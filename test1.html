@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Visit Scheduling & CRF Capture</title>
+      <style>
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
+        th { background: #f4f4f4; }
+    </style>
+</head>
+<body>
+
+    <h1>Visit Scheduling & Case Report Form Capture</h1>
+
+    <!-- Schedule Visit -->
+    <h2>Schedule Visit</h2>
+    <form id="scheduleVisitForm">
+        <label for="subjectId">Subject ID:</label>
+        <input type="text" id="subjectId" name="subjectId" required>
+
+        <label for="visitName">Visit Name:</label>
+        <input type="text" id="visitName" name="visitName" required>
+
+        <label for="visitDate">Visit Date:</label>
+        <input type="date" id="visitDate" name="visitDate" required>
+
+        <button type="submit">Schedule Visit</button>
+    </form>
+
+    <!-- Record CRF Data -->
+    <h2>Record CRF Data</h2>
+    <form id="recordCrfForm">
+        <label for="visitId">Visit ID:</label>
+        <input type="text" id="visitId" name="visitId" required>
+
+        <label for="crfStatus">CRF Status:</label>
+        <select id="crfStatus" name="crfStatus">
+            <option value="PENDING">PENDING</option>
+            <option value="COMPLETED">COMPLETED</option>
+            <option value="LOCKED">LOCKED</option>
+        </select>
+
+        <label for="queryCount">Query Count:</label>
+        <input type="number" id="queryCount" name="queryCount" min="0">
+
+        <button type="submit">Record CRF Data</button>
+    </form>
+
+    <!-- Lock CRF -->
+    <h2>Lock CRF</h2>
+    <form id="lockCrfForm">
+        <label for="lockVisitId">Visit ID:</label>
+        <input type="text" id="lockVisitId" name="lockVisitId" required>
+
+        <button type="submit">Lock CRF</button>
+    </form>
+
+    <!-- Visit History -->
+    <h2>Visit History</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Visit ID</th>
+                <th>Subject ID</th>
+                <th>Visit Name</th>
+                <th>Visit Date</th>
+                <th>CRF Status</th>
+                <th>Query Count</th>
+            </tr>
+        </thead>
+        <tbody id="visitHistoryTable">
+            <!-- Dynamic rows will be inserted here-->
+        </tbody>
+    </table>
+
+</body>
+</html>
