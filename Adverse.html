@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Adverse Event Reporting</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f6f8;
+        }
+        h2 {
+            color: #333;
+        }
+        form {
+            background: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            width: 400px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        input, select, textarea, button {
+            width: 100%;
+            margin: 8px 0;
+            padding: 8px;
+        }
+        table {
+            margin-top: 20px;
+            border-collapse: collapse;
+            width: 80%;
+            background: #fff;
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Adverse Event Reporting</h2>
+
+<form id="eventForm">
+    <label>Event ID</label>
+    <input type="text" id="eventId" required>
+
+    <label>Subject ID</label>
+    <input type="text" id="subjectId" required>
+
+    <label>Event Description</label>
+    <textarea id="description" required></textarea>
+
+    <label>Event Onset Date</label>
+    <input type="date" id="onsetDate" required>
+
+    <label>Severity</label>
+    <select id="severity">
+        <option>MILD</option>
+        <option>MODERATE</option>
+        <option>SEVERE</option>
+    </select>
+
+    <label>Event Status</label>
+    <select id="status">
+        <option>REPORTED</option>
+        <option>UNDER_REVIEW</option>
+        <option>RESOLVED</option>
+        <option>FATAL</option>
+    </select>
+
+    <button type="button" onclick="addEvent()">Submit</button>
+</form>
+
+<h3>Event History</h3>
+<table id="eventTable">
+    <thead>
+        <tr>
+            <th>Event ID</th>
+            <th>Subject ID</th>
+            <th>Description</th>
+            <th>Onset Date</th>
+            <th>Severity</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script>
+function addEvent() {
+    const table = document.getElementById("eventTable").getElementsByTagName('tbody')[0];
+
+    const row = table.insertRow();
+
+    row.insertCell(0).innerText = document.getElementById("eventId").value;
+    row.insertCell(1).innerText = document.getElementById("subjectId").value;
+    row.insertCell(2).innerText = document.getElementById("description").value;
+    row.insertCell(3).innerText = document.getElementById("onsetDate").value;
+    row.insertCell(4).innerText = document.getElementById("severity").value;
+    row.insertCell(5).innerText = document.getElementById("status").value;
+
+    document.getElementById("eventForm").reset();
+}
+</script>
+
+</body>
+</html>
