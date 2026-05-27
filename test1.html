@@ -22,6 +22,13 @@
     }
     .card {
       border: 1px solid #3d5c3d;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .navbar {
+      background-color: #3d5c3d; 
+    }
+    .navbar-brand {
+      color: #ffffff !important;
     }
     .table thead {
       background-color: #3d5c3d;
@@ -31,6 +38,14 @@
 </head>
 <body class="container py-4">
 
+    <!-- Navigation Bar -->
+  <nav class="navbar mb-4">
+    <div class="container-fluid">
+      <span class="navbar-brand mb-0 h1">Clinical Trial Visit Module</span>
+    </div>
+  </nav>
+
+
   <h1 class="text-center mb-4">Visit Scheduling & Case Report Form Capture</h1>
 
   <!-- Schedule Visit Form-->
@@ -38,14 +53,17 @@
     <div class="card-body">
       <h2>Schedule Visit</h2>
       <form id="scheduleVisitForm">
-        <div class="mb-3">
-          <label for="subjectId" class="form-label">Subject ID</label>
-          <input type="text" class="form-control" id="subjectId" name="subjectId" required>
+               <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="subjectId" class="form-label">Subject ID</label>
+            <input type="text" class="form-control" id="subjectId" name="subjectId" required>
+          </div>
+          <div class="col-md-6">
+            <label for="visitName" class="form-label">Visit Name</label>
+            <input type="text" class="form-control" id="visitName" name="visitName" required>
+          </div>
         </div>
-        <div class="mb-3">
-          <label for="visitName" class="form-label">Visit Name</label>
-          <input type="text" class="form-control" id="visitName" name="visitName" required>
-        </div>
+
         <div class="mb-3">
           <label for="visitDate" class="form-label">Visit Date</label>
           <input type="date" class="form-control" id="visitDate" name="visitDate" required>
