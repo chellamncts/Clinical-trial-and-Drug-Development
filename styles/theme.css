@@ -6,7 +6,6 @@
   --bs-body-bg: #F7F9F8;
 }
 
-/* Extra customization */
 .navbar {
   background-color: var(--bs-info);
 }
