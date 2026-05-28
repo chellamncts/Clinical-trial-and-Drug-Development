@@ -1,0 +1,16 @@
+:root {
+  --bs-primary: #1D9E75;
+  --bs-secondary: #378ADD;
+  --bs-info: #185FA5;
+  --bs-light: #E1F5EE;
+  --bs-body-bg: #F7F9F8;
+}
+
+/* Extra customization */
+.navbar {
+  background-color: var(--bs-info);
+}
+
+.btn-primary {
+  background-color: var(--bs-primary);
+}
