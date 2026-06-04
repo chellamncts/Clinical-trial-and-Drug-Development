@@ -41,6 +41,57 @@
       padding-right: 40px;  /* keeps login button slightly inward */
     }
 
+    html {
+    scroll-behavior: smooth;
+    }
+
+    .about-section {
+    padding: 80px 20px;
+    background-color: #f9f9f9;
+    text-align: center;
+    }
+    .about-section h2 {
+    color: #185FA5;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+    }
+    .about-section p {
+    font-size: 1.1rem;
+    color: #555;
+    max-width: 700px;
+    margin: auto;
+    line-height: 1.6;
+    }
+
+    .btn-about {
+    background-color: #1D9E75;   /* olive green accent */
+    color: #fff;
+    border-radius: 20px;
+    padding: 6px 18px;
+    margin-right: 10px;          /* spacing before login button */
+    transition: 0.3s;
+    }
+
+    .btn-about:hover {
+    background-color: #157a5a;   /* darker green on hover */
+    transform: scale(1.05);
+    }
+
+    .btn-login {
+    background-color: #185FA5;   /* deep blue */
+    color: #fff;
+    border-radius: 20px;
+    padding: 6px 18px;
+    transition: 0.3s;
+    margin-right: 20px;          /* keeps it slightly inward */
+    }
+
+    .btn-login:hover {
+    background-color: #378ADD;   /* lighter sky blue on hover */
+    transform: scale(1.05);
+    }
+
     .btn-login {
       background-color: #185FA5;   /* deep blue for contrast */
       color: #fff;
@@ -150,4 +201,117 @@
       font-family: 'Poppins', sans-serif;
       letter-spacing: 0.5px;
       box-shadow: 0 -2px 6px rgba(0,0,0,0.1);
+    }
+  
+    /* About Us Section Styling */
+
+    .about-card {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      text-align: left;
+      transition: transform 0.3s ease;
+    }
+
+    .about-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .about-card h4 {
+      color: var(--primary);
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+    }
+
+    .about-card h4 i {
+      margin-right: 10px;
+      color: var(--info);
+      font-size: 1.6rem;
+    }
+
+ 
+    /* About Us Section Styling */
+    .about-section {
+      padding: 80px 20px;
+      background: linear-gradient(90deg, var(--light), #ffffff); /* same as hero */
+    }
+
+    .about-section h2 {
+      color: var(--info); /* deep blue */
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.2rem;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    .about-section .intro,
+    .about-section .mission {
+      background-color: #ffffff;
+      padding: 30px;
+      margin-bottom: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      text-align: left;
+    }
+
+    .about-section .intro h4,
+    .about-section .mission h4 {
+      color: var(--primary);
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .about-section .intro p,
+    .about-section .mission p {
+      color: #555;
+      line-height: 1.6;
+      font-size: 1.05rem;
+      max-width: 800px;
+      margin: auto;
+      margin-bottom: 30px;
+    }
+    /* Key Features Cards */
+    .about-section .card {
+      border: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease;
+      text-align: center;
+      margin-bottom: 20px;
+      background-color: #fff;
+    }
+
+    .about-section .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .about-section .card h6 {
+      color: var(--info);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .about-section .card p {
+      font-size: 0.95rem;
+      color: #666;
+    }
+
+    /* Values List */
+    .about-section .list-group-item {
+      border: none;
+      background-color: #fff;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      font-size: 1rem;
+      color: #444;
+      text-align: left;
+    }
+
+    .about-section .list-group-item::before {
+      content: "✔ ";
+      color: var(--primary);
+      font-weight: bold;
     }
