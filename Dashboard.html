@@ -8,12 +8,12 @@
     body {
         font-family: Arial, sans-serif;
         margin: 0;
-        background: #eef7f1;
+        background: #f3fbf6; /* very light green */
     }
 
     header {
-        background: #1e7f5c;
-        color: white;
+        background: #a9dfbf; /* soft green */
+        color: #1b4332;
         padding: 15px;
         text-align: center;
     }
@@ -30,22 +30,23 @@
     }
 
     .card {
-        background: white;
+        background: #ffffff;
         padding: 15px;
         border-radius: 12px;
         text-align: center;
-        box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+        box-shadow: 0 2px 6px rgba(0,0,0,0.08);
     }
 
     .card h2 {
         margin: 10px 0;
-        color: #145a41;
+        color: #2d6a4f;
     }
 
-    .card.green { border-left: 6px solid #27ae60; }
-    .card.darkgreen { border-left: 6px solid #145a32; }
-    .card.lightgreen { border-left: 6px solid #52be80; }
-    .card.lime { border-left: 6px solid #82e0aa; }
+    /* Light green variations */
+    .card.green { border-left: 5px solid #74c69d; }
+    .card.light { border-left: 5px solid #b7e4c7; }
+    .card.soft { border-left: 5px solid #d8f3dc; }
+    .card.pale { border-left: 5px solid #95d5b2; }
 
     table {
         width: 100%;
@@ -56,18 +57,18 @@
     }
 
     th {
-        background: #1e7f5c;
-        color: white;
+        background: #b7e4c7;
+        color: #1b4332;
         padding: 10px;
     }
 
     td {
         padding: 10px;
-        border-bottom: 1px solid #ddd;
+        border-bottom: 1px solid #e6f4ea;
     }
 
     tr:hover {
-        background: #f2fbf6;
+        background: #f1faf5;
     }
 
     .form-section {
@@ -75,7 +76,7 @@
         background: white;
         padding: 20px;
         border-radius: 12px;
-        box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+        box-shadow: 0 2px 6px rgba(0,0,0,0.08);
     }
 
     .form-group {
@@ -83,8 +84,8 @@
     }
 
     label {
-        color: #145a32;
-        font-weight: bold;
+        color: #2d6a4f;
+        font-weight: 600;
     }
 
     input, select, textarea {
@@ -92,12 +93,13 @@
         padding: 8px;
         margin-top: 5px;
         border-radius: 6px;
-        border: 1px solid #ccc;
+        border: 1px solid #cce3d5;
+        background: #f8fdf9;
     }
 
     button {
-        background: #27ae60;
-        color: white;
+        background: #74c69d;
+        color: #1b4332;
         border: none;
         padding: 10px 15px;
         cursor: pointer;
@@ -106,7 +108,11 @@
     }
 
     button:hover {
-        background: #1e8449;
+        background: #95d5b2;
+    }
+
+    h2 {
+        color: #2d6a4f;
     }
 </style>
 </head>
@@ -125,22 +131,22 @@
             <h2 id="totalEvents">0</h2>
             <p>Total Events</p>
         </div>
-        <div class="card darkgreen">
+        <div class="card light">
             <h2 id="severeEvents">0</h2>
             <p>Severe</p>
         </div>
-        <div class="card lightgreen">
+        <div class="card soft">
             <h2 id="underReview">0</h2>
             <p>Under Review</p>
         </div>
-        <div class="card lime">
+        <div class="card pale">
             <h2 id="fatalEvents">0</h2>
             <p>Fatal</p>
         </div>
     </div>
 
     <!-- Event Table -->
-    <h2 style="color:#145a32;">Adverse Event History</h2>
+    <h2>Adverse Event History</h2>
     <table>
         <thead>
             <tr>
@@ -157,7 +163,7 @@
 
     <!-- Form -->
     <div class="form-section">
-        <h2 style="color:#145a32;">Report New Adverse Event</h2>
+        <h2>Report New Adverse Event</h2>
 
         <div class="form-group">
             <label>Subject ID</label>
