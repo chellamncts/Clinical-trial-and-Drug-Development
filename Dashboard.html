@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Adverse Event Dashboard</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        background: #eef7f1;
+    }
+
+    header {
+        background: #1e7f5c;
+        color: white;
+        padding: 15px;
+        text-align: center;
+    }
+
+    .container {
+        padding: 20px;
+    }
+
+    .cards {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .card {
+        background: white;
+        padding: 15px;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    }
+
+    .card h2 {
+        margin: 10px 0;
+        color: #145a41;
+    }
+
+    .card.green { border-left: 6px solid #27ae60; }
+    .card.darkgreen { border-left: 6px solid #145a32; }
+    .card.lightgreen { border-left: 6px solid #52be80; }
+    .card.lime { border-left: 6px solid #82e0aa; }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    th {
+        background: #1e7f5c;
+        color: white;
+        padding: 10px;
+    }
+
+    td {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    tr:hover {
+        background: #f2fbf6;
+    }
+
+    .form-section {
+        margin-top: 30px;
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    }
+
+    .form-group {
+        margin-bottom: 12px;
+    }
+
+    label {
+        color: #145a32;
+        font-weight: bold;
+    }
+
+    input, select, textarea {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }
+
+    button {
+        background: #27ae60;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        cursor: pointer;
+        border-radius: 8px;
+        margin-top: 10px;
+    }
+
+    button:hover {
+        background: #1e8449;
+    }
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Adverse Event Reporting & Safety Monitoring</h1>
+</header>
+
+<div class="container">
+
+    <!-- Summary Cards -->
+    <div class="cards">
+        <div class="card green">
+            <h2 id="totalEvents">0</h2>
+            <p>Total Events</p>
+        </div>
+        <div class="card darkgreen">
+            <h2 id="severeEvents">0</h2>
+            <p>Severe</p>
+        </div>
+        <div class="card lightgreen">
+            <h2 id="underReview">0</h2>
+            <p>Under Review</p>
+        </div>
+        <div class="card lime">
+            <h2 id="fatalEvents">0</h2>
+            <p>Fatal</p>
+        </div>
+    </div>
+
+    <!-- Event Table -->
+    <h2 style="color:#145a32;">Adverse Event History</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Event ID</th>
+                <th>Subject ID</th>
+                <th>Description</th>
+                <th>Onset Date</th>
+                <th>Severity</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody id="eventTable"></tbody>
+    </table>
+
+    <!-- Form -->
+    <div class="form-section">
+        <h2 style="color:#145a32;">Report New Adverse Event</h2>
+
+        <div class="form-group">
+            <label>Subject ID</label>
+            <input type="text" id="subjectId">
+        </div>
+
+        <div class="form-group">
+            <label>Description</label>
+            <textarea id="eventDescription"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Onset Date</label>
+            <input type="date" id="eventOnsetDate">
+        </div>
+
+        <div class="form-group">
+            <label>Severity</label>
+            <select id="severity">
+                <option>MILD</option>
+                <option>MODERATE</option>
+                <option>SEVERE</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Status</label>
+            <select id="eventStatus">
+                <option>REPORTED</option>
+                <option>UNDER_REVIEW</option>
+                <option>RESOLVED</option>
+                <option>FATAL</option>
+            </select>
+        </div>
+
+        <button onclick="addEvent()">Submit Event</button>
+    </div>
+
+</div>
+
+<script>
+let events = [];
+let eventCounter = 1;
+
+function addEvent() {
+    const event = {
+        eventId: "EVT-" + eventCounter++,
+        subjectId: document.getElementById("subjectId").value,
+        description: document.getElementById("eventDescription").value,
+        date: document.getElementById("eventOnsetDate").value,
+        severity: document.getElementById("severity").value,
+        status: document.getElementById("eventStatus").value
+    };
+
+    events.push(event);
+    renderTable();
+    updateDashboard();
+    clearForm();
+}
+
+function renderTable() {
+    const table = document.getElementById("eventTable");
+    table.innerHTML = "";
+
+    events.forEach(e => {
+        table.innerHTML += `
+        <tr>
+            <td>${e.eventId}</td>
+            <td>${e.subjectId}</td>
+            <td>${e.description}</td>
+            <td>${e.date}</td>
+            <td>${e.severity}</td>
+            <td>${e.status}</td>
+        </tr>`;
+    });
+}
+
+function updateDashboard() {
+    document.getElementById("totalEvents").innerText = events.length;
+    document.getElementById("severeEvents").innerText =
+        events.filter(e => e.severity === "SEVERE").length;
+    document.getElementById("underReview").innerText =
+        events.filter(e => e.status === "UNDER_REVIEW").length;
+    document.getElementById("fatalEvents").innerText =
+        events.filter(e => e.status === "FATAL").length;
+}
+
+function clearForm() {
+    document.getElementById("subjectId").value = "";
+    document.getElementById("eventDescription").value = "";
+    document.getElementById("eventOnsetDate").value = "";
+}
+</script>
+
+</body>
+</html>
