@@ -41,6 +41,57 @@
       padding-right: 40px;  /* keeps login button slightly inward */
     }
 
+    html {
+    scroll-behavior: smooth;
+    }
+
+    .about-section {
+    padding: 80px 20px;
+    background-color: #f9f9f9;
+    text-align: center;
+    }
+    .about-section h2 {
+    color: #185FA5;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+    }
+    .about-section p {
+    font-size: 1.1rem;
+    color: #555;
+    max-width: 700px;
+    margin: auto;
+    line-height: 1.6;
+    }
+
+    .btn-about {
+    background-color: #1D9E75;   /* olive green accent */
+    color: #fff;
+    border-radius: 20px;
+    padding: 6px 18px;
+    margin-right: 10px;          /* spacing before login button */
+    transition: 0.3s;
+    }
+
+    .btn-about:hover {
+    background-color: #157a5a;   /* darker green on hover */
+    transform: scale(1.05);
+    }
+
+    .btn-login {
+    background-color: #185FA5;   /* deep blue */
+    color: #fff;
+    border-radius: 20px;
+    padding: 6px 18px;
+    transition: 0.3s;
+    margin-right: 20px;          /* keeps it slightly inward */
+    }
+
+    .btn-login:hover {
+    background-color: #378ADD;   /* lighter sky blue on hover */
+    transform: scale(1.05);
+    }
+
     .btn-login {
       background-color: #185FA5;   /* deep blue for contrast */
       color: #fff;
