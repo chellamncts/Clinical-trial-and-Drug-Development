@@ -1,0 +1,153 @@
+    :root {
+      --primary: #1D9E75;    
+      --secondary: #378ADD;   
+      --info: #185FA5;        
+      --light: #E1F5EE;      
+      --bg: #F7F9F8;         
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background-color: var(--bg);
+      height: 100vh;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    
+   .navbar-logo {
+      height: 40px;
+      width: auto;
+      margin-right: 2px;   /* space between logo and text */
+    }
+
+    .navbar-title {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: #185FA5 !important;
+      letter-spacing: 1px;
+      margin-left: 0;    /* fine-tune text position */
+    }
+
+    .navbar {
+      background-color: #ffffff;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between; /* brand left, login right */
+      padding-left: 20px;   /* moves brand inward from edge */
+      padding-right: 40px;  /* keeps login button slightly inward */
+    }
+
+    .btn-login {
+      background-color: #185FA5;   /* deep blue for contrast */
+      color: #fff;
+      border-radius: 20px;
+      padding: 6px 18px;
+      transition: 0.3s;
+      margin-right: 20px;   /* pulls login button slightly inward */
+    }
+
+    .btn-login:hover {
+      background-color: #378ADD;   /* lighter sky blue on hover */
+      transform: scale(1.05);
+    }
+
+
+    /* Hero Section */
+    .hero {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      /* padding: 80px 60px; */
+      background: linear-gradient(90deg, var(--light), #ffffff);
+      min-height: calc(100vh - 70px); 
+      padding-top: 40px;     /* reduce top padding */
+      padding-bottom: 20px;  /* optional: less bottom space */
+      margin-top: -40px;
+      padding-left: 60px; 
+      padding-right: 40px;
+    }
+
+    .hero-text {
+      max-width: 50%;
+      margin-top: -20px;
+    }
+
+    .hero-text h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 3rem;
+      font-weight: 600;
+      color: #185FA5; /* deep blue for emphasis */
+      letter-spacing: 0.5px;
+      line-height: 1.2;
+    }
+
+
+    .hero-text p {
+      font-size: 1.2rem;
+      color: #555;
+      margin-bottom: 25px;
+      font-weight: 400;
+      line-height: 1.6;
+    }
+
+    .hero-heading {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 3rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      line-height: 1.2;
+      color: #185FA5; /* base deep blue */
+    }
+
+    .hero-heading .highlight {
+      color: #1D9E75; /* olive green accent */
+    }
+
+    .hero-heading .accent {
+      color: #378ADD; /* sky blue for final word */
+    }
+
+    .hero-image img {
+      max-width: 320px;
+      /* border-radius: 8px; */
+      background: none;   /* removes white patch */
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      margin: auto;
+      height: auto;
+      display: block;
+      margin-top: -20px; /* slightly overlaps with text for cohesion */
+    }
+
+
+
+    .tags span {
+      background-color: #ffffff;
+      color: var(--info);
+      padding: 6px 12px;
+      border-radius: 20px;
+      margin-right: 10px;
+      font-size: 0.9rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    @media (max-width: 768px) {
+      .hero-text,
+      .hero-image {
+        margin-top: -10px;
+      }
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #185FA5;   /* deep blue */
+      color: #ffffff;              /* default white text */
+      font-size: 0.9rem;
+      font-family: 'Poppins', sans-serif;
+      letter-spacing: 0.5px;
+      box-shadow: 0 -2px 6px rgba(0,0,0,0.1);
+    }
