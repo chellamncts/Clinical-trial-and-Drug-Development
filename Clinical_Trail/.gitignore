@@ -21,6 +21,15 @@ target/
 .settings
 .springBeans
 .sts4-cache
+<<<<<<< HEAD:Clinical_Trail/.gitignore
+=======
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+>>>>>>> 72d07bd5e1c98287f437c907088fb82b2ad964e6:ctddts/ctddts/.gitignore
 
 ### NetBeans ###
 /nbproject/private/
