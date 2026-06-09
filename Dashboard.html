@@ -1,248 +1,174 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>PV Officer Dashboard</title>
+<meta charset="UTF-8">
+<title>PV Officer Dashboard</title>
 
-    <style>
-        body {
-            margin: 0;
-            font-family: "Segoe UI", Tahoma, sans-serif;
-            display: flex;
-            background: #f4f7f6;
-        }
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
-        
-        .sidebar {
-            width: 220px;
-            background: #0f5132;
-            color: white;
-            height: 100vh;
-            padding: 20px;
-        }
+<style>
 
-        .sidebar h2 {
-            margin-bottom: 30px;
-        }
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f6faf7;
+}
 
-        .sidebar a {
-            display: block;
-            color: #c8f7dc;
-            text-decoration: none;
-            margin: 12px 0;
-            font-size: 14px;
-        }
+/* Sidebar */
+.sidebar {
+  width: 220px;
+  height: 100vh;
+  background: #198754;
+  color: white;
+  position: fixed;
+  padding: 20px;
+}
 
-        .sidebar a:hover {
-            color: white;
-            font-weight: bold;
-        }
+.sidebar h5 {
+  margin-bottom: 25px;
+}
 
-        
-        .main {
-            flex: 1;
-            padding: 20px;
-        }
+.sidebar a {
+  display: block;
+  color: #d1e7dd;
+  text-decoration: none;
+  padding: 8px;
+  border-radius: 5px;
+  margin-bottom: 8px;
+}
 
-        
-        .header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
+.sidebar a:hover {
+  background: #146c43;
+}
 
-        .header h1 {
-            margin: 0;
-            color: #0f5132;
-        }
+/* Main content */
+.main {
+  margin-left: 240px;
+  padding: 20px;
+}
 
-        
-        .cards {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 25px;
-        }
+/* Top bar */
+.topbar {
+  background: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
 
-        .card {
-            flex: 1;
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-        }
+/* Cards */
+.card {
+  border: none;
+  border-radius: 10px;
+  text-align: center;
+  padding: 15px;
+}
 
-        .card h3 {
-            margin: 0;
-            color: #0f5132;
-        }
+/* Section titles */
+.section-title {
+  font-weight: 600;
+  margin: 25px 0 10px;
+}
 
-        .card p {
-            font-size: 22px;
-            margin-top: 10px;
-            font-weight: bold;
-        }
+/* Table */
+.table {
+  background: white;
+  border-radius: 8px;
+}
 
-        .danger {
-            border-left: 5px solid #dc3545;
-        }
-
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-        }
-
-        th, td {
-            padding: 12px;
-            text-align: left;
-        }
-
-        th {
-            background: #198754;
-            color: white;
-        }
-
-        tr:nth-child(even) {
-            background: #f2fdf7;
-        }
-
-        
-        .alert-box {
-            margin-top: 20px;
-        }
-
-        .alert {
-            background: #fff3f3;
-            border-left: 5px solid #dc3545;
-            padding: 10px;
-            margin-bottom: 10px;
-        }
-
-        
-        .btn {
-            padding: 6px 10px;
-            border-radius: 6px;
-            border: none;
-            cursor: pointer;
-            font-size: 12px;
-        }
-
-        .btn-view {
-            background: #198754;
-            color: white;
-        }
-
-        .btn-review {
-            background: #0d6efd;
-            color: white;
-        }
-    </style>
+</style>
 </head>
 
 <body>
 
-
+<!-- ✅ Sidebar -->
 <div class="sidebar">
-    <h2>PV Dashboard</h2>
-    <a href="#">Dashboard</a>
-    <a href="#">Adverse Events</a>
-    <a href="#">Serious Events</a>
-    <a href="#">Case Processing</a>
-    <a href="#">Medical Review</a>
-    <a href="#">Signal Detection</a>
-    <a href="#">Safety Reports</a>
-    <a href="#">Audit Logs</a>
+  <h5>PV Dashboard</h5>
+  <a href="#">Overview</a>
+  <a href="Adverse.html">Adverse Events</a>
+  <a href="#">SAE Tracking</a>
+  <a href="#">Reports</a>
+  <a href="#">Audit Logs</a>
 </div>
 
-
+<!-- ✅ Main -->
 <div class="main">
 
-    <div class="header">
-        <h1>Pharmacovigilance Dashboard</h1>
-        <div>🔔 Notifications | Logout</div>
+  <!-- Top -->
+  <div class="topbar d-flex justify-content-between">
+    <strong>Pharmacovigilance Officer</strong>
+    <span>Welcome</span>
+  </div>
+
+  <!-- ✅ Overview Cards -->
+  <div class="row">
+    <div class="col-md-3">
+      <div class="card shadow-sm">
+        <h6>Total AE</h6>
+        <h4>120</h4>
+      </div>
     </div>
 
-    
-    <div class="cards">
-        <div class="card">
-            <h3>Total AEs</h3>
-            <p>120</p>
-        </div>
-
-        <div class="card danger">
-            <h3>Serious AEs</h3>
-            <p>15</p>
-        </div>
-
-        <div class="card">
-            <h3>Under Review</h3>
-            <p>30</p>
-        </div>
-
-        <div class="card">
-            <h3>Resolved</h3>
-            <p>75</p>
-        </div>
+    <div class="col-md-3">
+      <div class="card shadow-sm">
+        <h6>SAE Alerts</h6>
+        <h4 class="text-danger">8</h4>
+      </div>
     </div>
 
-   
-    <h2>Adverse Events</h2>
-
-    <table>
-        <tr>
-            <th>Event ID</th>
-            <th>Subject ID</th>
-            <th>Description</th>
-            <th>Severity</th>
-            <th>Status</th>
-            <th>Action</th>
-        </tr>
-
-        <tr>
-            <td>AE001</td>
-            <td>S001</td>
-            <td>Headache</td>
-            <td>Mild</td>
-            <td>Reported</td>
-            <td>
-                <button class="btn btn-view">View</button>
-                <button class="btn btn-review">Review</button>
-            </td>
-        </tr>
-
-        <tr>
-            <td>AE002</td>
-            <td>S002</td>
-            <td>Fever</td>
-            <td>Moderate</td>
-            <td>Under Review</td>
-            <td>
-                <button class="btn btn-view">View</button>
-                <button class="btn btn-review">Review</button>
-            </td>
-        </tr>
-
-        <tr>
-            <td>AE003</td>
-            <td>S003</td>
-            <td>Chest Pain</td>
-            <td>Severe</td>
-            <td>Critical</td>
-            <td>
-                <button class="btn btn-view">View</button>
-                <button class="btn btn-review">Review</button>
-            </td>
-        </tr>
-    </table>
-
-
-    <div class="alert-box">
-        <h2>Alerts</h2>
-
-        <div class="alert"> New Serious Adverse Event reported</div>
-        <div class="alert">⚠ Delayed reporting detected</div>
+    <div class="col-md-3">
+      <div class="card shadow-sm">
+        <h6>Under Review</h6>
+        <h4>15</h4>
+      </div>
     </div>
 
+    <div class="col-md-3">
+      <div class="card shadow-sm">
+        <h6>Closed</h6>
+        <h4>97</h4>
+      </div>
+    </div>
+  </div>
+
+  <!-- ✅ Adverse Events Table -->
+  <div class="section-title">Adverse Events</div>
+
+  <table class="table table-bordered">
+    <thead class="table-light">
+      <tr>
+        <th>ID</th>
+        <th>Drug</th>
+        <th>Severity</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>AE101</td>
+        <td>Paracetamol</td>
+        <td>Mild</td>
+        <td>Open</td>
+      </tr>
+      <tr>
+        <td>AE102</td>
+        <td>Ibuprofen</td>
+        <td class="text-danger">Severe</td>
+        <td>Review</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ✅ SAE Alert -->
+  <div class="section-title">SAE Alert</div>
+  <div class="alert alert-warning">
+    2 critical cases require attention
+  </div>
+
+  <!-- ✅ Action -->
+  <div class="section-title">Actions</div>
+  <button class="btn btn-success">Submit Report</button>
+
+</div>
+
+</body>
+</html>
