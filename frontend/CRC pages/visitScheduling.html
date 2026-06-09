@@ -101,8 +101,18 @@
         const response = await fetch(apiBase + "/history/" + subjectId);
         if (response.ok) {
           const visits = await response.json();
-          console.log("Visit history:", visits);
-          // TODO: render visits in a table
+          const tbody = document.querySelector("#visitTable tbody");
+          tbody.innerHTML = "";
+          visits.forEach(v => {
+            const row = `<tr>
+              <td>${v.visitId}</td>
+              <td>${v.subjectId}</td>
+              <td>${v.visitName}</td>
+              <td>${v.visitDate}</td>
+              <td>${v.crfStatus}</td>
+            </tr>`;
+            tbody.innerHTML += row;
+          });
         }
       } catch (err) {
         console.error(err);
