@@ -1,5 +1,5 @@
     :root {
-      --primary: #1D9E75;    
+      --primary: #0f5132;    
       --secondary: #378ADD;   
       --info: #185FA5;        
       --light: #E1F5EE;      
@@ -104,7 +104,7 @@
     }
 
     .hero-heading .highlight {
-      color: #1D9E75; /* olive green accent */
+      color: #0f5132;
     }
 
     .hero-heading .accent {
