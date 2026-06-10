@@ -1,23 +1,25 @@
 package org.example.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
-import org.example.model.User;
-import org.example.repository.UserRepository;
+import org.example.model.SampleLog;
+import org.example.repository.SampleLogRepository;
 
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepository repo;
+    private final SampleLogRepository repo;
 
-    public User saveUser(User user) {
-        return repo.save(user);
+    public UserService(SampleLogRepository repo) {
+        this.repo = repo;
     }
 
-    public List<User> getAllUsers() {
+    public void saveSampleLog(SampleLog sampleLog) {
+        repo.save(sampleLog);
+    }
+
+    public List<SampleLog> getAllSampleLogs() {
         return repo.findAll();
     }
 }
