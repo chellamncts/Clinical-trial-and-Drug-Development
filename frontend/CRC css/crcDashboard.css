@@ -1,0 +1,89 @@
+/* General page styles */
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f7f9f8;
+  margin: 0;
+}
+
+/* Sidebar */
+.sidebar {
+  height: 100vh;
+  background-color: #0f5132; /* dark green */
+  padding-top: 20px;
+  position: fixed;
+  width: 220px;
+  color: #fff;
+}
+
+.sidebar h3 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.sidebar a {
+  display: block;
+  color: #fff;
+  padding: 12px;
+  text-decoration: none;
+  margin: 5px 0;
+}
+
+.sidebar a:hover {
+  background-color: #145a3d;
+}
+
+/* Main content */
+.main-content {
+  margin-left: 240px;   /* space for sidebar */
+  padding: 20px;        /* top/bottom + left/right padding */
+  padding-right: 0px;  /* extra breathing space on the right */
+}
+
+.summary-box {
+  background-color: #fff;
+  color: #333;
+  text-align: left;
+  padding: 20px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  border-left: 6px solid #1D9E75; /* green accent line */
+  height: 100%;
+}
+
+
+.summary-box h6 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #0f5132;                     /* dark green heading */
+}
+
+.summary-box h3 {
+  font-size: 22px;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* Cards */
+.card {
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+
+/* Table */
+.table th {
+  background-color: #185FA5;
+  color: #fff;
+}
+
+.table td {
+  vertical-align: middle;
+}
+
+/* Charts */
+canvas {
+  max-height: 250px; /* keeps charts smaller */
+}
