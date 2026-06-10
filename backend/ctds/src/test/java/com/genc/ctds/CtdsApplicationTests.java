@@ -1,10 +1,10 @@
-package com.genc.ctddts;
+package com.genc.ctds;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CtddtsApplicationTests {
+class CtdsApplicationTests {
 
 	@Test
 	void contextLoads() {
