@@ -1,0 +1,16 @@
+package com.genc.ctds.subjectenrollment.service;
+
+import com.genc.ctds.subjectenrollment.model.TrialSubject;
+import com.genc.ctds.subjectenrollment.repository.SubjectRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class SubjectService {
+    @Autowired
+    private SubjectRepository repository;
+
+    public void saveSubject(TrialSubject subject) {
+        repository.save(subject);
+    }
+}
