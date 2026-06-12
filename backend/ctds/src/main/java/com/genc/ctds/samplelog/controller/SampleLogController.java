@@ -1,0 +1,123 @@
+package com.genc.ctds.samplelog.controller;
+
+import com.genc.ctds.samplelog.model.SampleLog;
+import com.genc.ctds.samplelog.service.SampleLogService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
+
+@Controller
+public class SampleLogController{
+
+    private final SampleLogService service;
+
+    public SampleLogController(SampleLogService service) {
+        this.service = service;
+    }
+
+    @GetMapping("/UserForm")
+    public String showForm(Model model) {
+        model.addAttribute("user", new SampleLog());
+        return "UserForm";
+    }
+
+    @GetMapping("/sample/collect")
+    public String showSampleCollectForm(Model model) {
+        model.addAttribute("user", new SampleLog());
+        return "UserForm";
+    }
+
+    @PostMapping("/saveUser")
+    public String saveUser(@ModelAttribute SampleLog user, Model model) {
+        SampleLog saved = service.saveSampleLog(user);
+        model.addAttribute("subId", saved.getSampleId());
+        model.addAttribute("sample", saved);
+        return "result";
+    }
+
+    /** Retrieve and display a single sample by ID. */
+    @GetMapping("/sample/view/{sampleId}")
+    public String viewSample(@PathVariable int sampleId, Model model) {
+        SampleLog sample = service.getSampleById(sampleId);
+        if (sample == null) {
+            model.addAttribute("error", "Sample ID " + sampleId + " not found");
+            return "error";
+        }
+        model.addAttribute("sample", sample);
+        model.addAttribute("subId", sample.getSampleId());
+        return "result";
+    }
+
+    /** View all samples. */
+    @GetMapping("/sample/list")
+    public String listSamples(Model model) {
+        List<SampleLog> samples = service.getAllSampleLogs();
+        model.addAttribute("samples", samples);
+        model.addAttribute("totalCount", samples.size());
+        return "sample-list";
+    }
+
+    /** View samples filtered by status. */
+    @GetMapping("/sample/status/{status}")
+    public String viewByStatus(@PathVariable String status, Model model) {
+        try {
+            SampleLog.SampleStatus sampleStatus = SampleLog.SampleStatus.valueOf(status.toUpperCase());
+            List<SampleLog> samples = service.getSamplesByStatus(sampleStatus);
+            model.addAttribute("samples", samples);
+            model.addAttribute("totalCount", samples.size());
+            return "sample-list";
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("error", "Invalid status: " + status);
+            return "error";
+        }
+    }
+
+    /** View samples for a specific subject. */
+    @GetMapping("/sample/subject/{subjectId}")
+    public String viewBySubject(@PathVariable int subjectId, Model model) {
+        List<SampleLog> samples = service.getSamplesBySubject(subjectId);
+        model.addAttribute("samples", samples);
+        model.addAttribute("totalCount", samples.size());
+        return "sample-list";
+    }
+
+    /** Search by sampleId or subjectId. */
+    @GetMapping("/sample/search")
+    public String searchSample(@RequestParam(required = false) Integer sampleId,
+                               @RequestParam(required = false) Integer subjectId,
+                               Model model) {
+        if (sampleId != null) {
+            SampleLog sample = service.getSampleById(sampleId);
+            if (sample != null) {
+                model.addAttribute("sample", sample);
+                model.addAttribute("success", "Sample found successfully");
+            } else {
+                model.addAttribute("error", "Sample ID " + sampleId + " not found");
+            }
+            model.addAttribute("searched", true);
+        } else if (subjectId != null) {
+            List<SampleLog> samples = service.getSamplesBySubject(subjectId);
+            if (!samples.isEmpty()) {
+                model.addAttribute("samples", samples);
+                model.addAttribute("success", "Found " + samples.size() + " sample(s) for Subject " + subjectId);
+            } else {
+                model.addAttribute("error", "No samples found for Subject ID " + subjectId);
+            }
+            model.addAttribute("searched", true);
+        }
+        return "sample-search";
+    }
+
+    /** Display empty search form. */
+    @GetMapping("/sample/search-form")
+    public String showSearchForm(Model model) {
+        model.addAttribute("searched", false);
+        return "sample-search";
+    }
+}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error - Lab Sample Tracking</title>
+    <link rel="stylesheet" th:href="@{/app.css}">
+</head>
+<body>
+<nav class="navbar">
+    <div class="brand"><span class="dot"></span> Lab Sample &amp; IP Tracking</div>
+    <div class="nav-links">
+        <a th:href="@{/UserForm}">Add Sample</a>
+        <a th:href="@{/sample/list}">Show All</a>
+        <a th:href="@{/sample/search-form}">Search</a>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="card">
+        <div class="card-title">Something went wrong</div>
+        <div class="card-body">
+            <div class="msg msg-error" th:text="${error} ?: 'An unexpected error occurred.'">Error.</div>
+            <div class="actions">
+                <a class="btn" th:href="@{/UserForm}">Back to Form</a>
+                <a class="btn btn-outline" th:href="@{/sample/search-form}">Search</a>
+                <a class="btn btn-outline" th:href="@{/sample/list}">Show All</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">&copy; 2026 Clinical Trial &amp; Drug Development Tracking System</footer>
+</body>
+</html>
+

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Sample - Lab Sample Tracking</title>
+    <link rel="stylesheet" th:href="@{/app.css}">
+</head>
+<body>
+<nav class="navbar">
+    <div class="brand"><span class="dot"></span> Lab Sample &amp; IP Tracking</div>
+    <div class="nav-links">
+        <a th:href="@{/UserForm}">Add Sample</a>
+        <a th:href="@{/sample/list}">Show All</a>
+        <a th:href="@{/sample/search-form}">Search</a>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="card">
+        <div class="card-title">Search Sample</div>
+        <div class="card-body">
+            <div th:if="${error}" class="msg msg-error" th:text="${error}"></div>
+            <div th:if="${success}" class="msg msg-success" th:text="${success}"></div>
+
+            <form th:action="@{/sample/search}" method="get">
+                <div class="grid">
+                    <div class="field">
+                        <label for="sampleId">Search by Sample ID</label>
+                        <input id="sampleId" type="number" name="sampleId" min="1" placeholder="Enter Sample ID">
+                    </div>
+                    <div class="field">
+                        <label for="subjectId">Search by Subject ID</label>
+                        <input id="subjectId" type="number" name="subjectId" min="1" placeholder="Enter Subject ID">
+                    </div>
+                </div>
+                <div class="actions">
+                    <button class="btn" type="submit">Search</button>
+                    <a class="btn btn-outline" th:href="@{/sample/list}">Show All</a>
+                    <a class="btn btn-outline" th:href="@{/UserForm}">+ New Sample</a>
+                </div>
+            </form>
+
+            <!-- Single sample result -->
+            <div th:if="${sample != null}" style="margin-top:24px;">
+                <h3 style="color:#0a3a23;">Sample Details</h3>
+                <div class="grid">
+                    <div class="item"><div class="label">Sample ID</div><div class="value" th:text="${sample.sampleId}">--</div></div>
+                    <div class="item"><div class="label">Subject ID</div><div class="value" th:text="${sample.subjectId}">--</div></div>
+                    <div class="item"><div class="label">Sample Type</div><div class="value" th:text="${sample.sampleType}">--</div></div>
+                    <div class="item"><div class="label">Collection Date</div><div class="value" th:text="${sample.collectionDate}">--</div></div>
+                    <div class="item">
+                        <div class="label">Status</div>
+                        <div class="value">
+                            <span th:if="${sample.sampleStatus != null}" class="badge"
+                                  th:classappend="'badge-' + ${sample.sampleStatus.name().toLowerCase()}"
+                                   th:text="${sample.sampleStatus.displayName}">Collected</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Multiple samples result -->
+            <div th:if="${samples != null and !samples.isEmpty()}" style="margin-top:24px;">
+                <h3 style="color:#0a3a23;" th:text="'Found ' + ${samples.size()} + ' sample(s)'">Results</h3>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                        <tr><th>ID</th><th>Subject</th><th>Type</th><th>Date</th><th>Status</th><th>Action</th></tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="s : ${samples}">
+                            <td th:text="${s.sampleId}">--</td>
+                            <td th:text="${s.subjectId}">--</td>
+                            <td th:text="${s.sampleType}">--</td>
+                            <td th:text="${s.collectionDate}">--</td>
+                            <td>
+                                <span th:if="${s.sampleStatus != null}" class="badge"
+                                      th:classappend="'badge-' + ${s.sampleStatus.name().toLowerCase()}"
+                                      th:text="${s.sampleStatus.displayName}">Collected</span>
+                            </td>
+                            <td><a class="btn btn-outline" th:href="@{/sample/view/{id}(id=${s.sampleId})}">View</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">&copy; 2026 Clinical Trial &amp; Drug Development Tracking System</footer>
+</body>
+</html>
+

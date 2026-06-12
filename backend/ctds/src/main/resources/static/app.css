@@ -1,0 +1,271 @@
+/* ===========================================================
+   Clinical Trial - Lab Sample Module Theme
+   Palette: #0f5132 (deep green) & #ffffff (white)
+   =========================================================== */
+
+:root {
+    --green: #0f5132;
+    --green-dark: #0a3a23;
+    --green-soft: #e8f1ec;
+    --green-line: #cfe3d7;
+    --white: #ffffff;
+    --ink: #1f2a24;
+    --muted: #5f6f67;
+    --danger: #b3261e;
+    --shadow: 0 8px 24px rgba(15, 81, 50, 0.12);
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+    background: #f4f7f5;
+    color: var(--ink);
+}
+
+/* ---------- Navbar ---------- */
+.navbar {
+    background: var(--green);
+    color: var(--white);
+    padding: 14px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: var(--shadow);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.navbar .brand {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: .3px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.navbar .brand .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--white);
+    display: inline-block;
+}
+
+.navbar .nav-links {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.navbar .nav-links a {
+    color: var(--white);
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    transition: background .2s ease;
+}
+
+.navbar .nav-links a:hover { background: rgba(255, 255, 255, 0.16); }
+
+/* ---------- Layout ---------- */
+.container {
+    max-width: 980px;
+    margin: 28px auto;
+    padding: 0 18px;
+}
+
+.card {
+    background: var(--white);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    border: 1px solid var(--green-line);
+}
+
+.card-title {
+    background: var(--green);
+    color: var(--white);
+    padding: 16px 22px;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.card-body { padding: 24px; }
+
+/* ---------- Forms ---------- */
+.field { margin-bottom: 18px; }
+
+label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: var(--green-dark);
+    font-size: 14px;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 11px 13px;
+    border: 1px solid var(--green-line);
+    border-radius: 9px;
+    font-size: 14px;
+    background: #fbfdfc;
+    font-family: inherit;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--green);
+    box-shadow: 0 0 0 3px rgba(15, 81, 50, 0.15);
+    background: var(--white);
+}
+
+textarea { resize: vertical; min-height: 80px; }
+
+/* ---------- Buttons ---------- */
+.actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+
+.btn {
+    background: var(--green);
+    color: var(--white);
+    border: 0;
+    border-radius: 9px;
+    padding: 11px 18px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: background .2s ease, transform .1s ease;
+}
+
+.btn:hover { background: var(--green-dark); transform: translateY(-1px); }
+
+.btn-outline {
+    background: var(--white);
+    color: var(--green);
+    border: 1px solid var(--green);
+}
+
+.btn-outline:hover { background: var(--green-soft); }
+
+/* ---------- Messages ---------- */
+.msg {
+    padding: 12px 14px;
+    border-radius: 9px;
+    margin-bottom: 16px;
+    font-size: 14px;
+}
+
+.msg-success { background: var(--green-soft); color: var(--green-dark); border-left: 4px solid var(--green); }
+.msg-error   { background: #fdeceb; color: var(--danger); border-left: 4px solid var(--danger); }
+
+/* ---------- Detail grid ---------- */
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.item {
+    background: #f8fbf9;
+    border: 1px solid var(--green-line);
+    border-radius: 10px;
+    padding: 14px;
+}
+
+.item .label {
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    margin-bottom: 6px;
+    font-weight: 700;
+}
+
+.item .value {
+    font-size: 16px;
+    color: var(--green-dark);
+    font-weight: 700;
+    word-break: break-word;
+}
+
+/* ---------- Table ---------- */
+.table-wrap { overflow-x: auto; }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+thead th {
+    background: var(--green);
+    color: var(--white);
+    text-align: left;
+    padding: 12px 14px;
+    font-weight: 700;
+}
+
+tbody td { padding: 11px 14px; border-bottom: 1px solid var(--green-line); }
+tbody tr:nth-child(even) { background: #f8fbf9; }
+tbody tr:hover { background: var(--green-soft); }
+
+.empty { color: var(--muted); padding: 18px 0; text-align: center; }
+
+/* ---------- Status badges ---------- */
+.badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .4px;
+}
+
+.badge-collected   { background: var(--green-soft); color: var(--green-dark); }
+.badge-in_transit  { background: #fff3e0; color: #b25e00; }
+.badge-analyzed    { background: #e3f0fb; color: #14598f; }
+.badge-destroyed   { background: #fdeceb; color: var(--danger); }
+
+/* ---------- Stat tiles ---------- */
+.stats { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 18px; }
+
+.stat {
+    flex: 1;
+    min-width: 150px;
+    background: var(--white);
+    border: 1px solid var(--green-line);
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: var(--shadow);
+}
+
+.stat .num { font-size: 28px; font-weight: 800; color: var(--green); }
+.stat .cap { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+/* ---------- Footer ---------- */
+.footer {
+    text-align: center;
+    padding: 22px;
+    color: var(--white);
+    background: var(--green);
+    margin-top: 40px;
+    font-size: 13px;
+}
+
+@media (max-width: 640px) {
+    .grid { grid-template-columns: 1fr; }
+    .navbar { flex-direction: column; gap: 10px; align-items: flex-start; }
+}
+
