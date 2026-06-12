@@ -1,0 +1,71 @@
+package com.genc.ctds.visitscheduling.controller;
+
+import com.genc.ctds.visitscheduling.model.VisitRecord;
+import com.genc.ctds.visitscheduling.service.VisitService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@Controller
+@RequestMapping("/visits")
+public class VisitController {
+
+    @Autowired
+    private VisitService visitService;
+
+
+    @GetMapping("/visitScheduling")
+    public String showVisitPage(Model model) {
+        model.addAttribute("scheduledVisits", visitService.countScheduled());
+        model.addAttribute("pendingCrfs", visitService.countPendingCrfs());
+        model.addAttribute("completedCrfs", visitService.countCompletedCrfs());
+        model.addAttribute("lockedCrfs", visitService.countLockedCrfs());
+        model.addAttribute("visit", new VisitRecord());
+        model.addAttribute("recentVisits", visitService.getRecentVisits());
+        return "visitScheduling";
+    }
+
+    @PostMapping("/schedule")
+    public String scheduleVisit(@ModelAttribute VisitRecord visit) {
+        visitService.scheduleVisit(visit);
+        // After scheduling, redirect to the list page
+        return "redirect:/visits/list";
+    }
+
+    @GetMapping("/list")
+    public String showAllVisits(Model model) {
+        model.addAttribute("visits", visitService.getAllVisits());
+        return "visitList"; // Thymeleaf template name
+    }
+
+    @GetMapping("/search-form")
+    public String showSearchForm() {
+        return "visitSearch"; // template with search form
+    }
+
+    @GetMapping("/search")
+    public String searchVisits(@RequestParam("subjectId") Long subjectId, Model model) {
+        model.addAttribute("visits", visitService.findBySubjectId(subjectId));
+        return "visitList"; // reuse the list template to show results
+    }
+
+
+
+    @PostMapping("/lock/{visitId}")
+    public String lockCrfFromPage(@PathVariable Long visitId) {
+        visitService.lockCrf(visitId);
+        return "redirect:/visits/visitScheduling";
+    }
+
+    @PostMapping("/complete/{visitId}")
+    public String completeCrfFromPage(@PathVariable Long visitId) {
+        visitService.completeCrf(visitId);
+        return "redirect:/visits/visitScheduling";
+    }
+
+
+
+}
