@@ -32,24 +32,24 @@ public class VisitController {
     public String scheduleVisit(@ModelAttribute VisitRecord visit) {
         visitService.scheduleVisit(visit);
         // After scheduling, redirect to the list page
-        return "redirect:/visits/list";
+        return "redirect:/visits/visitSummary";
     }
 
-    @GetMapping("/list")
+    @GetMapping("/visitSummary")
     public String showAllVisits(Model model) {
         model.addAttribute("visits", visitService.getAllVisits());
-        return "visitList"; // Thymeleaf template name
+        return "visitSummary";
     }
 
     @GetMapping("/search-form")
     public String showSearchForm() {
-        return "visitSearch"; // template with search form
+        return "visitSearch";
     }
 
     @GetMapping("/search")
     public String searchVisits(@RequestParam("subjectId") Long subjectId, Model model) {
         model.addAttribute("visits", visitService.findBySubjectId(subjectId));
-        return "visitList"; // reuse the list template to show results
+        return "visitSummary";
     }
 
 
@@ -57,13 +57,13 @@ public class VisitController {
     @PostMapping("/lock/{visitId}")
     public String lockCrfFromPage(@PathVariable Long visitId) {
         visitService.lockCrf(visitId);
-        return "redirect:/visits/visitScheduling";
+        return "redirect:/visits/visitSummary";
     }
 
     @PostMapping("/complete/{visitId}")
     public String completeCrfFromPage(@PathVariable Long visitId) {
         visitService.completeCrf(visitId);
-        return "redirect:/visits/visitScheduling";
+        return "redirect:/visits/visitSummary";
     }
 
 

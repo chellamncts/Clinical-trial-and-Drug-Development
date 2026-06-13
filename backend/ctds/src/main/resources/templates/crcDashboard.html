@@ -11,24 +11,26 @@
 
 <!-- Sidebar -->
 <div class="sidebar">
-    <h3>CRC Dashboard</h3>
-    <a th:href="@{/crcDashboard}">Dashboard</a>
-    <a th:href="@{/subjects}">Subject Enrollment</a>
-    <a th:href="@{/visits/visitScheduling}">Visit Scheduling</a>
-    <a th:href="@{/crfs}">CRFs</a>
-    <a th:href="@{/queries}">Queries</a>
-    <a th:href="@{/reports}">Reports</a>
-    <a th:href="@{/logout}">Logout</a>
+    <h3 class="sidebar-title">CRC Dashboard</h3>
+    <ul class="sidebar-links">
+        <li><a class="active" th:href="@{/crcDashboard}">Dashboard</a></li>
+        <li><a th:href="@{/subjects}">Subject Enrollment</a></li>
+        <li><a th:href="@{/visits/visitScheduling}">Visit Scheduling</a></li>
+        <li><a th:href="@{/crfs}">CRFs</a></li>
+        <li><a th:href="@{/queries}">Queries</a></li>
+        <li><a th:href="@{/reports}">Reports</a></li>
+        <li><a th:href="@{/logout}">Logout</a></li>
+    </ul>
 </div>
 
 <!-- Main Content -->
 <div class="main-content">
     <!-- Summary Boxes Row -->
     <div class="row mb-4">
-        <div class="col-md-2"><div class="summary-box"><h6>Scheduled Visits</h6><h3 th:text="${scheduledVisits}">0</h3></div></div>
-        <div class="col-md-2"><div class="summary-box"><h6>Pending CRFs</h6><h3 th:text="${pendingCrfs}">0</h3></div></div>
-        <div class="col-md-2"><div class="summary-box"><h6>Completed CRFs</h6><h3 th:text="${completedCrfs}">0</h3></div></div>
-        <div class="col-md-2"><div class="summary-box"><h6>Locked CRFs</h6><h3 th:text="${lockedCrfs}">0</h3></div></div>
+        <div class="col-md-2"><div class="summary-box"><h6>Scheduled Visits</h6><h3 th:text="${crcDashboard.scheduledVisits}">0</h3></div></div>
+        <div class="col-md-2"><div class="summary-box"><h6>Pending CRFs</h6><h3 th:text="${crcDashboard.pendingCrfs}">0</h3></div></div>
+        <div class="col-md-2"><div class="summary-box"><h6>Completed CRFs</h6><h3 th:text="${crcDashboard.completedCrfs}">0</h3></div></div>
+        <div class="col-md-2"><div class="summary-box"><h6>Locked CRFs</h6><h3 th:text="${crcDashboard.lockedCrfs}">0</h3></div></div>
         <div class="col-md-2"><div class="summary-box"><h6>Open Queries</h6><h3 th:text="${openQueries}">0</h3></div></div>
         <div class="col-md-2"><div class="summary-box"><h6>Enrolled Subjects</h6><h3 th:text="${enrolledSubjects}">0</h3></div></div>
     </div>
@@ -38,26 +40,6 @@
         <div class="col-md-4"><div class="card p-3"><h6>CRF Status Distribution</h6><canvas id="crfStatusChart"></canvas></div></div>
         <div class="col-md-4"><div class="card p-3"><h6>Visits Timeline</h6><canvas id="visitsChart"></canvas></div></div>
         <div class="col-md-4"><div class="card p-3"><h6>Subject Enrollment Trends</h6><canvas id="subjectChart"></canvas></div></div>
-    </div>
-
-    <!-- Recent Visits Table -->
-    <div class="card p-3 mb-4" id="visits">
-        <h6>Recent Visits</h6>
-        <table class="table table-striped">
-            <thead>
-            <tr><th>Visit ID</th><th>Subject ID</th><th>Visit Name</th><th>Visit Date</th><th>CRF Status</th><th>Query Count</th></tr>
-            </thead>
-            <tbody>
-            <tr th:each="visit : ${recentVisits}">
-                <td th:text="${visit.id}">-</td>
-                <td th:text="${visit.subjectId}">-</td>
-                <td th:text="${visit.visitName}">-</td>
-                <td th:text="${visit.visitDate}">-</td>
-                <td th:text="${visit.crfStatus}">-</td>
-                <td th:text="${visit.queryCount}">0</td>
-            </tr>
-            </tbody>
-        </table>
     </div>
 </div>
 
@@ -70,7 +52,7 @@
       data: {
         labels: ['Pending','Completed','Locked'],
         datasets:[{
-          data: [ [[${pendingCrfs}]], [[${completedCrfs}]], [[${lockedCrfs}]] ],
+          data: [ [[${crcDashboard.pendingCrfs}]], [[${crcDashboard.completedCrfs}]], [[${crcDashboard.lockedCrfs}]] ],
           backgroundColor:['#ffcc00','#1D9E75','#185FA5']
         }]
       },
@@ -81,10 +63,10 @@
     new Chart(document.getElementById('visitsChart'), {
       type: 'line',
       data: {
-        labels: [[${visitsTimelineLabels}]],
+        labels: [[${crcDashboard.visitsTimelineLabels}]],
         datasets:[{
           label:'Visits',
-          data: [[${visitsTimelineData}]],
+          data: [[${crcDashboard.visitsTimelineData}]],
           borderColor:'#378ADD',
           fill:false,
           tension:0.3
@@ -100,7 +82,7 @@
         labels:['Screened','Enrolled','Withdrawn'],
         datasets:[{
           label:'Subjects',
-          data: [[${subjectEnrollmentData}]],
+          data: [[${crcDashboard.subjectEnrollmentData}]],
           backgroundColor:['#ffcc00','#1D9E75','#d9534f']
         }]
       },

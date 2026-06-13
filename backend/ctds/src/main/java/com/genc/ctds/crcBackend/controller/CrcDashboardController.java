@@ -1,7 +1,7 @@
 package com.genc.ctds.crcBackend.controller;
 
 
-import com.genc.ctds.crcBackend.model.crcDashboard;
+import com.genc.ctds.crcBackend.model.CrcDashboard;
 import com.genc.ctds.visitscheduling.model.VisitRecord;
 import com.genc.ctds.visitscheduling.service.VisitService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,33 +13,23 @@ import java.util.Arrays;
 import java.util.List;
 
 @Controller
-public class crcDashboardController {
+public class CrcDashboardController {
     @Autowired
     private VisitService visitService;
-//    private final CrfService crfService;
 //    private final QueryService queryService;
 //    private final SubjectService subjectService;
 
-//    public CrcDashboardController(VisitService visitService,
-//                                  CrfService crfService,
-//                                  QueryService queryService,
-//                                  SubjectService subjectService) {
-//        this.visitService = visitService;
-//        this.crfService = crfService;
-//        this.queryService = queryService;
-//        this.subjectService = subjectService;
-//    }
 
     @GetMapping("/crcDashboard")
     public String showDashboard(Model model) {
-        crcDashboard crcDashboard = new crcDashboard();
+        CrcDashboard crcDashboard = new CrcDashboard();
 
-        // Summary counts
-//        crcDashboard.setScheduledVisits(visitService.countScheduled());
-//        crcDashboard.setPendingCrfs(crfService.countPending());
-//        crcDashboard.setCompletedCrfs(crfService.countCompleted());
-//        crcDashboard.setLockedCrfs(crfService.countLocked());
-//        crcDashboard.setOpenQueries(queryService.countOpen());
+//         Summary counts
+        crcDashboard.setScheduledVisits(visitService.countScheduled());
+        crcDashboard.setPendingCrfs(visitService.countPendingCrfs());
+        crcDashboard.setCompletedCrfs(visitService.countCompletedCrfs());
+        crcDashboard.setLockedCrfs(visitService.countLockedCrfs());
+//        crcDashboard.setOpenQueries(visitService.countOpen());
 //        crcDashboard.setEnrolledSubjects(subjectService.countEnrolled());
 
         // Chart data
@@ -47,9 +37,9 @@ public class crcDashboardController {
         crcDashboard.setVisitsTimelineData(Arrays.asList(3, 5, 4));
         crcDashboard.setSubjectEnrollmentData(Arrays.asList(10, 25, 2));
 
-        // Recent visits (replace with dynamic service call)
-//        List<VisitRecord> recentVisits = visitService.getRecentVisits();
-//        dashboard.setRecentVisits(recentVisits);
+//         Recent visits (replace with dynamic service call)
+        List<VisitRecord> recentVisits = visitService.getRecentVisits();
+        crcDashboard.setRecentVisits(recentVisits);
 
         // Add to Thymeleaf model
         model.addAttribute("crcDashboard", crcDashboard);

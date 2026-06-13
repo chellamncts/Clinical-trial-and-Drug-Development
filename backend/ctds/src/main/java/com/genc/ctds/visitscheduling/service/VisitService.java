@@ -24,14 +24,12 @@ public class VisitService {
         return visitRepository.save(visit);
     }
 
-    // Get recent visits (limit to last 10 for dashboard)
     public List<VisitRecord> getRecentVisits() {
         List<VisitRecord> visits = visitRepository.findTop10ByOrderByVisitDateDesc();
         visits.sort(Comparator.comparing(VisitRecord::getId));
         return visits;
     }
 
-    // Get visit history for a subject
     public List<VisitRecord> getVisitHistory(Long subjectId) {
         return visitRepository.findBySubjectIdOrderByVisitDateAsc(subjectId);
     }

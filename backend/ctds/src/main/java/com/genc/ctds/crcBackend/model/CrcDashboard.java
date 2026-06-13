@@ -4,7 +4,7 @@ import com.genc.ctds.visitscheduling.model.VisitRecord;
 
 import java.util.List;
 
-public class crcDashboard {
+public class CrcDashboard {
 
     // Summary counts
     private int scheduledVisits;

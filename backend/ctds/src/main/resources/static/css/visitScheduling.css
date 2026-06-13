@@ -35,9 +35,7 @@
     margin: 0;
 }
 
-.sidebar-links li {
-    margin-bottom: 12px;
-}
+.sidebar-links li { margin-bottom: 12px; }
 
 .sidebar-links a {
     color: var(--white);
@@ -54,12 +52,13 @@
     background: rgba(255, 255, 255, 0.16);
 }
 
-/* ---------- Main Content with Sidebar ---------- */
+/* ---------- Main Content ---------- */
 .main-content {
     margin-left: 240px; /* leave space for sidebar */
     padding: 20px;
 }
 
+/* ---------- Global ---------- */
 * { box-sizing: border-box; }
 
 body {
@@ -174,12 +173,102 @@ input:focus, select:focus {
 
 .grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;  /* 2 columns for desktop */
-    gap: 16px;                        /* spacing between items */
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
 }
+
+/* ---------- Search Bar ---------- */
+.search-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.search-bar input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid var(--green-line);
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.search-bar input:focus {
+    outline: none;
+    border-color: var(--green);
+    box-shadow: 0 0 0 3px rgba(15, 81, 50, 0.15);
+}
+
+/* ---------- Styled Table ---------- */
+.styled-table {
+    width: 100%;
+    border-collapse: separate;   /* use separate to allow spacing */
+    border-spacing: 0;           /* remove default gaps */
+    font-size: 14px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--green-line);
+    border-radius: 8px;
+    overflow: hidden;
+    table-layout: fixed;         /* ensures consistent column widths */
+}
+
+.styled-table th {
+    background: var(--green);
+    color: var(--white);
+    font-weight: 700;
+    padding: 16px 20px;          /* more padding for header */
+    text-align: left;
+}
+
+.styled-table td {
+    padding: 14px 20px;          /* consistent spacing */
+    vertical-align: middle;
+    border-bottom: 1px solid var(--green-line);
+    word-wrap: break-word;
+}
+
+.styled-table tbody tr:nth-child(even) { background: #f8fbf9; }
+.styled-table tbody tr:hover { background: var(--green-soft); }
+
+
+/* ---------- Status Badges ---------- */
+.badge {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.badge-pending   { background: #fff3e0; color: #b25e00; }
+.badge-completed { background: #e3f0fb; color: #14598f; }
+.badge-locked    { background: #fdeceb; color: var(--danger); }
+/* ---------- Actions Column ---------- */
+/* Actions column */
+.actions-cell {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-start;
+    flex-wrap: nowrap;   /* keep buttons side by side */
+}
+
+.actions-cell button {
+    white-space: nowrap; /* prevent text breaking */
+}
+
+.actions-cell form {
+    margin: 0;
+}
+
 
 /* ---------- Buttons ---------- */
 .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+
+.btn-sm {
+    padding: 8px 16px;           /* slightly larger buttons */
+    font-size: 13px;
+    border-radius: 6px;
+}
 
 .btn {
     background: var(--green);
@@ -217,7 +306,9 @@ input:focus, select:focus {
     font-size: 13px;
 }
 
+/* ---------- Responsive ---------- */
 @media (max-width: 640px) {
     .grid { grid-template-columns: 1fr; }
     .navbar { flex-direction: column; gap: 10px; align-items: flex-start; }
+    .actions-cell { flex-direction: column; gap: 6px; }
 }
