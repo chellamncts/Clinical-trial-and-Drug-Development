@@ -1,3 +1,3 @@
-package com.genc.ctds.samplelog.repository;
-public interface SampleLogRepository {
+public class SampleLogRepository {
+    
 }
