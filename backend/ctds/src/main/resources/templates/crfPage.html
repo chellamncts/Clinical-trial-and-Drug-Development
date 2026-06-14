@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Visit Summary - Clinical Trial</title>
+    <link rel="stylesheet" th:href="@{/css/visitScheduling.css}">
+</head>
+<body>
+<!-- Sidebar -->
+<div class="sidebar">
+    <h3 class="sidebar-title">CRC Dashboard</h3>
+    <ul class="sidebar-links">
+        <li><a th:href="@{/crcDashboard}">Dashboard</a></li>
+        <li><a th:href="@{/subjects}">Subject Enrollment</a></li>
+        <li><a th:href="@{/visits/visitScheduling}">Visit Scheduling</a></li>
+        <li><a class="active" th:href="@{/visits/crfPage}">CRFs</a></li>
+        <li><a th:href="@{/queriesPage}">Queries</a></li>
+        <li><a th:href="@{/reports}">Reports</a></li>
+        <li><a th:href="@{/logout}">Logout</a></li>
+    </ul>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+    <nav class="navbar">
+        <div class="brand"><span class="dot"></span> Clinical Trial & Drug Development Tracking</div>
+        <div class="nav-links">
+            <a th:href="@{/visits/visitScheduling}">Schedule Visit</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-title">CRF</div>
+            <div class="card-body">
+                <!-- Search Field -->
+                <form th:action="@{/visits/search}" method="get" class="search-bar">
+                    <input type="number" name="subjectId" placeholder="Enter Subject ID" required>
+                    <button class="btn" type="submit">Search</button>
+                </form>
+
+                <!-- Visits Table -->
+                <div class="table-wrap">
+                    <table class="styled-table">
+                        <thead>
+                        <tr>
+                            <th>Visit ID</th>
+                            <th>Subject ID</th>
+                            <th>Visit Name</th>
+                            <th>Visit Date</th>
+                            <th>CRF Status</th>
+                            <th style="width:200px;">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="v : ${visits}">
+                            <td th:text="${v.id}">-</td>
+                            <td th:text="${v.subjectId}">-</td>
+                            <td th:text="${v.visitName}">-</td>
+                            <td th:text="${v.visitDate}">-</td>
+                            <td>
+                                <span th:switch="${v.crfStatus}">
+                                    <span th:case="'PENDING'" class="badge badge-pending">Pending</span>
+                                    <span th:case="'COMPLETED'" class="badge badge-completed">Completed</span>
+                                    <span th:case="'LOCKED'" class="badge badge-locked">Locked</span>
+                                    <span th:case="*" class="badge badge-pending" th:text="${v.crfStatus}">-</span>
+                                </span>
+                            </td>
+                            <td class="actions-cell">
+                                <form th:action="@{'/visits/lock/' + ${v.id}}" method="post">
+                                    <button type="submit" class="btn btn-outline btn-sm">Lock</button>
+                                </form>
+                                <form th:action="@{'/visits/complete/' + ${v.id}}" method="post">
+                                    <button type="submit" class="btn btn btn-sm">Complete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">&copy; 2026 Clinical Trial & Drug Development Tracking System</footer>
+</div>
+</body>
+</html>

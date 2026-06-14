@@ -32,13 +32,13 @@ public class VisitController {
     public String scheduleVisit(@ModelAttribute VisitRecord visit) {
         visitService.scheduleVisit(visit);
         // After scheduling, redirect to the list page
-        return "redirect:/visits/visitSummary";
+        return "redirect:/visits/crfPage";
     }
 
-    @GetMapping("/visitSummary")
+    @GetMapping("/crfPage")
     public String showAllVisits(Model model) {
         model.addAttribute("visits", visitService.getAllVisits());
-        return "visitSummary";
+        return "crfPage";
     }
 
     @GetMapping("/search-form")
@@ -49,21 +49,19 @@ public class VisitController {
     @GetMapping("/search")
     public String searchVisits(@RequestParam("subjectId") Long subjectId, Model model) {
         model.addAttribute("visits", visitService.findBySubjectId(subjectId));
-        return "visitSummary";
+        return "crfPage";
     }
-
-
 
     @PostMapping("/lock/{visitId}")
     public String lockCrfFromPage(@PathVariable Long visitId) {
         visitService.lockCrf(visitId);
-        return "redirect:/visits/visitSummary";
+        return "redirect:/visits/crfPage";
     }
 
     @PostMapping("/complete/{visitId}")
     public String completeCrfFromPage(@PathVariable Long visitId) {
         visitService.completeCrf(visitId);
-        return "redirect:/visits/visitSummary";
+        return "redirect:/visits/crfPage";
     }
 
 
