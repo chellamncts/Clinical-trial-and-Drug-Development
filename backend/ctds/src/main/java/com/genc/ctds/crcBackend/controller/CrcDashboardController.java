@@ -2,6 +2,7 @@ package com.genc.ctds.crcBackend.controller;
 
 
 import com.genc.ctds.crcBackend.model.CrcDashboard;
+import com.genc.ctds.subjectenrollment.service.SubjectService;
 import com.genc.ctds.visitscheduling.model.VisitRecord;
 import com.genc.ctds.visitscheduling.service.VisitService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,18 +34,17 @@ public class CrcDashboardController {
 //        crcDashboard.setEnrolledSubjects(subjectService.countEnrolled());
 
         // Chart data
-        crcDashboard.setVisitsTimelineLabels(Arrays.asList("2026-06-01", "2026-06-02", "2026-06-03"));
-        crcDashboard.setVisitsTimelineData(Arrays.asList(3, 5, 4));
+        crcDashboard.setVisitsTimelineLabels(visitService.getVisitsTimelineLabels());
+        crcDashboard.setVisitsTimelineData(visitService.getVisitsTimelineData());
         crcDashboard.setSubjectEnrollmentData(Arrays.asList(10, 25, 2));
 
-//         Recent visits (replace with dynamic service call)
+
         List<VisitRecord> recentVisits = visitService.getRecentVisits();
         crcDashboard.setRecentVisits(recentVisits);
 
-        // Add to Thymeleaf model
         model.addAttribute("crcDashboard", crcDashboard);
 
-        return "crcDashboard"; // maps to dashboard.html (Thymeleaf template)
+        return "crcDashboard";
     }
 }
 

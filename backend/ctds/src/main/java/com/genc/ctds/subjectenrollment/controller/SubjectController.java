@@ -33,7 +33,7 @@ public class SubjectController {
         }
         service.saveSubject(subject);
         model.addAttribute("data", subject);
-        return "a";
+        return "enrollmentStatus";
     }
 
 }

@@ -13,7 +13,7 @@
     <h3 class="sidebar-title">CRC Dashboard</h3>
     <ul class="sidebar-links">
         <li><a th:href="@{/crcDashboard}">Dashboard</a></li>
-        <li><a th:href="@{/subjects}">Subject Enrollment</a></li>
+        <li><a th:href="@{/enrollment}">Subject Enrollment</a></li>
         <li><a class="active" th:href="@{/visits/visitScheduling}">Visit Scheduling</a></li>
         <li><a th:href="@{/visits/crfPage}">CRFs</a></li>
         <li><a th:href="@{/queriesPage}">Queries</a></li>
@@ -61,7 +61,6 @@
                     <div class="actions">
                         <button class="btn" type="submit">Schedule Visit</button>
                         <a class="btn btn-outline" th:href="@{/visits/crfPage}">Show All</a>
-                        <a class="btn btn-outline" th:href="@{/visits/search-form}">Search</a>
                     </div>
                 </form>
             </div>

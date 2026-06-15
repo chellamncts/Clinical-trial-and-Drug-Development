@@ -31,7 +31,6 @@ public class VisitController {
     @PostMapping("/schedule")
     public String scheduleVisit(@ModelAttribute VisitRecord visit) {
         visitService.scheduleVisit(visit);
-        // After scheduling, redirect to the list page
         return "redirect:/visits/crfPage";
     }
 
@@ -63,7 +62,4 @@ public class VisitController {
         visitService.completeCrf(visitId);
         return "redirect:/visits/crfPage";
     }
-
-
-
 }
