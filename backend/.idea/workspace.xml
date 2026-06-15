@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="9cb96379-7d43-45ff-901e-6b45816e154c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/PMDPlugin.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/backend.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctds/.gitattributes" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctds/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctds/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctds/mvnw" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctds/mvnw.cmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctds/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/CtdsApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/adverseevent/controller/AdverseEventController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/adverseevent/model/AdverseEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/adverseevent/repository/AdverseEventRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/adverseevent/service/AdverseEventService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/controller/HomeController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/samplelog/controller/SampleLogController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/samplelog/model/SampleLogController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/samplelog/repository/SampleLogRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/samplelog/service/SampleLogService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/subjectenrollment/controller/SubjectEnrollmentController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/subjectenrollment/model/SubjectEnrollment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/subjectenrollment/repository/SubjectEnrollmentRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/subjectenrollment/service/SubjectEnrollmentService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/trialprotocol/controller/TrialProtocolController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/trialprotocol/model/Phase.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/trialprotocol/model/ProtocolStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/trialprotocol/model/TrialProtocol.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/trialprotocol/repository/TrialProtocolRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/trialprotocol/service/TrialProtocolService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/visitscheduling/controller/VisitSchedulingController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/visitscheduling/model/VisitScheduling.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/visitscheduling/repository/VisitSchedulingRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/visitscheduling/service/VisitSchedulingService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctds/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctds/src/main/resources/static/assets/homePage.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctds/src/main/resources/static/assets/image.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctds/src/main/resources/static/assets/logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctds/src/main/resources/static/css/adminDashboard.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctds/src/main/resources/static/css/home.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctds/src/main/resources/static/css/login.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctds/src/main/resources/templates/home.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctds/src/main/resources/templates/protocolCreation.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctds/src/main/resources/templates/userManagement.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ctds/src/test/java/com/genc/ctds/CtdsApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/css/home.css" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/css/home.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/css/login.css" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/login.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/home.html" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CopilotPersistence">
+    <persistenceIdMap>
+      <entry key="_C:/Users/2503723/NewFile/ThirdFolder/Clinical-trial-and-Drug-Development/backend" value="3EyQjoD0k1m1AzYv48QGZNpAw6v" />
+    </persistenceIdMap>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="HTML File" />
+        <option value="Enum" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="3EyQjoD0k1m1AzYv48QGZNpAw6v" />
+  <component name="ProjectSessionTemplates">
+    <option name="panelTemplate">
+      <template>
+        <option name="modeId" value="file:///c%3A/snapshot/copilot-language-server-internal/dist/assets/agents/Plan.agent.md" />
+        <option name="model">
+          <model>
+            <option name="modelType" value="builtin_family" />
+            <option name="modelValue" value="auto" />
+          </model>
+        </option>
+        <option name="targetType" value="LOCAL" />
+      </template>
+    </option>
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.CtdsApplication.executor&quot;: &quot;Run&quot;,
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Merging nithish&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/2503723/NewFile/ThirdFolder/Clinical-trial-and-Drug-Development/backend/ctds/src/main/resources/static/asset&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\2503723\NewFile\ThirdFolder\Clinical-trial-and-Drug-Development\backend\ctds\src\main\resources\static\asset" />
+      <recent name="C:\Users\2503723\NewFile\ThirdFolder\Clinical-trial-and-Drug-Development\backend\ctds\src\main\resources\static" />
+    </key>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9cb96379-7d43-45ff-901e-6b45816e154c" name="Changes" comment="" />
+      <created>1781148466926</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1781148466926</updated>
+    </task>
+    <servers />
+  </component>
+</project>
