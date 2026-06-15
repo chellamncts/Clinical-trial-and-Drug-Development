@@ -15,7 +15,6 @@ public class TrialSubject {
     private String studyArm;
     private String subjectStatus;
     private boolean consentProvided;
-
     public String getSubjectId() {
         return subjectId;
     }

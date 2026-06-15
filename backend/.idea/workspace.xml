@@ -5,8 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="371a6fd9-bf99-45e6-91ab-287f71bf0834" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/ctds/src/main/resources/static/css/enrollmentStatus.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctds/src/main/resources/templates/a.html" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/resources/templates/a.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/subjectenrollment/controller/SubjectController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/subjectenrollment/controller/SubjectController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/subjectenrollment/model/TrialSubject.java" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/subjectenrollment/model/TrialSubject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/subjectenrollment/repository/SubjectRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/subjectenrollment/repository/SubjectRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/subjectenrollment/service/SubjectService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/subjectenrollment/service/SubjectService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/resources/static/css/enrollment.css" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/resources/static/css/enrollment.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/resources/templates/enrollment.html" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/resources/templates/enrollment.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/resources/templates/enrollmentStatus.html" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/resources/templates/enrollmentStatus.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

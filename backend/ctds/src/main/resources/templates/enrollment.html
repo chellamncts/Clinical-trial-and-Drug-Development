@@ -1,66 +1,90 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Subject Enrollment & Consent Management</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/enrollment.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subject Enrollment - Clinical Trial</title>
+    <link rel="stylesheet" th:href="@{/css/enrollment.css}">
 </head>
-
 <body>
 
-<div class="container">
-
-    <h2>Subject Enrollment & Consent Management</h2>
-    <form th:action="@{/enroll}" th:object="${subject}" method="post">
-        <div class="form-group">
-            <label class="form-label">Subject ID <span style="color:red">*</span></label>
-            <input type="text" th:field="*{subjectId}" class="form-control" placeholder="Enter Subject ID" required>
-        </div>
-        <div class="form-group">
-            <label class="form-label">Protocol ID <span style="color:red">*</span></label>
-            <input type="text" th:field="*{protocolId}" class="form-control" placeholder="Enter Protocol ID" required>
-        </div>
-        <div class="form-group">
-            <label class="form-label">Site ID <span style="color:red">*</span></label>
-            <input type="text" th:field="*{siteId}" class="form-control" placeholder="Enter Site ID" required>
-        </div>
-        <div class="form-group">
-            <label class="form-label">Enrollment Date <span style="color:red">*</span></label>
-            <input type="date" th:field="*{enrollmentDate}" class="form-control" required>
-        </div>
-        <div class="form-group">
-            <label class="form-label">Study Arm <span style="color:red">*</span></label>
-            <select th:field="*{studyArm}" class="form-select" required>
-                <option value="">Select Arm</option>
-                <option value="Control">Control</option>
-                <option value="Treatment A">Treatment A</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label class="form-label">Subject Status <span style="color:red">*</span></label>
-            <select th:field="*{subjectStatus}" class="form-select" required>
-                <option value="SCREENED">SCREENED</option>
-                <option value="ENROLLED">ENROLLED</option>
-            </select>
-        </div>
-        <div class="form-group form-check">
-            <input type="checkbox" th:field="*{consentProvided}" class="form-check-input" id="consentCheck">
-            <label class="form-check-label" for="consentCheck">
-                Informed Consent Provided <span style="color:red">*</span>
-            </label>
-        </div>
-        <div class="mt-3">
-            <button type="submit" name="action" value="enroll" class="btn btn-success">Enroll</button>
-            <button type="submit" name="action" value="screen" class="btn btn-success">Screen</button>
-            <button type="submit" name="action" value="withdraw" class="btn btn-success">Withdraw</button>
-        </div>
-
-    </form>
-
+<!-- Sidebar -->
+<div class="sidebar">
+    <h3 class="sidebar-title">CRC Dashboard</h3>
+    <ul class="sidebar-links">
+        <li><a th:href="@{/crcDashboard}">Dashboard</a></li>
+        <li><a class="active" th:href="@{/enrollment}">Subject Enrollment</a></li>
+        <li><a th:href="@{/visits/visitScheduling}">Visit Scheduling</a></li>
+        <li><a th:href="@{/visits/crfPage}">CRFs</a></li>
+        <li><a th:href="@{/queriesPage}">Queries</a></li>
+        <li><a th:href="@{/reports}">Reports</a></li>
+        <li><a th:href="@{/logout}">Logout</a></li>
+    </ul>
 </div>
-<script src="/js/enrollment.js"></script>
 
+<!-- Main Content -->
+<div class="main-content">
+    <nav class="navbar">
+        <div class="brand"><span class="dot"></span> Clinical Trial & Drug Development Tracking</div>
+    </nav>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-title">Subject Enrollment & Consent Management</div>
+            <div class="card-body">
+                <form th:action="@{/enroll}" th:object="${subject}" method="post">
+                    <div class="grid">
+                        <div class="field">
+                            <label for="subjectId">Subject ID <span class="required">*</span></label>
+                            <input id="subjectId" type="text" th:field="*{subjectId}" placeholder="Enter Subject ID" required>
+                        </div>
+                        <div class="field">
+                            <label for="protocolId">Protocol ID <span class="required">*</span></label>
+                            <input id="protocolId" type="text" th:field="*{protocolId}" placeholder="Enter Protocol ID" required>
+                        </div>
+                        <div class="field">
+                            <label for="siteId">Site ID <span class="required">*</span></label>
+                            <input id="siteId" type="text" th:field="*{siteId}" placeholder="Enter Site ID" required>
+                        </div>
+                        <div class="field">
+                            <label for="enrollmentDate">Enrollment Date <span class="required">*</span></label>
+                            <input id="enrollmentDate" type="date" th:field="*{enrollmentDate}" required>
+                        </div>
+                        <div class="field">
+                            <label for="studyArm">Study Arm <span class="required">*</span></label>
+                            <select id="studyArm" th:field="*{studyArm}" required>
+                                <option value="">Select Arm</option>
+                                <option value="Control">Control</option>
+                                <option value="Treatment A">Treatment A</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="subjectStatus">Subject Status <span class="required">*</span></label>
+                            <select id="subjectStatus" th:field="*{subjectStatus}" required>
+                                <option value="SCREENED">SCREENED</option>
+                                <option value="ENROLLED">ENROLLED</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="field checkbox-row">
+                        <input id="consentCheck" type="checkbox" th:field="*{consentProvided}">
+                        <label for="consentCheck">Informed Consent Provided <span class="required">*</span></label>
+                    </div>
+
+                    <div class="actions">
+                        <button class="btn" type="submit" name="action" value="enroll">Enroll</button>
+                        <button class="btn" type="submit" name="action" value="screen">Screen</button>
+                        <button class="btn" type="submit" name="action" value="withdraw">Withdraw</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">&copy; 2026 Clinical Trial & Drug Development Tracking System</footer>
+</div>
+
+<script th:src="@{/js/enrollment.js}"></script>
 </body>
 </html>

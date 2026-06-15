@@ -1,52 +1,277 @@
+:root {
+    --green: #0f5132;
+    --green-dark: #0a3a23;
+    --green-soft: #e8f1ec;
+    --green-line: #cfe3d7;
+    --white: #ffffff;
+    --ink: #1f2a24;
+    --shadow: 0 8px 24px rgba(15, 81, 50, 0.12);
+}
+
+/* Basic */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 body {
-            font-family: Arial;
-            background-color: #e8f5e9;
-        }
+    font-family: Arial, sans-serif;
+    background: #f4f7f5;
+    display: flex;
+}
 
-        .container {
-            width: 90%;
-            margin: auto;
-            padding: 20px;
-        }
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    width: 220px;
+    height: 100vh;
+    background: var(--green);
+    color: white;
+    padding: 20px;
+    box-shadow: var(--shadow);
+    z-index: 100;
+    overflow-y: auto;
+}
 
-        h2 {
-            margin-bottom: 20px;
-            color: #1b5e20;
-        }
+.sidebar-title {
+    font-weight: bold;
+    margin: 0 0 20px 0;
+    padding: 0;
+    font-size: 18px;
+}
 
-        input[type="text"],
-        input[type="date"],
-        select {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-        }
+.sidebar-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
 
-        .form-group {
-            margin-bottom: 15px;
-        }
+.sidebar-links li {
+    margin-bottom: 10px;
+}
 
-        button {
-            padding: 10px 20px;
-            margin-right: 10px;
-            border: 1px solid #1b5e20;
-            background-color: #0f5132;
-            color: white;
-            cursor: pointer;
-        }
+.sidebar-links a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 12px;
+    display: block;
+    border-radius: 5px;
+    font-weight: 600;
+    transition: background .2s ease;
+}
 
-        button:hover {
-            background-color: #1b5e20;
-        }
+.sidebar-links a:hover,
+.sidebar-links a.active {
+    background: rgba(255, 255, 255, 0.2);
+}
 
-        .form-check-input {
-            width: 20px;
-            height: 20px;
-            margin-right: 8px;
-            cursor: pointer;
-        }
+/* Main content */
+.main-content {
+    margin-left: 240px;
+    width: calc(100% - 240px);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
 
-        .form-check {
-            display: flex;
-            align-items: center;
-        }
+/* Navbar */
+.navbar {
+    background: var(--green);
+    color: white;
+    padding: 20px 36px;
+    font-size: 20px;
+    flex-shrink: 0;
+    box-shadow: var(--shadow);
+}
+
+.navbar .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    background: white;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+/* Container */
+.container {
+    flex: 1;
+    max-width: 900px;
+    width: 100%;
+    margin: 40px auto;
+    padding: 0 32px;
+    display: flex;
+    justify-content: center;
+}
+
+/* Card */
+.card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    border: 1px solid var(--green-line);
+    width: 100%;
+}
+
+.card-title {
+    background: var(--green);
+    color: white;
+    padding: 24px 32px;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.card-body {
+    padding: 40px;
+}
+
+/* Grid layout */
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 10px;
+}
+
+/* Fields */
+.field {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--green-dark);
+    font-size: 14px;
+}
+
+.required {
+    color: #b3261e;
+    font-weight: 700;
+}
+
+input, select {
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--green-line);
+    font-size: 14px;
+    background: #fbfdfc;
+    font-family: inherit;
+    transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--green);
+    box-shadow: 0 0 0 3px rgba(15, 81, 50, 0.15);
+    background: var(--white);
+}
+
+/* Checkbox row */
+.checkbox-row {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 10px;
+}
+
+.checkbox-row input[type="checkbox"] {
+   margin: 0 !important;
+}
+
+.checkbox-row label {
+    margin: 0 !important;
+}
+
+/* Buttons */
+.actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 28px;
+}
+
+.btn {
+    background: var(--green);
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 9px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 14px;
+    transition: background .2s ease, transform .1s ease;
+    white-space: nowrap;
+}
+
+.btn:hover {
+    background: var(--green-dark);
+    transform: translateY(-2px);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.btn-outline {
+    background: white;
+    color: var(--green);
+    border: 2px solid var(--green);
+}
+
+.btn-outline:hover {
+    background: var(--green-soft);
+    color: var(--green-dark);
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 24px 32px;
+    background: var(--green);
+    color: white;
+    margin-top: auto;
+    flex-shrink: 0;
+    width: 100%;
+    font-size: 14px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: static;
+    }
+
+    .container {
+        padding: 0 16px;
+        margin: 20px auto;
+    }
+
+    .card-body {
+        padding: 24px;
+    }
+}
