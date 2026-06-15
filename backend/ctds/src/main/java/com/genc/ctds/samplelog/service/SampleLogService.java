@@ -23,19 +23,11 @@ public class SampleLogService {
         return repo.findAll();
     }
 
-    public SampleLog getSampleById(int sampleId) {
-        return repo.findById(sampleId).orElse(null);
-    }
-
     public List<SampleLog> getSamplesBySubject(int subjectId) {
         return repo.findAll().stream()
                 .filter(sample -> sample.getSubjectId() == subjectId)
                 .toList();
     }
 
-    public List<SampleLog> getSamplesByStatus(SampleLog.SampleStatus status) {
-        return repo.findAll().stream()
-                .filter(sample -> sample.getSampleStatus() == status)
-                .toList();
-    }
+
 }
