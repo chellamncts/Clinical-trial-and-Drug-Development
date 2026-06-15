@@ -27,12 +27,6 @@ public class SampleLogController{
         return "UserForm";
     }
 
-//    @GetMapping("/sample/collect")
-//    public String showSampleCollectForm(Model model) {
-//        model.addAttribute("user", new SampleLog());
-//        return "UserForm";
-//    }
-
     @PostMapping("/saveUser")
     public String saveUser(@ModelAttribute SampleLog user, Model model) {
         SampleLog saved = service.saveSampleLog(user);//This sends the form data to the service for saving.
@@ -42,18 +36,6 @@ public class SampleLogController{
         return "result";
     }
 
-    /** Retrieve and display a single sample by ID. */
-    @GetMapping("/sample/view/{sampleId}")
-    public String viewSample(@PathVariable int sampleId, Model model) {
-        SampleLog sample = service.getSampleById(sampleId);
-        if (sample == null) {
-            model.addAttribute("error", "Sample ID " + sampleId + " not found");
-            return "error";
-        }
-        model.addAttribute("sample", sample);
-        model.addAttribute("subId", sample.getSampleId());
-        return "result";
-    }
 
     /** View all samples. */
     @GetMapping("/sample/list")
@@ -64,20 +46,7 @@ public class SampleLogController{
         return "sample-list";
     }
 
-    /** View samples filtered by status. */
-    @GetMapping("/sample/status/{status}")
-    public String viewByStatus(@PathVariable String status, Model model) {
-        try {
-            SampleLog.SampleStatus sampleStatus = SampleLog.SampleStatus.valueOf(status.toUpperCase());
-            List<SampleLog> samples = service.getSamplesByStatus(sampleStatus);
-            model.addAttribute("samples", samples);
-            model.addAttribute("totalCount", samples.size());
-            return "sample-list";
-        } catch (IllegalArgumentException e) {
-            model.addAttribute("error", "Invalid status: " + status);
-            return "error";
-        }
-    }
+
 
     /** View samples for a specific subject. */
     @GetMapping("/sample/subject/{subjectId}")

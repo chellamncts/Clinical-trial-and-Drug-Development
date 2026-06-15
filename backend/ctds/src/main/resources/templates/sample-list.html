@@ -34,7 +34,7 @@
             <div class="table-wrap" th:if="${samples != null and !samples.isEmpty()}">
                 <table>
                     <thead>
-                    <tr><th>ID</th><th>Subject</th><th>Type</th><th>Collection Date</th><th>Lab Result</th><th>Status</th><th>Action</th></tr>
+                    <tr><th>ID</th><th>Subject</th><th>Type</th><th>Collection Date</th><th>Lab Result</th><th>Status</th></tr>
                     </thead>
                     <tbody>
                     <tr th:each="s : ${samples}">
@@ -48,7 +48,6 @@
                                   th:classappend="'badge-' + ${s.sampleStatus.name().toLowerCase()}"
                                   th:text="${s.sampleStatus.displayName}">Collected</span>
                         </td>
-                        <td><a class="btn btn-outline" th:href="@{/sample/view/{id}(id=${s.sampleId})}">View</a></td>
                     </tr>
                     </tbody>
                 </table>
