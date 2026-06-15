@@ -4,8 +4,9 @@ import com.genc.ctds.auth.model.RoleType;
 import com.genc.ctds.auth.model.User;
 import com.genc.ctds.auth.service.UserActivityService;
 import com.genc.ctds.auth.service.AuthService;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,20 +28,29 @@ public class HomeController {
     }
 
     @GetMapping("/dashboard")
-    public String dashboard(HttpSession session) {
-        Object role = session.getAttribute("role");
-        if (role == null) {
+    public String dashboard(Authentication authentication, Model model) {
+        if (authentication == null || !authentication.isAuthenticated()) {
             return "redirect:/login";
         }
-        String username = (String) session.getAttribute("username");
-        return switch (role.toString()) {
-            case "ADMIN" -> "admin-dashboard";
-            case "CLINICAL_RESEARCH_COORDINATOR" -> "crc-dashboard";
-            case "PRINCIPAL_INVESTIGATOR" -> "pi-dashboard";
-            case "DATA_MANAGER" -> "datamanager-dashboard";
-            case "PHARMACOVIGILANCE_OFFICER" -> "pv-dashboard";
-            default -> "redirect:/login";
-        };
+        model.addAttribute("username", authentication.getName());
+
+        if (hasRole(authentication, "ADMIN")) {
+            return "admin-dashboard";
+        }
+        if (hasRole(authentication, "CLINICAL_RESEARCH_COORDINATOR")) {
+            return "crc-dashboard";
+        }
+        if (hasRole(authentication, "PRINCIPAL_INVESTIGATOR")) {
+            return "pi-dashboard";
+        }
+        if (hasRole(authentication, "DATA_MANAGER")) {
+            return "datamanager-dashboard";
+        }
+        if (hasRole(authentication, "PHARMACOVIGILANCE_OFFICER")) {
+            return "pv-dashboard";
+        }
+
+        return "redirect:/login";
     }
     @GetMapping("/userManagement")
     public String userManagement(Model model) {
@@ -49,18 +59,29 @@ public class HomeController {
         List<User> user1 = authService.getAllUsers();
         model.addAttribute("allUsers",user1);
 
+
         Map<RoleType, Long> roleDistribution = authService.getRoleDistribution();
         model.addAttribute("roleLabels", roleDistribution.keySet().stream().map(this::formatRoleLabel).toList());
         model.addAttribute("roleCounts", roleDistribution.values());
         model.addAttribute("recentActivities", userActivityService.getRecentActivities());
 
-        return "userManagement.html";
+        return "userManagement";
     }
     @PostMapping("/userManagement")
-    public String saveUser(@ModelAttribute User user, HttpSession session){
-        String actor = (String) session.getAttribute("username");
+    public String saveUser(@ModelAttribute User user, Authentication authentication){
+        String actor = authentication == null ? null : authentication.getName();
         authService.saveUser(user, actor);
         return "redirect:/userManagement";
+    }
+
+    private boolean hasRole(Authentication authentication, String role) {
+        String expectedAuthority = "ROLE_" + role;
+        for (GrantedAuthority authority : authentication.getAuthorities()) {
+            if (expectedAuthority.equals(authority.getAuthority())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private String formatRoleLabel(RoleType roleType) {

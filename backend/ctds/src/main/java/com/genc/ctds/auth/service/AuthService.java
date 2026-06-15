@@ -3,52 +3,39 @@ package com.genc.ctds.auth.service;
 import com.genc.ctds.auth.model.RoleType;
 import com.genc.ctds.auth.model.User;
 import com.genc.ctds.auth.repository.UserRepository;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
 
 @Service
-public class AuthService {
+public class AuthService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final UserActivityService userActivityService;
+    private final PasswordEncoder passwordEncoder;
 
-    public AuthService(UserRepository userRepository, UserActivityService userActivityService) {
+    public AuthService(UserRepository userRepository,
+                       UserActivityService userActivityService,
+                       PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.userActivityService = userActivityService;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    public Optional<User> authenticate(String username, String rawPassword) {
-        if (username == null || username.isBlank() || rawPassword == null || rawPassword.isBlank()) {
-            return Optional.empty();
-        }
-
-        Optional<User> userOptional = userRepository.findByUsername(username.trim());
-        if (userOptional.isEmpty()) {
-            return Optional.empty();
-        }
-
-        User user = userOptional.get();
-//        if (!user.isActive()) {
-//            return Optional.empty();
-//        }
-
-        if (!rawPassword.equals(user.getPasswordHash())) {
-            return Optional.empty();
-        }
-
-        return Optional.of(user);
-    }
     public void saveUser(User user, String actor) {
         String normalizedUsername = user.getUsername().trim();
         Optional<User> existingUser = userRepository.findByUsername(normalizedUsername);
 
         User userToSave = existingUser.orElseGet(User::new);
         userToSave.setUsername(normalizedUsername);
-        userToSave.setPasswordHash(user.getPasswordHash());
+        userToSave.setPasswordHash(passwordEncoder.encode(user.getPasswordHash()));
         userToSave.setRole(user.getRole());
 
         if (existingUser.isPresent()) {
@@ -80,27 +67,22 @@ public class AuthService {
         return roleDistribution;
     }
 
-//    public User createUser(String username, String rawPassword, RoleType role, boolean active) {
-//        User user = new User();
-//        user.setUsername(username.trim());
-//        user.setPasswordHash(rawPassword);
-//        user.setRole(role);
-//        user.setActive(active);
-//        return userRepository.save(user);
-//    }
-//
-//    public User createOrUpdateUser(String username, String rawPassword, RoleType role, boolean active) {
-//        Optional<User> existingUser = userRepository.findByUsername(username.trim());
-//        User user = existingUser.orElseGet(User::new);
-//        user.setUsername(username.trim());
-//        user.setPasswordHash(rawPassword);
-//        user.setRole(role);
-//        user.setActive(active);
-//        return userRepository.save(user);
-//    }
-
     public boolean hasUser(String username) {
         return userRepository.existsByUsername(username);
     }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByUsername(username.trim())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
+
+        return org.springframework.security.core.userdetails.User
+                .withUsername(user.getUsername())
+                .password(user.getPasswordHash())
+                .roles(user.getRole().name())
+                .disabled(!user.isActive())
+                .build();
+    }
+
 }
 

@@ -12,12 +12,12 @@
 <!-- Sidebar -->
 <div class="sidebar">
     <h3>Admin Dashboard</h3>
-    <a href="adminDashboard.html">Dashboard</a>
+    <a th:href="@{/dashboard}">Dashboard</a>
     <a th:href="@{/userManagement}">User Management</a>
     <a class="active" th:href="@{/createProtocol}">Protocol Creation</a>
-    <a href="sites.html">Site Activation</a>
+    <a th:href="@{/sites}">Site Activation</a>
     <a href="reports.html">Reports</a>
-    <a href="logout.html">Logout</a>
+    <a th:href="@{/logout}">Logout</a>
 </div>
 
 <!-- Main Content -->
@@ -63,9 +63,7 @@
             <tr><th>Protocol ID</th><th>Title</th><th>Therapeutic Area</th><th>Phase</th><th>Status</th></tr>
             </thead>
             <tbody>
-            <tr><td>P101</td><td>Cancer Drug Trial</td><td>Oncology</td><td>Phase II</td><td>Draft</td></tr>
-            <tr><td>P102</td><td>Diabetes Study</td><td>Endocrinology</td><td>Phase III</td><td>Active</td></tr>
-            <tr><td>P103</td><td>Heart Disease Research</td><td>Cardiology</td><td>Phase I</td><td>Completed</td></tr>
+            <tr th:each="p:${protocols}"><td th:text="${p.protocol_id}">P101</td><td th:text="${p.protocol_title}"><td th:text="${p.therapeuticArea}">Cancer Drug Trial</td><td th:text="${p.phase}">Oncology</td><td th:text="${p.protocolStatus}">Phase II</td></tr>
             </tbody>
         </table>
     </div>

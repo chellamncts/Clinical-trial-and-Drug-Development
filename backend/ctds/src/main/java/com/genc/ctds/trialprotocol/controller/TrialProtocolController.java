@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
+
 @Controller
 public class TrialProtocolController {
     @Autowired
@@ -21,11 +23,18 @@ public class TrialProtocolController {
         model.addAttribute("protocolObject", new TrialProtocol());
         model.addAttribute("phases", Phase.values());
         model.addAttribute("pro", ProtocolStatus.values());
+        List<TrialProtocol> protocols = trialProtocolService.getAllProtocols();
+        model.addAttribute("protocols", protocols);
         return "protocolCreation";
     }
     @PostMapping("/postProtocol")
-    public String saveProtocol(@ModelAttribute TrialProtocol trialProtocol) {
+    public String saveProtocol(@ModelAttribute TrialProtocol trialProtocol,Model model) {
         trialProtocolService.saveProtocol(trialProtocol);
+
         return "redirect:/createProtocol";
+    }
+    @GetMapping("/sites")
+    public String viewSites(Model model) {
+        return "sites";
     }
 }
