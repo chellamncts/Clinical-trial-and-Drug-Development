@@ -5,10 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="371a6fd9-bf99-45e6-91ab-287f71bf0834" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../Frontend/PI pages/PIdashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend/PI pages/PIdashboard.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ctds/src/main/resources/templates/a.html" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/resources/templates/a.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctds/src/main/resources/templates/enrollment.html" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/resources/templates/enrollment.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
