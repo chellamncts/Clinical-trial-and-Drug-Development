@@ -26,12 +26,8 @@
             <form th:action="@{/sample/search}" method="get">
                 <div class="grid">
                     <div class="field">
-                        <label for="sampleId">Search by Sample ID</label>
-                        <input id="sampleId" type="number" name="sampleId" min="1" placeholder="Enter Sample ID">
-                    </div>
-                    <div class="field">
                         <label for="subjectId">Search by Subject ID</label>
-                        <input id="subjectId" type="number" name="subjectId" min="1" placeholder="Enter Subject ID">
+                        <input id="subjectId" type="number" name="subjectId" min="1" placeholder="Enter Subject ID" required>
                     </div>
                 </div>
                 <div class="actions">
@@ -41,32 +37,13 @@
                 </div>
             </form>
 
-            <!-- Single sample result -->
-            <div th:if="${sample != null}" style="margin-top:24px;">
-                <h3 style="color:#0a3a23;">Sample Details</h3>
-                <div class="grid">
-                    <div class="item"><div class="label">Sample ID</div><div class="value" th:text="${sample.sampleId}">--</div></div>
-                    <div class="item"><div class="label">Subject ID</div><div class="value" th:text="${sample.subjectId}">--</div></div>
-                    <div class="item"><div class="label">Sample Type</div><div class="value" th:text="${sample.sampleType}">--</div></div>
-                    <div class="item"><div class="label">Collection Date</div><div class="value" th:text="${sample.collectionDate}">--</div></div>
-                    <div class="item">
-                        <div class="label">Status</div>
-                        <div class="value">
-                            <span th:if="${sample.sampleStatus != null}" class="badge"
-                                  th:classappend="'badge-' + ${sample.sampleStatus.name().toLowerCase()}"
-                                   th:text="${sample.sampleStatus.displayName}">Collected</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <!-- Multiple samples result -->
             <div th:if="${samples != null and !samples.isEmpty()}" style="margin-top:24px;">
-                <h3 style="color:#0a3a23;" th:text="'Found ' + ${samples.size()} + ' sample(s)'">Results</h3>
+                <h3 style="color:#0a3a23;" th:text="'Subject ' + ${subjectId} + ' - Found ' + ${samples.size()} + ' sample(s)'">Results</h3>
                 <div class="table-wrap">
                     <table>
                         <thead>
-                        <tr><th>ID</th><th>Subject</th><th>Type</th><th>Date</th><th>Status</th><th>Action</th></tr>
+                        <tr><th>ID</th><th>Subject</th><th>Type</th><th>Date</th><th>Lab Result</th><th>Status</th><th>Action</th></tr>
                         </thead>
                         <tbody>
                         <tr th:each="s : ${samples}">
@@ -74,6 +51,7 @@
                             <td th:text="${s.subjectId}">--</td>
                             <td th:text="${s.sampleType}">--</td>
                             <td th:text="${s.collectionDate}">--</td>
+                            <td th:text="${s.labResult != null ? s.labResult : '--'}">--</td>
                             <td>
                                 <span th:if="${s.sampleStatus != null}" class="badge"
                                       th:classappend="'badge-' + ${s.sampleStatus.name().toLowerCase()}"

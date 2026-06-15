@@ -7,6 +7,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "sample_log")
+@SuppressWarnings("unused")
 public class SampleLog {
 
     @Id
@@ -20,14 +21,22 @@ public class SampleLog {
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate collectionDate;
 
-    @Column(length = 255)
     private String labResult;
+
+    @Column(length = 500)
+    private String custodyLog;
+
+    private Double coldChainTemperatureC;
+
+    @Enumerated(EnumType.STRING)
+    private CustodyStatus custodyStatus;
 
     @Enumerated(EnumType.STRING)
     private SampleStatus sampleStatus;
 
     public SampleLog() {
         this.sampleStatus = SampleStatus.COLLECTED;
+        this.custodyStatus = CustodyStatus.COLLECTED;
     }
 
     // Getters and setters
@@ -45,6 +54,15 @@ public class SampleLog {
 
     public String getLabResult() { return labResult; }
     public void setLabResult(String labResult) { this.labResult = labResult; }
+
+    public String getCustodyLog() { return custodyLog; }
+    public void setCustodyLog(String custodyLog) { this.custodyLog = custodyLog; }
+
+    public Double getColdChainTemperatureC() { return coldChainTemperatureC; }
+    public void setColdChainTemperatureC(Double coldChainTemperatureC) { this.coldChainTemperatureC = coldChainTemperatureC; }
+
+    public CustodyStatus getCustodyStatus() { return custodyStatus; }
+    public void setCustodyStatus(CustodyStatus custodyStatus) { this.custodyStatus = custodyStatus; }
 
     public SampleStatus getSampleStatus() { return sampleStatus; }
     public void setSampleStatus(SampleStatus sampleStatus) { this.sampleStatus = sampleStatus; }
@@ -64,5 +82,13 @@ public class SampleLog {
         public String getDisplayName() {
             return displayName;
         }
+    }
+
+    public enum CustodyStatus {
+        COLLECTED,
+        HANDED_OVER,
+        IN_TRANSIT,
+        RECEIVED_AT_LAB,
+        COMPLETED
     }
 }

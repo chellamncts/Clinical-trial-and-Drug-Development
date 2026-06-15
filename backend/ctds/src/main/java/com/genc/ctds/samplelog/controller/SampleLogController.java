@@ -20,23 +20,24 @@ public class SampleLogController{
     public SampleLogController(SampleLogService service) {
         this.service = service;
     }
-
+    //It gives the form an empty object to fill.
     @GetMapping("/UserForm")
     public String showForm(Model model) {
         model.addAttribute("user", new SampleLog());
         return "UserForm";
     }
 
-    @GetMapping("/sample/collect")
-    public String showSampleCollectForm(Model model) {
-        model.addAttribute("user", new SampleLog());
-        return "UserForm";
-    }
+//    @GetMapping("/sample/collect")
+//    public String showSampleCollectForm(Model model) {
+//        model.addAttribute("user", new SampleLog());
+//        return "UserForm";
+//    }
 
     @PostMapping("/saveUser")
     public String saveUser(@ModelAttribute SampleLog user, Model model) {
-        SampleLog saved = service.saveSampleLog(user);
-        model.addAttribute("subId", saved.getSampleId());
+        SampleLog saved = service.saveSampleLog(user);//This sends the form data to the service for saving.
+        //Adds sample ID to model with name subId
+        model.addAttribute("subId", saved.getSampleId());//To display the generated ID on result page.
         model.addAttribute("sample", saved);
         return "result";
     }
@@ -87,30 +88,25 @@ public class SampleLogController{
         return "sample-list";
     }
 
-    /** Search by sampleId or subjectId. */
+    /** Search only by subjectId and show all sample details for that subject. */
     @GetMapping("/sample/search")
-    public String searchSample(@RequestParam(required = false) Integer sampleId,
-                               @RequestParam(required = false) Integer subjectId,
+    public String searchSample(@RequestParam(required = false) Integer subjectId,
                                Model model) {
-        if (sampleId != null) {
-            SampleLog sample = service.getSampleById(sampleId);
-            if (sample != null) {
-                model.addAttribute("sample", sample);
-                model.addAttribute("success", "Sample found successfully");
-            } else {
-                model.addAttribute("error", "Sample ID " + sampleId + " not found");
-            }
-            model.addAttribute("searched", true);
-        } else if (subjectId != null) {
-            List<SampleLog> samples = service.getSamplesBySubject(subjectId);
-            if (!samples.isEmpty()) {
-                model.addAttribute("samples", samples);
-                model.addAttribute("success", "Found " + samples.size() + " sample(s) for Subject " + subjectId);
-            } else {
-                model.addAttribute("error", "No samples found for Subject ID " + subjectId);
-            }
-            model.addAttribute("searched", true);
+        if (subjectId == null) {
+            model.addAttribute("error", "Please enter a Subject ID to search");
+            model.addAttribute("searched", false);
+            return "sample-search";
         }
+
+        List<SampleLog> samples = service.getSamplesBySubject(subjectId);
+        if (!samples.isEmpty()) {
+            model.addAttribute("samples", samples);
+            model.addAttribute("subjectId", subjectId);
+            model.addAttribute("success", "Found " + samples.size() + " sample(s) for Subject " + subjectId);
+        } else {
+            model.addAttribute("error", "No samples found for Subject ID " + subjectId);
+        }
+        model.addAttribute("searched", true);
         return "sample-search";
     }
 
