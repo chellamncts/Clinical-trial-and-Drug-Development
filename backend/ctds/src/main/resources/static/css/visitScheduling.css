@@ -166,6 +166,8 @@ input, select {
     font-size: 14px;
     background: #fbfdfc;
     font-family: inherit;
+    min-width: 0;
+    box-sizing: border-box;
 }
 
 input:focus, select:focus {
@@ -178,7 +180,7 @@ input:focus, select:focus {
 .grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 16px;
+    gap: 24px; /* increase spacing between columns */
 }
 
 /* ---------- Search Bar ---------- */

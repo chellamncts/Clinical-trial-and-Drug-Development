@@ -25,11 +25,6 @@ public class VisitService {
         return visitRepository.save(visit);
     }
 
-    public List<VisitRecord> getRecentVisits() {
-        List<VisitRecord> visits = visitRepository.findTop10ByOrderByVisitDateDesc();
-        visits.sort(Comparator.comparing(VisitRecord::getId));
-        return visits;
-    }
 
     public List<VisitRecord> getVisitHistory(Long subjectId) {
         return visitRepository.findBySubjectIdOrderByVisitDateAsc(subjectId);

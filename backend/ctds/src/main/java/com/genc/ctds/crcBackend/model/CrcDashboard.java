@@ -19,8 +19,6 @@ public class CrcDashboard {
     private List<Integer> visitsTimelineData;
     private List<Integer> subjectEnrollmentData;
 
-    // Recent visits table
-    private List<VisitRecord> recentVisits;
 
     // Getters and Setters
     public int getScheduledVisits() { return scheduledVisits; }
@@ -50,7 +48,5 @@ public class CrcDashboard {
     public List<Integer> getSubjectEnrollmentData() { return subjectEnrollmentData; }
     public void setSubjectEnrollmentData(List<Integer> subjectEnrollmentData) { this.subjectEnrollmentData = subjectEnrollmentData; }
 
-    public List<VisitRecord> getRecentVisits() { return recentVisits; }
-    public void setRecentVisits(List<VisitRecord> recentVisits) { this.recentVisits = recentVisits; }
 }
 

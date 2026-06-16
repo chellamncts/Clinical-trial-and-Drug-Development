@@ -17,8 +17,8 @@ import java.util.List;
 public class CrcDashboardController {
     @Autowired
     private VisitService visitService;
-//    private final QueryService queryService;
-//    private final SubjectService subjectService;
+    @Autowired
+    private SubjectService subjectService;
 
 
     @GetMapping("/crcDashboard")
@@ -31,16 +31,17 @@ public class CrcDashboardController {
         crcDashboard.setCompletedCrfs(visitService.countCompletedCrfs());
         crcDashboard.setLockedCrfs(visitService.countLockedCrfs());
 //        crcDashboard.setOpenQueries(visitService.countOpen());
-//        crcDashboard.setEnrolledSubjects(subjectService.countEnrolled());
+        crcDashboard.setEnrolledSubjects((int) subjectService.countEnrollment());
 
         // Chart data
         crcDashboard.setVisitsTimelineLabels(visitService.getVisitsTimelineLabels());
         crcDashboard.setVisitsTimelineData(visitService.getVisitsTimelineData());
-        crcDashboard.setSubjectEnrollmentData(Arrays.asList(10, 25, 2));
+        crcDashboard.setSubjectEnrollmentData(Arrays.asList(
+                (int) subjectService.countScreened(),
+                (int) subjectService.countEnrollment(),
+                (int) subjectService.countWithdrawn()
+        ));
 
-
-        List<VisitRecord> recentVisits = visitService.getRecentVisits();
-        crcDashboard.setRecentVisits(recentVisits);
 
         model.addAttribute("crcDashboard", crcDashboard);
 
