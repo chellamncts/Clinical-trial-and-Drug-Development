@@ -1,6 +1,4 @@
 package com.genc.ctds.auth.controller;
-
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

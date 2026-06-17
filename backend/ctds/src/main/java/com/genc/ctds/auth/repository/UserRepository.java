@@ -11,8 +11,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByUsername(String username);
 
     boolean existsByUsername(String username);
-
-    @Query("select u.role, count(u) from User u group by u.role")
-    List<Object[]> countUsersByRole();
 }
 

@@ -44,27 +44,8 @@
         <div class="col-md-6"><div class="card p-3"><h6>User Roles Distribution</h6><canvas id="rolesChart"></canvas></div></div>
         <div class="col-md-6"><div class="card p-3"><h6>Site Activation Status</h6><canvas id="sitesChart"></canvas></div></div>
     </div>
+    <footer th:replace="~{fragments/footer :: adminFooter}"></footer>
 </div>
-
-<!-- Chart.js Scripts -->
-<script>
-    new Chart(document.getElementById('rolesChart'), {
-      type: 'pie',
-      data: {
-        labels: ['Admin','CRC','PI','Data Manager'],
-        datasets:[{ data:[5,12,8,3], backgroundColor:['#ffcc00','#1D9E75','#185FA5','#d9534f'] }]
-      }
-    });
-
-    new Chart(document.getElementById('sitesChart'), {
-      type: 'bar',
-      data: {
-        labels:['Active','Inactive','Pending'],
-        datasets:[{ label:'Sites', data:[10,2,4], backgroundColor:['#1D9E75','#d9534f','#ffcc00'] }]
-      }
-    });
-</script>
-
 </body>
 </html>
 

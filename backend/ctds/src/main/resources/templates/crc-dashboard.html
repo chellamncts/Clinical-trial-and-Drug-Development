@@ -1,9 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
-<head><meta charset="UTF-8"><title>CRC Dashboard</title></head>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>CRC Dashboard</title>
+	<link rel="stylesheet" href="/css/adminDashboard.css">
+</head>
 <body>
-<h2>Clinical Research Coordinator Dashboard</h2>
-<a href="/logout">Logout</a>
+<div class="main-content" style="margin-left: 0;">
+	<h2>Clinical Research Coordinator Dashboard</h2>
+	<a th:href="@{/logout}">Logout</a>
+	<footer th:replace="~{fragments/footer :: adminFooter}"></footer>
+</div>
 </body>
 </html>
 

@@ -5,24 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9cb96379-7d43-45ff-901e-6b45816e154c" name="Changes" comment="Added Role Based Login and Implemented TrialProtocol page">
-      <change afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/auth/config/SecurityConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ctds/src/main/resources/templates/sites.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctds/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/auth/config/DefaultAdminInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/auth/config/DefaultAdminInitializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/auth/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/auth/config/SecurityConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/auth/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/auth/controller/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/auth/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/auth/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/auth/model/UserActivity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/auth/repository/UserActivityRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/auth/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/auth/repository/UserRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/auth/service/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/auth/service/AuthService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/auth/service/UserActivityService.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/controller/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/controller/HomeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/trialprotocol/controller/TrialProtocolController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/trialprotocol/controller/TrialProtocolController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/trialprotocol/service/TrialProtocolService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/trialprotocol/service/TrialProtocolService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ctds/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctds/src/main/resources/data.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/resources/static/css/adminDashboard.css" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/resources/static/css/adminDashboard.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ctds/src/main/resources/templates/admin-dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/resources/templates/admin-dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/resources/templates/crc-dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/resources/templates/crc-dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/resources/templates/datamanager-dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/resources/templates/datamanager-dashboard.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ctds/src/main/resources/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/resources/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/resources/templates/pi-dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/resources/templates/pi-dashboard.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ctds/src/main/resources/templates/protocolCreation.html" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/resources/templates/protocolCreation.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/resources/templates/pv-dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/resources/templates/pv-dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/resources/templates/sites.html" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/resources/templates/sites.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ctds/src/main/resources/templates/userManagement.html" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/resources/templates/userManagement.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctds/src/test/java/com/genc/ctds/AuthFlowIntegrationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/test/java/com/genc/ctds/AuthFlowIntegrationTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctds/src/test/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/test/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,20 +74,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.CtdsApplication.executor": "Run",
-    "DefaultHtmlFileTemplate": "HTML File",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "nithish",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/2503723/NewFile/ThirdFolder/Clinical-trial-and-Drug-Development/backend/ctds/src/main/resources/static/asset"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.CtdsApplication.executor&quot;: &quot;Run&quot;,
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;nithish&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/2503723/NewFile/ThirdFolder/Clinical-trial-and-Drug-Development/backend/ctds/src/main/resources/static/asset&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\2503723\NewFile\ThirdFolder\Clinical-trial-and-Drug-Development\backend\ctds\src\main\resources\static\asset" />

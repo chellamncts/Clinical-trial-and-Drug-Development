@@ -42,6 +42,9 @@ h4, h6 {
 .main-content {
   margin-left: 240px;   /* space for sidebar */
   padding: 20px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .summary-box {
@@ -149,6 +152,23 @@ canvas {
   background-color: #148b60;
 }
 
+/* Shared footer for admin-facing pages */
+.footer {
+  margin-top: auto;
+  padding: 12px 16px;
+  text-align: center;
+  color: #1f5136;
+  font-size: 13px;
+  background-color: #dff5e8;
+  border-top: 1px solid #b8e3cb;
+}
+
+/* Extend footer into the left navigation area on admin pages */
+.sidebar + .main-content .footer {
+  margin-left: -240px;
+  width: calc(100% + 240px);
+}
+
 /* Responsive sidebar */
 @media (max-width: 768px) {
   .sidebar {
@@ -158,6 +178,10 @@ canvas {
   }
   .main-content {
     margin-left: 0;
+  }
+  .sidebar + .main-content .footer {
+    margin-left: 0;
+    width: 100%;
   }
 }
 

@@ -1,5 +1,4 @@
 package com.genc.ctds.auth.config;
-
 import com.genc.ctds.auth.model.RoleType;
 import com.genc.ctds.auth.model.User;
 import com.genc.ctds.auth.repository.UserRepository;
@@ -14,10 +13,10 @@ public class DefaultAdminInitializer {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    @Value("${app.admin.username:admin}")
+    @Value("${admin.username:admin}")
     private String adminUsername;
  
-    @Value("${app.admin.password:admin@123}")
+    @Value("${admin.password:admin@123}")
     private String adminPassword;
 
     public DefaultAdminInitializer(UserRepository userRepository, PasswordEncoder passwordEncoder) {
@@ -32,7 +31,6 @@ public class DefaultAdminInitializer {
             return;
         }
 
-        // Create default admin only when it does not already exist.
         if (userRepository.existsByUsername(username)) {
             return;
         }
