@@ -1,6 +1,4 @@
 package com.genc.ctds.auth.service;
-
-import com.genc.ctds.auth.model.RoleType;
 import com.genc.ctds.auth.model.User;
 import com.genc.ctds.auth.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,7 +6,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -24,7 +21,7 @@ public class AuthService implements UserDetailsService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public void saveUser(User user, String actor) {
+    public void saveUser(User user) {
         String normalizedUsername = user.getUsername().trim();
         Optional<User> existingUser = userRepository.findByUsername(normalizedUsername);
 

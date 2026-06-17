@@ -20,71 +20,18 @@
     <a th:href="@{/logout}">Logout</a>
 </div>
 
-<!-- Main Content -->
 <div class="main-content">
     <h4>Protocol Creation</h4>
+    <p class="text-muted">Create protocol versions, capture eligibility criteria, and review protocol-level status before site activation.</p>
 
-    <!-- Add Protocol Button -->
-    <div class="d-flex justify-content-end mb-3">
-        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addProtocolModal">+ Add Protocol</button>
-    </div>
-
-    <!-- Search Field -->
-    <div class="card p-3 mb-4">
-        <div class="row g-2 align-items-center">
-            <div class="col-md-6">
-                <input type="text" id="searchInput" class="form-control" placeholder="🔍 Search protocols by title, area, or phase...">
-            </div>
-            <div class="col-md-3">
-                <select id="phaseFilter" class="form-select">
-                    <option value="">Filter by Phase</option>
-                    <option>Phase I</option>
-                    <option>Phase II</option>
-                    <option>Phase III</option>
-                    <option>Phase IV</option>
-                </select>
-            </div>
-            <div class="col-md-3">
-                <select id="statusFilter" class="form-select">
-                    <option value="">Filter by Status</option>
-                    <option>Draft</option>
-                    <option>Active</option>
-                    <option>Completed</option>
-                </select>
-            </div>
-        </div>
-    </div>
-
-    <!-- Protocols Table -->
-    <div class="card p-3 mb-4">
-        <h6>Registered Protocols</h6>
-        <table class="table table-striped" id="protocolTable">
-            <thead>
-            <tr><th>Protocol ID</th><th>Title</th><th>Therapeutic Area</th><th>Phase</th><th>Status</th></tr>
-            </thead>
-            <tbody>
-            <tr th:each="p:${protocols}"><td th:text="${p.protocol_id}">P101</td><td th:text="${p.protocol_title}"><td th:text="${p.therapeuticArea}">Cancer Drug Trial</td><td th:text="${p.phase}">Oncology</td><td th:text="${p.protocolStatus}">Phase II</td></tr>
-            </tbody>
-        </table>
-    </div>
-    <footer th:replace="~{fragments/footer :: adminFooter}"></footer>
-</div>
-
-<!-- Add Protocol Modal -->
-<div class="modal fade" id="addProtocolModal" tabindex="-1" aria-labelledby="addProtocolModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-
-            <div class="modal-header">
-                <h5 class="modal-title" id="addProtocolModalLabel">Add New Protocol</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-
-            <div class="modal-body">
+    <div class="row g-4 mb-4">
+        <div class="col-lg-5">
+            <div class="card p-4 shadow-sm">
+                <h6 class="mb-3">Add New Protocol</h6>
                 <form th:action="@{/postProtocol}" th:object="${protocolObject}" method="post">
                     <div class="mb-3">
-                        <label class="form-label">Protocol Title</label>
-                        <input type="text" th:field="*{protocol_title}" class="form-control" required>
+                        <label class="form-label">Trial Title</label>
+                        <input type="text" th:field="*{trialTitle}" class="form-control" required>
                     </div>
 
                     <div class="mb-3">
@@ -92,31 +39,115 @@
                         <input type="text" th:field="*{therapeuticArea}" class="form-control" required>
                     </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Phase</label>
-                        <select th:field="*{phase}" class="form-select" required>
-                            <option th:each="s:${phases}" th:value="${s}" th:text="${s}" ></option>
-                        </select>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Phase</label>
+                            <select th:field="*{phase}" class="form-select" required>
+                                <option value="">Select phase</option>
+                                <option th:each="phaseOption : ${phases}" th:value="${phaseOption}" th:text="${phaseOption}"></option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Protocol Status</label>
+                            <select class="form-select" th:field="*{protocolStatus}" required>
+                                <option value="">Select status</option>
+                                <option th:each="statusOption : ${protocolStatuses}" th:value="${statusOption}" th:text="${statusOption}"></option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mt-1">
+                        <div class="col-md-6">
+                            <label class="form-label">Start Date</label>
+                            <input type="date" class="form-control" th:field="*{startDate}" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Version Number</label>
+                            <input type="number" min="1" class="form-control" th:field="*{versionNumber}" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 mt-3">
+                        <label class="form-label">Inclusion Criteria</label>
+                        <textarea th:field="*{inclusionCriteria}" class="form-control" rows="4" placeholder="Enter inclusion criteria"></textarea>
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Status</label>
-                        <select class="form-select" th:field="*{protocolStatus}" required>
-                            <option th:each="ps:${pro}" th:value="${ps}" th:text="${ps}" ></option>
-                        </select>
+                        <label class="form-label">Exclusion Criteria</label>
+                        <textarea th:field="*{exclusionCriteria}" class="form-control" rows="4" placeholder="Enter exclusion criteria"></textarea>
                     </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Start Date</label>
-                        <input type="date" class="form-control" th:field="*{startDate}" required>
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">Save Protocol</button>
+                        <a class="btn btn-outline-secondary" th:href="@{/sites}">Manage Sites</a>
                     </div>
-
-                    <button type="submit" class="btn btn-primary">Save Protocol</button>
                 </form>
             </div>
+        </div>
 
+        <div class="col-lg-7">
+            <!-- Search Field -->
+            <div class="card p-3 mb-4 shadow-sm">
+                <div class="row g-2 align-items-center">
+                    <div class="col-md-6">
+                        <input type="text" id="searchInput" class="form-control" placeholder="Search protocols by title, area, or phase...">
+                    </div>
+                    <div class="col-md-3">
+                        <select id="phaseFilter" class="form-select">
+                            <option value="">Filter by Phase</option>
+                            <option th:each="phaseOption : ${phases}" th:value="${phaseOption}" th:text="${phaseOption}"></option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <select id="statusFilter" class="form-select">
+                            <option value="">Filter by Status</option>
+                            <option th:each="statusOption : ${protocolStatuses}" th:value="${statusOption}" th:text="${statusOption}"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Protocols Table -->
+            <div class="card p-3 shadow-sm">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h6 class="mb-0">Registered Protocols</h6>
+                    <span class="badge bg-primary" th:text="${#lists.size(protocols)} + ' total'">0 total</span>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped align-middle" id="protocolTable">
+                        <thead>
+                        <tr>
+                            <th>Protocol ID</th>
+                            <th>Title</th>
+                            <th>Therapeutic Area</th>
+                            <th>Phase</th>
+                            <th>Status</th>
+                            <th>Version</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:if="${#lists.isEmpty(protocols)}">
+                            <td colspan="7" class="text-center text-muted">No protocols have been created yet.</td>
+                        </tr>
+                        <tr th:each="p : ${protocols}">
+                            <td th:text="${p.protocolId}">1</td>
+                            <td th:text="${p.trialTitle}">Cancer Drug Trial</td>
+                            <td th:text="${p.therapeuticArea}">Oncology</td>
+                            <td th:text="${p.phase}">PHASE_II</td>
+                            <td th:text="${p.protocolStatus}">APPROVED</td>
+                            <td th:text="${p.versionNumber}">1</td>
+                            <td>
+                                <a class="btn btn-sm btn-outline-primary" th:href="@{/protocol/{id}(id=${p.protocolId})}">View Details</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
+    <footer th:replace="~{fragments/footer :: adminFooter}"></footer>
 </div>
 
 <!-- Bootstrap JS -->

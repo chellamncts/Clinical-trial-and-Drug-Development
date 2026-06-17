@@ -3,38 +3,59 @@ package com.genc.ctds.trialprotocol.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
+@Table(name = "trial_protocols")
 public class TrialProtocol {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long protocol_id;
+    private Long protocolId;
 
-    @Column(nullable = false, unique = true, length = 50)
-    private String protocol_title;
+    @Column(nullable = false, length = 150)
+    private String trialTitle;
 
     @Column(nullable = false, length = 200)
     private String therapeuticArea;
+
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
     private Phase phase;
+
+    @Column(nullable = false)
     private LocalDate startDate;
+
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
     private ProtocolStatus protocolStatus;
 
-    public Long getProtocol_id() {
-        return protocol_id;
+    @Column(nullable = false)
+    private Integer versionNumber = 1;
+
+    @Lob
+    private String inclusionCriteria;
+
+    @Lob
+    private String exclusionCriteria;
+
+    @OneToMany(mappedBy = "trialProtocol", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ClinicalSite> sites = new ArrayList<>();
+
+    public Long getProtocolId() {
+        return protocolId;
     }
 
-    public void setProtocol_id(Long protocol_id) {
-        this.protocol_id = protocol_id;
+    public void setProtocolId(Long protocolId) {
+        this.protocolId = protocolId;
     }
 
-    public String getProtocol_title() {
-        return protocol_title;
+    public String getTrialTitle() {
+        return trialTitle;
     }
 
-    public void setProtocol_title(String protocol_title) {
-        this.protocol_title = protocol_title;
+    public void setTrialTitle(String trialTitle) {
+        this.trialTitle = trialTitle;
     }
 
     public String getTherapeuticArea() {
@@ -67,5 +88,53 @@ public class TrialProtocol {
 
     public void setProtocolStatus(ProtocolStatus protocolStatus) {
         this.protocolStatus = protocolStatus;
+    }
+
+    public Integer getVersionNumber() {
+        return versionNumber;
+    }
+
+    public void setVersionNumber(Integer versionNumber) {
+        this.versionNumber = versionNumber;
+    }
+
+    public String getInclusionCriteria() {
+        return inclusionCriteria;
+    }
+
+    public void setInclusionCriteria(String inclusionCriteria) {
+        this.inclusionCriteria = inclusionCriteria;
+    }
+
+    public String getExclusionCriteria() {
+        return exclusionCriteria;
+    }
+
+    public void setExclusionCriteria(String exclusionCriteria) {
+        this.exclusionCriteria = exclusionCriteria;
+    }
+
+    public List<ClinicalSite> getSites() {
+        return sites;
+    }
+
+    public void setSites(List<ClinicalSite> sites) {
+        this.sites = sites;
+    }
+
+    public Long getProtocol_id() {
+        return protocolId;
+    }
+
+    public void setProtocol_id(Long protocolId) {
+        this.protocolId = protocolId;
+    }
+
+    public String getProtocol_title() {
+        return trialTitle;
+    }
+
+    public void setProtocol_title(String protocolTitle) {
+        this.trialTitle = protocolTitle;
     }
 }

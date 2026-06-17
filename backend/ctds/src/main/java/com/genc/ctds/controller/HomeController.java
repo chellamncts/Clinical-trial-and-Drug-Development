@@ -57,9 +57,8 @@ public class HomeController {
         return "userManagement";
     }
     @PostMapping("/userManagement")
-    public String saveUser(@ModelAttribute User user, Authentication authentication){
-        String actor = authentication == null ? null : authentication.getName();
-        authService.saveUser(user,actor);
+    public String saveUser(@ModelAttribute User user){
+        authService.saveUser(user);
         return "redirect:/userManagement";
     }
 
