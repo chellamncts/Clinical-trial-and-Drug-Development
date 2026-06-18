@@ -1,6 +1,6 @@
 package com.genc.ctds.trialprotocol.model;
 
-public class SiteRegistrationForm {
+public class ClinicalSiteDTO {
 
     private Long protocolId;
     private String siteCode;

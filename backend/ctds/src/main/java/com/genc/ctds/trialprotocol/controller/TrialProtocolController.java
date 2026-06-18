@@ -1,8 +1,7 @@
 package com.genc.ctds.trialprotocol.controller;
-
 import com.genc.ctds.trialprotocol.model.Phase;
 import com.genc.ctds.trialprotocol.model.ProtocolStatus;
-import com.genc.ctds.trialprotocol.model.SiteRegistrationForm;
+import com.genc.ctds.trialprotocol.model.ClinicalSiteDTO;
 import com.genc.ctds.trialprotocol.model.SiteStatus;
 import com.genc.ctds.trialprotocol.model.TrialProtocol;
 import com.genc.ctds.trialprotocol.service.TrialProtocolService;
@@ -47,7 +46,7 @@ public class TrialProtocolController {
 
     @GetMapping("/sites")
     public String viewSites(Model model) {
-        model.addAttribute("siteRegistrationForm", new SiteRegistrationForm());
+        model.addAttribute("clinicalSiteDTO", new ClinicalSiteDTO());
         model.addAttribute("protocols", trialProtocolService.getAllProtocols());
         model.addAttribute("sites", trialProtocolService.getAllSites());
         model.addAttribute("siteStatuses", SiteStatus.values());
@@ -55,8 +54,8 @@ public class TrialProtocolController {
     }
 
     @PostMapping("/sites/register")
-    public String registerSite(@ModelAttribute SiteRegistrationForm siteRegistrationForm) {
-        trialProtocolService.registerSite(siteRegistrationForm);
+    public String registerSite(@ModelAttribute ClinicalSiteDTO clinicalSiteDTO) {
+        trialProtocolService.registerSite(clinicalSiteDTO);
         return "redirect:/sites";
     }
 

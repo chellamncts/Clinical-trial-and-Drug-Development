@@ -1,8 +1,8 @@
 package com.genc.ctds.trialprotocol.service;
 
 import com.genc.ctds.trialprotocol.model.ClinicalSite;
+import com.genc.ctds.trialprotocol.model.ClinicalSiteDTO;
 import com.genc.ctds.trialprotocol.model.ProtocolStatus;
-import com.genc.ctds.trialprotocol.model.SiteRegistrationForm;
 import com.genc.ctds.trialprotocol.model.SiteStatus;
 import com.genc.ctds.trialprotocol.model.TrialProtocol;
 import com.genc.ctds.trialprotocol.repository.ClinicalSiteRepository;
@@ -51,7 +51,7 @@ public class TrialProtocolService {
     }
 
     @Transactional
-    public ClinicalSite registerSite(SiteRegistrationForm form) {
+    public ClinicalSite registerSite(ClinicalSiteDTO form) {
         TrialProtocol protocol = getProtocolDetails(form.getProtocolId());
 
         ClinicalSite site = new ClinicalSite();
@@ -96,7 +96,7 @@ public class TrialProtocolService {
         return isSiteReady(site);
     }
 
-    private boolean isSiteReady(SiteRegistrationForm form) {
+    private boolean isSiteReady(ClinicalSiteDTO form) {
         return form.isEthicsApproved() && form.isStaffTrained() && form.isPharmacyReady();
     }
 

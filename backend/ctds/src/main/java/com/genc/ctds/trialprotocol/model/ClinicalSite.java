@@ -49,8 +49,8 @@ public class ClinicalSite {
 
     private LocalDate activationDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "protocol_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "protocol_id")
     private TrialProtocol trialProtocol;
 
     public Long getSiteId() {

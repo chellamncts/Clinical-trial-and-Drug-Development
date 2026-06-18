@@ -6,12 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="9cb96379-7d43-45ff-901e-6b45816e154c" name="Changes" comment="Added Role Based Login and Implemented TrialProtocol page">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/auth/service/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/auth/service/AuthService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/controller/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/controller/HomeController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/trialprotocol/controller/TrialProtocolController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/trialprotocol/controller/TrialProtocolController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/trialprotocol/model/TrialProtocol.java" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/trialprotocol/model/TrialProtocol.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/trialprotocol/repository/TrialProtocolRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/trialprotocol/repository/TrialProtocolRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/trialprotocol/model/ClinicalSite.java" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/trialprotocol/model/ClinicalSite.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/trialprotocol/model/SiteRegistrationForm.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/trialprotocol/service/TrialProtocolService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/trialprotocol/service/TrialProtocolService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/resources/templates/admin-dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/resources/templates/admin-dashboard.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ctds/src/main/resources/templates/protocolCreation.html" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/resources/templates/protocolCreation.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ctds/src/main/resources/templates/sites.html" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/resources/templates/sites.html" afterDir="false" />
     </list>
@@ -91,6 +90,17 @@
       <updated>1781148466926</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added Role Based Login and Implemented TrialProtocol page" />
