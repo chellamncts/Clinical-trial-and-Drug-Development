@@ -8,7 +8,13 @@
     --shadow: 0 8px 24px rgba(15, 81, 50, 0.12);
 }
 
-/* Basic */
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 html, body {
     height: 100%;
     margin: 0;
@@ -21,6 +27,11 @@ body {
     display: flex;
 }
 
+/* Remove underline from ALL links globally */
+a {
+    text-decoration: none !important;
+}
+
 /* Sidebar */
 .sidebar {
     position: fixed;
@@ -31,13 +42,11 @@ body {
     padding: 20px;
     box-shadow: var(--shadow);
     z-index: 100;
-    overflow-y: auto;
 }
 
 .sidebar-title {
     font-weight: bold;
-    margin: 0 0 20px 0;
-    padding: 0;
+    margin-bottom: 20px;
     font-size: 18px;
 }
 
@@ -53,12 +62,11 @@ body {
 
 .sidebar-links a {
     color: white;
-    text-decoration: none;
     padding: 10px 12px;
     display: block;
     border-radius: 5px;
     font-weight: 600;
-    transition: background .2s ease;
+    text-decoration: none !important;
 }
 
 .sidebar-links a:hover,
@@ -68,8 +76,8 @@ body {
 
 /* Main content */
 .main-content {
-    margin-left: 240px;
-    width: calc(100% - 240px);
+    margin-left: 220px;
+    width: calc(100% - 220px);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -80,17 +88,14 @@ body {
     background: var(--green);
     color: white;
     padding: 20px 36px;
-    font-size: 20px;
-    flex-shrink: 0;
     box-shadow: var(--shadow);
 }
 
-.navbar .brand {
+.brand {
     display: flex;
     align-items: center;
     gap: 10px;
-    font-weight: 700;
-    font-size: 20px;
+    font-weight: bold;
 }
 
 .dot {
@@ -98,7 +103,6 @@ body {
     height: 10px;
     background: white;
     border-radius: 50%;
-    display: inline-block;
 }
 
 /* Container */
@@ -108,8 +112,6 @@ body {
     width: 100%;
     margin: 40px auto;
     padding: 0 32px;
-    display: flex;
-    justify-content: center;
 }
 
 /* Card */
@@ -119,7 +121,6 @@ body {
     box-shadow: var(--shadow);
     overflow: hidden;
     border: 1px solid var(--green-line);
-    width: 100%;
 }
 
 .card-title {
@@ -128,19 +129,17 @@ body {
     padding: 24px 32px;
     font-size: 20px;
     font-weight: bold;
-    margin: 0;
 }
 
 .card-body {
     padding: 40px;
 }
 
-/* Grid layout */
+/* Grid */
 .grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 24px;
-    margin-bottom: 10px;
 }
 
 /* Fields */
@@ -153,106 +152,110 @@ label {
     margin-bottom: 8px;
     font-weight: 600;
     color: var(--green-dark);
-    font-size: 14px;
 }
 
 .required {
     color: #b3261e;
-    font-weight: 700;
 }
 
+/* Inputs */
 input, select {
-    padding: 12px 14px;
+    padding: 12px;
     border-radius: 8px;
     border: 1px solid var(--green-line);
-    font-size: 14px;
     background: #fbfdfc;
-    font-family: inherit;
-    transition: border-color .2s ease, box-shadow .2s ease;
+    font-size: 14px;
 }
 
-input:focus, select:focus {
+/* Focus */
+input:focus,
+select:focus {
     outline: none;
     border-color: var(--green);
     box-shadow: 0 0 0 3px rgba(15, 81, 50, 0.15);
-    background: var(--white);
 }
 
-/* Checkbox row */
+/* Checkbox */
 .checkbox-row {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    justify-content: flex-start !important;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     gap: 10px;
+    margin-top: 15px;
 }
 
 .checkbox-row input[type="checkbox"] {
-   margin: 0 !important;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
 }
 
 .checkbox-row label {
-    margin: 0 !important;
+    margin-bottom: 0;
 }
 
-/* Buttons */
+/* Buttons container */
 .actions {
     display: flex;
     gap: 12px;
+    margin-top: 25px;
     flex-wrap: wrap;
-    margin-top: 28px;
 }
 
+/* Button base - applies to ALL buttons including View Status */
 .btn {
     background: var(--green);
-    color: white;
+    color: white !important;
     padding: 12px 24px;
     border: none;
-    border-radius: 9px;
-    cursor: pointer;
-    font-weight: 700;
+    border-radius: 8px;
+    font-weight: bold;
     font-size: 14px;
-    transition: background .2s ease, transform .1s ease;
-    white-space: nowrap;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none !important;
+    transition: all 0.2s ease;
 }
 
-.btn:hover {
-    background: var(--green-dark);
-    transform: translateY(-2px);
-}
-
+/* Button hover */
+.btn:hover,
 .btn:active {
-    transform: translateY(0);
+    background: var(--green-dark);
+    text-decoration: none !important;
+    color: white !important;
 }
 
+/* View Status button - white with green outline */
 .btn-outline {
-    background: white;
-    color: var(--green);
-    border: 2px solid var(--green);
+    background: white !important;
+    color: var(--green) !important;
+    border: 2px solid var(--green) !important;
+    text-decoration: none !important;
 }
 
-.btn-outline:hover {
-    background: var(--green-soft);
-    color: var(--green-dark);
+.btn-outline:hover,
+.btn-outline:active {
+    background: var(--green-soft) !important;
+    color: var(--green-dark) !important;
+    border: 2px solid var(--green-dark) !important;
+    text-decoration: none !important;
 }
 
 /* Footer */
 .footer {
     text-align: center;
-    padding: 24px 32px;
+    padding: 20px;
     background: var(--green);
     color: white;
     margin-top: auto;
-    flex-shrink: 0;
-    width: 100%;
-    font-size: 14px;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
     .grid {
         grid-template-columns: 1fr;
-        gap: 16px;
     }
 
     .main-content {
@@ -261,17 +264,17 @@ input:focus, select:focus {
     }
 
     .sidebar {
+        position: static;
         width: 100%;
         height: auto;
-        position: static;
     }
 
-    .container {
-        padding: 0 16px;
-        margin: 20px auto;
+    .actions {
+        flex-direction: column;
     }
 
-    .card-body {
-        padding: 24px;
+    .btn {
+        width: 100%;
+        text-align: center;
     }
 }

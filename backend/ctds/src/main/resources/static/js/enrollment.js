@@ -20,10 +20,8 @@ document.querySelector("form").addEventListener("submit", function(e) {
     let protocolId = document.querySelector("input[name='protocolId']").value.trim();
     let siteId = document.querySelector("input[name='siteId']").value.trim();
     let date = document.querySelector("input[type='date']").value;
-
-    let selects = document.querySelectorAll("select");
-    let studyArm = selects[0].value;
-    let status = selects[1].value;
+    let studyArm = document.querySelector("select[name='studyArm']").value;
+    let status = document.querySelector("select[name='subjectStatus']").value;
 
     let consent = document.getElementById("consentCheck").checked;
     if (
