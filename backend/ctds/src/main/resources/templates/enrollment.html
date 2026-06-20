@@ -61,8 +61,11 @@
                         <div class="field">
                             <label for="subjectStatus">Subject Status <span class="required">*</span></label>
                             <select id="subjectStatus" th:field="*{subjectStatus}" required>
+                                <option value="">Select Subject Status</option>
                                 <option value="SCREENED">SCREENED</option>
                                 <option value="ENROLLED">ENROLLED</option>
+                                <option value="COMPLETED">COMPLETED</option>
+                                <option value="WITHDRAWN">WITHDRAWN</option>
                             </select>
                         </div>
                     </div>
@@ -73,9 +76,8 @@
                     </div>
 
                     <div class="actions">
-                        <button class="btn" type="submit" name="action" value="enroll">Enroll</button>
-                        <button class="btn" type="submit" name="action" value="screen">Screen</button>
-                        <button class="btn" type="submit" name="action" value="withdraw">Withdraw</button>
+                        <button class="btn" type="submit">Submit</button>
+                        <a th:href="@{/enrollmentStatus}" class="btn btn-outline">View Status</a>
                     </div>
                 </form>
             </div>
