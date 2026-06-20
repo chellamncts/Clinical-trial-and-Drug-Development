@@ -7,15 +7,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Controller
 @RequestMapping("/visits")
 public class VisitController {
 
     @Autowired
     private VisitService visitService;
-
 
     @GetMapping("/visitScheduling")
     public String showVisitPage(Model model) {
@@ -24,14 +21,12 @@ public class VisitController {
         model.addAttribute("completedCrfs", visitService.countCompletedCrfs());
         model.addAttribute("lockedCrfs", visitService.countLockedCrfs());
         model.addAttribute("visit", new VisitRecord());
-        model.addAttribute("recentVisits", visitService.getRecentVisits());
         return "visitScheduling";
     }
 
     @PostMapping("/schedule")
     public String scheduleVisit(@ModelAttribute VisitRecord visit) {
         visitService.scheduleVisit(visit);
-        // After scheduling, redirect to the list page
         return "redirect:/visits/crfPage";
     }
 
@@ -39,11 +34,6 @@ public class VisitController {
     public String showAllVisits(Model model) {
         model.addAttribute("visits", visitService.getAllVisits());
         return "crfPage";
-    }
-
-    @GetMapping("/search-form")
-    public String showSearchForm() {
-        return "visitSearch";
     }
 
     @GetMapping("/search")
@@ -63,7 +53,4 @@ public class VisitController {
         visitService.completeCrf(visitId);
         return "redirect:/visits/crfPage";
     }
-
-
-
 }

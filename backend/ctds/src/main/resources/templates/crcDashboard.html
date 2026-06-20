@@ -14,7 +14,7 @@
     <h3 class="sidebar-title">CRC Dashboard</h3>
     <ul class="sidebar-links">
         <li><a class="active" th:href="@{/crcDashboard}">Dashboard</a></li>
-        <li><a th:href="@{/subjects}">Subject Enrollment</a></li>
+        <li><a th:href="@{/enrollment}">Subject Enrollment</a></li>
         <li><a th:href="@{/visits/visitScheduling}">Visit Scheduling</a></li>
         <li><a th:href="@{/visits/crfPage}">CRFs</a></li>
         <li><a th:href="@{/queriesPage}">Queries</a></li>
@@ -31,8 +31,8 @@
         <div class="col-md-2"><div class="summary-box"><h6>Pending CRFs</h6><h3 th:text="${crcDashboard.pendingCrfs}">0</h3></div></div>
         <div class="col-md-2"><div class="summary-box"><h6>Completed CRFs</h6><h3 th:text="${crcDashboard.completedCrfs}">0</h3></div></div>
         <div class="col-md-2"><div class="summary-box"><h6>Locked CRFs</h6><h3 th:text="${crcDashboard.lockedCrfs}">0</h3></div></div>
-        <div class="col-md-2"><div class="summary-box"><h6>Open Queries</h6><h3 th:text="${openQueries}">0</h3></div></div>
-        <div class="col-md-2"><div class="summary-box"><h6>Enrolled Subjects</h6><h3 th:text="${enrolledSubjects}">0</h3></div></div>
+        <div class="col-md-2"><div class="summary-box"><h6>Open Queries</h6><h3 th:text="${crcDashboard.openQueries}">0</h3></div></div>
+        <div class="col-md-2"><div class="summary-box"><h6>Enrolled Subjects</h6><h3 th:text="${crcDashboard.enrolledSubjects}">0</h3></div></div>
     </div>
 
     <!-- Charts -->
@@ -52,15 +52,18 @@
       data: {
         labels: ['Pending','Completed','Locked'],
         datasets:[{
-          data: [ [[${crcDashboard.pendingCrfs}]], [[${crcDashboard.completedCrfs}]], [[${crcDashboard.lockedCrfs}]] ],
+          data: [
+            [[${crcDashboard.pendingCrfs}]],
+            [[${crcDashboard.completedCrfs}]],
+            [[${crcDashboard.lockedCrfs}]]
+          ],
           backgroundColor:['#ffcc00','#1D9E75','#185FA5']
         }]
       },
       options: { responsive: true, maintainAspectRatio: false }
     });
 
-    // Visits Timeline Line Chart
-    new Chart(document.getElementById('visitsChart'), {
+   new Chart(document.getElementById('visitsChart'), {
       type: 'line',
       data: {
         labels: [[${crcDashboard.visitsTimelineLabels}]],
@@ -72,7 +75,19 @@
           tension:0.3
         }]
       },
-      options: { responsive: true, maintainAspectRatio: false }
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              stepSize: 1,
+              precision: 0
+            }
+          }
+        }
+      }
     });
 
     // Subject Enrollment Bar Chart
@@ -82,12 +97,25 @@
         labels:['Screened','Enrolled','Withdrawn'],
         datasets:[{
           label:'Subjects',
-          data: [[${crcDashboard.subjectEnrollmentData}]],
+          data: [[${crcDashboard.subjectEnrollmentData}]],  // dynamic [screened, enrolled, withdrawn]
           backgroundColor:['#ffcc00','#1D9E75','#d9534f']
         }]
       },
-      options: { responsive: true, maintainAspectRatio: false }
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              stepSize: 1,
+              precision: 0
+            }
+          }
+        }
+      }
     });
+
     /*]]>*/
 </script>
 

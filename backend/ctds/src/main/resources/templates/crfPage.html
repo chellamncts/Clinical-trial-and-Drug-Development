@@ -11,7 +11,7 @@
     <h3 class="sidebar-title">CRC Dashboard</h3>
     <ul class="sidebar-links">
         <li><a th:href="@{/crcDashboard}">Dashboard</a></li>
-        <li><a th:href="@{/subjects}">Subject Enrollment</a></li>
+        <li><a th:href="@{/enrollment}">Subject Enrollment</a></li>
         <li><a th:href="@{/visits/visitScheduling}">Visit Scheduling</a></li>
         <li><a class="active" th:href="@{/visits/crfPage}">CRFs</a></li>
         <li><a th:href="@{/queriesPage}">Queries</a></li>
@@ -24,8 +24,8 @@
 <div class="main-content">
     <nav class="navbar">
         <div class="brand"><span class="dot"></span> Clinical Trial & Drug Development Tracking</div>
-        <div class="nav-links">
-            <a th:href="@{/visits/visitScheduling}">Schedule Visit</a>
+        <div class="nav-actions">
+            <a class="btn" th:href="@{/visits/visitScheduling}">Schedule Visit</a>
         </div>
     </nav>
 

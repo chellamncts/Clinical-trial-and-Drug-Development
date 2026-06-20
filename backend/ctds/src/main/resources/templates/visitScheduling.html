@@ -13,7 +13,7 @@
     <h3 class="sidebar-title">CRC Dashboard</h3>
     <ul class="sidebar-links">
         <li><a th:href="@{/crcDashboard}">Dashboard</a></li>
-        <li><a th:href="@{/subjects}">Subject Enrollment</a></li>
+        <li><a th:href="@{/enrollment}">Subject Enrollment</a></li>
         <li><a class="active" th:href="@{/visits/visitScheduling}">Visit Scheduling</a></li>
         <li><a th:href="@{/visits/crfPage}">CRFs</a></li>
         <li><a th:href="@{/queriesPage}">Queries</a></li>
@@ -34,34 +34,33 @@
             <div class="card-body">
                 <form th:action="@{/visits/schedule}" th:object="${visit}" method="post">
                     <div class="grid">
-                        <div class="field">
-                            <label for="subjectId">Subject ID <span class="text-danger">*</span></label>
-                            <input id="subjectId" type="number" th:field="*{subjectId}" min="1" required>
+                            <div class="field">
+                                <label for="subjectId">Subject ID <span class="text-danger">*</span></label>
+                                <input id="subjectId" type="number" th:field="*{subjectId}" min="1" required>
+                            </div>
+                            <div class="field">
+                                <label for="visitName">Visit Name <span class="text-danger">*</span></label>
+                                <input id="visitName" type="text" th:field="*{visitName}" required>
+                            </div>
+                            <div class="field">
+                                <label for="visitDate">Visit Date <span class="text-danger">*</span></label>
+                                <input id="visitDate" type="date" th:field="*{visitDate}"
+                                       th:attr="min=${#dates.format(#dates.createNow(),'yyyy-MM-dd')}" required>
+                            </div>
+                            <div class="field">
+                                <label for="crfStatus">CRF Status <span class="text-danger">*</span></label>
+                                <select id="crfStatus" th:field="*{crfStatus}" required>
+                                    <option value="">Select status</option>
+                                    <option value="PENDING">Pending</option>
+                                    <option value="COMPLETED">Completed</option>
+                                    <option value="LOCKED">Locked</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="field">
-                            <label for="visitName">Visit Name <span class="text-danger">*</span></label>
-                            <input id="visitName" type="text" th:field="*{visitName}" required>
-                        </div>
-                        <div class="field">
-                            <label for="visitDate">Visit Date <span class="text-danger">*</span></label>
-                            <input id="visitDate" type="date" th:field="*{visitDate}"
-                                   th:attr="min=${#dates.format(#dates.createNow(),'yyyy-MM-dd')}" required>
-                        </div>
-                        <div class="field">
-                            <label for="crfStatus">CRF Status <span class="text-danger">*</span></label>
-                            <select id="crfStatus" th:field="*{crfStatus}" required>
-                                <option value="">Select status</option>
-                                <option value="PENDING">Pending</option>
-                                <option value="COMPLETED">Completed</option>
-                                <option value="LOCKED">Locked</option>
-                            </select>
-                        </div>
-                    </div>
 
-                    <div class="actions">
+                        <div class="actions">
                         <button class="btn" type="submit">Schedule Visit</button>
                         <a class="btn btn-outline" th:href="@{/visits/crfPage}">Show All</a>
-                        <a class="btn btn-outline" th:href="@{/visits/search-form}">Search</a>
                     </div>
                 </form>
             </div>

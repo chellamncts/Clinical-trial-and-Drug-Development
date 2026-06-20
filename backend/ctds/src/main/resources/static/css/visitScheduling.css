@@ -10,20 +10,17 @@
     --shadow: 0 8px 24px rgba(15, 81, 50, 0.12);
 }
 
+/* Basic */
 html, body {
-  height: 100%;
-  margin: 0;
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
-* { box-sizing: border-box; }
-
 body {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
-  background: #f4f7f5;
-  color: var(--ink);
+    font-family: Arial, sans-serif;
+    background: #f4f7f5;
+    display: flex;
 }
 
 /* ---------- Sidebar ---------- */
@@ -70,69 +67,67 @@ body {
 
 /* ---------- Main Content ---------- */
 .main-content {
-  margin-left: 240px;   /* offset for sidebar */
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+    margin-left: 240px;
+    width: calc(100% - 240px);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
-/* ---------- Navbar ---------- */
+/* Navbar */
 .navbar {
     background: var(--green);
-    color: var(--white);
-    padding: 24px 36px;   /* taller header */
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    color: white;
+    padding: 20px 36px;
+    font-size: 20px;
+    flex-shrink: 0;
     box-shadow: var(--shadow);
-    position: sticky;
-    top: 0;
-    z-index: 50;
+    display: flex;                  /* enable flexbox */
+    justify-content: space-between; /* brand left, actions right */
+    align-items: center;
 }
 
 .navbar .brand {
-    font-size: 24px;      /* larger brand text */
-    font-weight: 700;
-    letter-spacing: .3px;
     display: flex;
     align-items: center;
     gap: 10px;
+    font-weight: 700;
+    font-size: 20px;
 }
 
-.navbar .brand .dot {
-    width: 12px;
-    height: 12px;
+.dot {
+    width: 10px;
+    height: 10px;
+    background: white;
     border-radius: 50%;
-    background: var(--white);
     display: inline-block;
 }
 
-.navbar .nav-links {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-}
-
-.navbar .nav-links a {
-    color: var(--white);
-    text-decoration: none;
-    padding: 8px 14px;
-    border-radius: 8px;
-    font-size: 14px;
+.nav-actions .btn {
+    background: var(--white);
+    color: var(--green);
     font-weight: 600;
-    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 8px;
+    padding: 8px 16px;
+    text-decoration: none;
     transition: background .2s ease;
+    margin-right: 12px; /* margin space from right corner */
 }
 
-.navbar .nav-links a:hover { background: rgba(255, 255, 255, 0.16); }
+.nav-actions .btn:hover {
+    background: var(--green-soft);
+}
 
 /* ---------- Layout ---------- */
 .container {
-    max-width: 1200px;   /* wider form */
-    margin: 40px auto;   /* more vertical spacing */
+    flex: 1;
+    max-width: 900px;
+    width: 100%;
+    margin: 40px auto;
     padding: 0 32px;
+    display: flex;
+    justify-content: center;
 }
-
 .card {
     background: var(--white);
     border-radius: 14px;
@@ -171,6 +166,8 @@ input, select {
     font-size: 14px;
     background: #fbfdfc;
     font-family: inherit;
+    min-width: 0;
+    box-sizing: border-box;
 }
 
 input:focus, select:focus {
@@ -183,7 +180,7 @@ input:focus, select:focus {
 .grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 16px;
+    gap: 24px; /* increase spacing between columns */
 }
 
 /* ---------- Search Bar ---------- */
@@ -300,13 +297,14 @@ input:focus, select:focus {
 
 /* ---------- Footer ---------- */
 .footer {
-  margin-top: auto;
-  text-align: center;
-  padding: 32px;         /* taller footer */
-  color: var(--white);
-  background: var(--green);
-  font-size: 15px;       /* slightly larger text */
-  width: 100%;
+    text-align: center;
+    padding: 24px 32px;
+    background: var(--green);
+    color: white;
+    margin-top: auto;
+    flex-shrink: 0;
+    width: 100%;
+    font-size: 14px;
 }
 
 /* ---------- Responsive ---------- */

@@ -21,4 +21,11 @@ public class SubjectService {
     public long countEnrollment() {
         return repository.countBySubjectStatus(SubjectStatus.ENROLLED);
     }
+    public long countScreened() {
+        return repository.countBySubjectStatus("SCREENED");
+    }
+
+    public long countWithdrawn() {
+        return repository.countBySubjectStatus("WITHDRAWN");
+    }
 }
