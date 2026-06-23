@@ -1,5 +1,6 @@
 package com.genc.ctds.visitscheduling.model;
 
+import com.genc.ctds.subjectenrollment.model.TrialSubject;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -8,30 +9,36 @@ import java.time.LocalDate;
 public class VisitRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private Long subjectId;
+    private Integer id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "subject_id", foreignKey = @ForeignKey(name = "fk_visit_subject"))
+    private TrialSubject trialSubject;
+
+    @Transient
+    private Integer subjectId;
+
+    public Integer getSubjectId() { return subjectId; }
+    public void setSubjectId(Integer subjectId) { this.subjectId = subjectId; }
+
     private String visitName;
     private LocalDate visitDate;
 
     @Enumerated(EnumType.STRING)
     private CrfStatus crfStatus;
 
-    private int queryCount;
+    private Integer queryCount;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public TrialSubject getTrialSubject() {
+        return trialSubject;
     }
 
-    public Long getSubjectId() {
-        return subjectId;
-    }
-
-    public void setSubjectId(Long subjectId) {
-        this.subjectId = subjectId;
+    public void setTrialSubject(TrialSubject trialSubject) {
+        this.trialSubject = trialSubject;
     }
 
     public String getVisitName() {
@@ -58,11 +65,11 @@ public class VisitRecord {
         this.crfStatus = crfStatus;
     }
 
-    public int getQueryCount() {
+    public Integer getQueryCount() {
         return queryCount;
     }
 
-    public void setQueryCount(int queryCount) {
+    public void setQueryCount(Integer queryCount) {
         this.queryCount = queryCount;
     }
 }

@@ -9,13 +9,11 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface VisitRepository extends JpaRepository<VisitRecord, Long> {
-    List<VisitRecord> findTop10ByOrderByVisitDateDesc();
+public interface VisitRepository extends JpaRepository<VisitRecord, Integer> {
 
-    List<VisitRecord> findBySubjectIdOrderByVisitDateAsc(Long subjectId);
+    List<VisitRecord> findByTrialSubject_SubjectIdOrderByVisitDateAsc(Integer subjectId);
 
     int countByCrfStatus(CrfStatus crfStatus);
-    List<VisitRecord> findTop10ByOrderByIdAsc();
 
     @Query("SELECT v.visitDate, COUNT(v) FROM VisitRecord v GROUP BY v.visitDate ORDER BY v.visitDate")
     List<Object[]> countVisitsByDate();

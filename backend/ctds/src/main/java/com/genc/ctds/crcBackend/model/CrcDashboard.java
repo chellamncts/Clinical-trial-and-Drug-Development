@@ -1,12 +1,9 @@
 package com.genc.ctds.crcBackend.model;
 
-import com.genc.ctds.visitscheduling.model.VisitRecord;
-
 import java.util.List;
 
 public class CrcDashboard {
 
-    // Summary counts
     private int scheduledVisits;
     private int pendingCrfs;
     private int completedCrfs;
@@ -14,13 +11,10 @@ public class CrcDashboard {
     private int openQueries;
     private int enrolledSubjects;
 
-    // Chart data
     private List<String> visitsTimelineLabels;
     private List<Integer> visitsTimelineData;
     private List<Integer> subjectEnrollmentData;
 
-
-    // Getters and Setters
     public int getScheduledVisits() { return scheduledVisits; }
     public void setScheduledVisits(int scheduledVisits) { this.scheduledVisits = scheduledVisits; }
 

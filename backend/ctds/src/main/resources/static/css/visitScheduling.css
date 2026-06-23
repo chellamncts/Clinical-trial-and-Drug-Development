@@ -245,9 +245,9 @@ input:focus, select:focus {
     text-transform: uppercase;
 }
 
-.badge-pending   { background: #fff3e0; color: #b25e00; }
-.badge-completed { background: #e3f0fb; color: #14598f; }
-.badge-locked    { background: #fdeceb; color: var(--danger); }
+.badge-pending { background-color: #ffcc00; }
+.badge-completed { background-color: #1D9E75; }
+.badge-locked { background-color: #185FA5; }
 
 /* ---------- Actions Column ---------- */
 .actions-cell {
@@ -294,6 +294,7 @@ input:focus, select:focus {
 }
 
 .btn-outline:hover { background: var(--green-soft); }
+
 
 /* ---------- Footer ---------- */
 .footer {

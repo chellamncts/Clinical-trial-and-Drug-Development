@@ -6,7 +6,6 @@
     <link rel="stylesheet" th:href="@{/css/visitScheduling.css}">
 </head>
 <body>
-<!-- Sidebar -->
 <div class="sidebar">
     <h3 class="sidebar-title">CRC Dashboard</h3>
     <ul class="sidebar-links">
@@ -15,7 +14,6 @@
         <li><a th:href="@{/visits/visitScheduling}">Visit Scheduling</a></li>
         <li><a class="active" th:href="@{/visits/crfPage}">CRFs</a></li>
         <li><a th:href="@{/queriesPage}">Queries</a></li>
-        <li><a th:href="@{/reports}">Reports</a></li>
         <li><a th:href="@{/logout}">Logout</a></li>
     </ul>
 </div>
@@ -55,7 +53,7 @@
                         <tbody>
                         <tr th:each="v : ${visits}">
                             <td th:text="${v.id}">-</td>
-                            <td th:text="${v.subjectId}">-</td>
+                            <td th:text="${v.trialSubject != null ? v.trialSubject.subjectId : '-'}">-</td>
                             <td th:text="${v.visitName}">-</td>
                             <td th:text="${v.visitDate}">-</td>
                             <td>
@@ -67,13 +65,19 @@
                                 </span>
                             </td>
                             <td class="actions-cell">
-                                <form th:action="@{'/visits/lock/' + ${v.id}}" method="post">
+                                <!-- Record CRF: only show when PENDING -->
+                                <form th:action="@{'/visits/recordCrf/' + ${v.id}}" method="post"
+                                      th:if="${v.crfStatus.name() == 'PENDING'}">
+                                    <button type="submit" class="btn btn-sm">Record CRF</button>
+                                </form>
+
+                                <!-- Lock: only show when COMPLETED -->
+                                <form th:action="@{'/visits/lock/' + ${v.id}}" method="post"
+                                      th:if="${v.crfStatus.name() == 'COMPLETED'}">
                                     <button type="submit" class="btn btn-outline btn-sm">Lock</button>
                                 </form>
-                                <form th:action="@{'/visits/complete/' + ${v.id}}" method="post">
-                                    <button type="submit" class="btn btn btn-sm">Complete</button>
-                                </form>
                             </td>
+
                         </tr>
                         </tbody>
                     </table>

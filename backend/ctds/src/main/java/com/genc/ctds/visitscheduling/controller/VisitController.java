@@ -32,25 +32,29 @@ public class VisitController {
 
     @GetMapping("/crfPage")
     public String showAllVisits(Model model) {
-        model.addAttribute("visits", visitService.getAllVisits());
+        model.addAttribute("visits", visitService.getVisitHistory());
         return "crfPage";
     }
 
     @GetMapping("/search")
-    public String searchVisits(@RequestParam("subjectId") Long subjectId, Model model) {
+    public String searchVisits(@RequestParam("subjectId") int subjectId, Model model) {
         model.addAttribute("visits", visitService.findBySubjectId(subjectId));
         return "crfPage";
     }
 
+    // Record CRF data
+    @PostMapping("/recordCrf/{visitId}")
+    public String recordCrfData(@PathVariable int visitId,
+                                @RequestParam(value = "queryCount", required = false) Integer queryCount) {
+        visitService.recordCrfData(visitId, queryCount);
+        return "redirect:/visits/crfPage";
+    }
+
+    // Lock CRF
     @PostMapping("/lock/{visitId}")
-    public String lockCrfFromPage(@PathVariable Long visitId) {
+    public String lockCrfFromPage(@PathVariable int visitId) {
         visitService.lockCrf(visitId);
         return "redirect:/visits/crfPage";
     }
 
-    @PostMapping("/complete/{visitId}")
-    public String completeCrfFromPage(@PathVariable Long visitId) {
-        visitService.completeCrf(visitId);
-        return "redirect:/visits/crfPage";
-    }
 }

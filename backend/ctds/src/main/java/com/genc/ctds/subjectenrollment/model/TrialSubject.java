@@ -1,7 +1,9 @@
 package com.genc.ctds.subjectenrollment.model;
 
+import com.genc.ctds.visitscheduling.model.VisitRecord;
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 public class TrialSubject {
@@ -13,9 +15,20 @@ public class TrialSubject {
     private LocalDate enrollmentDate;
     private String studyArm;
 
-    @Enumerated(EnumType.STRING) //store ENUM as STRING
+    @Enumerated(EnumType.STRING)
     private SubjectStatus subjectStatus;
     private boolean consentProvided;
+
+    @OneToMany(mappedBy = "trialSubject", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<VisitRecord> visitRecords;
+
+    public List<VisitRecord> getVisitRecords() {
+        return visitRecords;
+    }
+
+    public void setVisitRecords(List<VisitRecord> visitRecords) {
+        this.visitRecords = visitRecords;
+    }
 
     public Integer getSubjectId() {
         return subjectId;

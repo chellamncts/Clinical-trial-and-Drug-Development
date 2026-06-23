@@ -8,7 +8,6 @@
 </head>
 <body>
 
-<!-- Sidebar -->
 <div class="sidebar">
     <h3 class="sidebar-title">CRC Dashboard</h3>
     <ul class="sidebar-links">
@@ -17,12 +16,10 @@
         <li><a class="active" th:href="@{/visits/visitScheduling}">Visit Scheduling</a></li>
         <li><a th:href="@{/visits/crfPage}">CRFs</a></li>
         <li><a th:href="@{/queriesPage}">Queries</a></li>
-        <li><a th:href="@{/reports}">Reports</a></li>
         <li><a th:href="@{/logout}">Logout</a></li>
     </ul>
 </div>
 
-<!-- Main Content -->
 <div class="main-content">
     <nav class="navbar">
         <div class="brand"><span class="dot"></span> Clinical Trial & Drug Development Tracking</div>
@@ -36,7 +33,7 @@
                     <div class="grid">
                             <div class="field">
                                 <label for="subjectId">Subject ID <span class="text-danger">*</span></label>
-                                <input id="subjectId" type="number" th:field="*{subjectId}" min="1" required>
+                                <input id="subjectId" type="number" th:field="*{trialSubject.subjectId}" min="1" required>
                             </div>
                             <div class="field">
                                 <label for="visitName">Visit Name <span class="text-danger">*</span></label>

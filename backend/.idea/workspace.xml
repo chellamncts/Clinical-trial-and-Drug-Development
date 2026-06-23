@@ -6,14 +6,22 @@
   <component name="ChangeListManager">
     <list default="true" id="371a6fd9-bf99-45e6-91ab-287f71bf0834" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/subjectenrollment/controller/SubjectController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/subjectenrollment/controller/SubjectController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/crcBackend/controller/CrcDashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/crcBackend/controller/CrcDashboardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/crcBackend/model/CrcDashboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/crcBackend/model/CrcDashboard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/crcBackend/service/CrcService.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/subjectenrollment/model/TrialSubject.java" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/subjectenrollment/model/TrialSubject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/subjectenrollment/repository/SubjectRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/subjectenrollment/repository/SubjectRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/subjectenrollment/service/SubjectService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/subjectenrollment/service/SubjectService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctds/src/main/resources/static/css/enrollment.css" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/resources/static/css/enrollment.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctds/src/main/resources/static/js/enrollment.js" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/resources/static/js/enrollment.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctds/src/main/resources/templates/enrollment.html" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/resources/templates/enrollment.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/visitscheduling/controller/VisitController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/visitscheduling/controller/VisitController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/visitscheduling/model/VisitRecord.java" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/visitscheduling/model/VisitRecord.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/visitscheduling/repository/VisitRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/visitscheduling/repository/VisitRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/visitscheduling/service/VisitService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/visitscheduling/service/VisitService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/resources/static/css/visitScheduling.css" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/resources/static/css/visitScheduling.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/resources/templates/crcDashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/resources/templates/crcDashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/resources/templates/crfPage.html" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/resources/templates/crfPage.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ctds/src/main/resources/templates/enrollmentStatus.html" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/resources/templates/enrollmentStatus.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/resources/templates/queriesPage.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/resources/templates/visitScheduling.html" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/resources/templates/visitScheduling.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,6 +30,7 @@
   </component>
   <component name="CopilotPersistence">
     <persistenceIdMap>
+      <entry key="_C:/Users/2503504/Project practice/Clinical-trial-and-Drug-Development/backend" value="3FQjdsJrdkVi141245xgpDL1VsZ" />
       <entry key="_C:/Users/2503588/ctddts/Clinical-trial-and-Drug-Development/backend" value="3ExDv6L2uXMEwIND1pCnmuz6mSI" />
     </persistenceIdMap>
   </component>
@@ -50,7 +59,7 @@
     &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Mohana&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;sivaranjani&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/2503588/ctddts/Clinical-trial-and-Drug-Development/backend&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;

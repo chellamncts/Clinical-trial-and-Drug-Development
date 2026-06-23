@@ -18,14 +18,11 @@
         <li><a th:href="@{/visits/visitScheduling}">Visit Scheduling</a></li>
         <li><a th:href="@{/visits/crfPage}">CRFs</a></li>
         <li><a th:href="@{/queriesPage}">Queries</a></li>
-        <li><a th:href="@{/reports}">Reports</a></li>
         <li><a th:href="@{/logout}">Logout</a></li>
     </ul>
 </div>
 
-<!-- Main Content -->
 <div class="main-content">
-    <!-- Summary Boxes Row -->
     <div class="row mb-4">
         <div class="col-md-2"><div class="summary-box"><h6>Scheduled Visits</h6><h3 th:text="${crcDashboard.scheduledVisits}">0</h3></div></div>
         <div class="col-md-2"><div class="summary-box"><h6>Pending CRFs</h6><h3 th:text="${crcDashboard.pendingCrfs}">0</h3></div></div>
@@ -35,7 +32,6 @@
         <div class="col-md-2"><div class="summary-box"><h6>Enrolled Subjects</h6><h3 th:text="${crcDashboard.enrolledSubjects}">0</h3></div></div>
     </div>
 
-    <!-- Charts -->
     <div class="row mb-4">
         <div class="col-md-4"><div class="card p-3"><h6>CRF Status Distribution</h6><canvas id="crfStatusChart"></canvas></div></div>
         <div class="col-md-4"><div class="card p-3"><h6>Visits Timeline</h6><canvas id="visitsChart"></canvas></div></div>
@@ -43,7 +39,6 @@
     </div>
 </div>
 
-<!-- Chart.js Scripts -->
 <script th:inline="javascript">
     /*<![CDATA[*/
     // CRF Status Pie Chart
