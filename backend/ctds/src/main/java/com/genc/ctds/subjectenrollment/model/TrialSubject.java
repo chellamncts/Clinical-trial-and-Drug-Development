@@ -7,13 +7,14 @@ import java.time.LocalDate;
 public class TrialSubject {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer subjectId;
     private Integer protocolId;
     private Integer siteId;
     private LocalDate enrollmentDate;
     private String studyArm;
 
-    @Enumerated(EnumType.STRING) //store ENUM as STRING
+    @Enumerated(EnumType.STRING)
     private SubjectStatus subjectStatus;
     private boolean consentProvided;
 
@@ -24,6 +25,7 @@ public class TrialSubject {
     public void setSubjectId(Integer subjectId) {
         this.subjectId = subjectId;
     }
+
 
     public Integer getProtocolId() {
         return protocolId;

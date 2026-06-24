@@ -10,8 +10,7 @@
       <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/subjectenrollment/model/TrialSubject.java" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/subjectenrollment/model/TrialSubject.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/subjectenrollment/repository/SubjectRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/subjectenrollment/repository/SubjectRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/subjectenrollment/service/SubjectService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/subjectenrollment/service/SubjectService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctds/src/main/resources/static/css/enrollment.css" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/resources/static/css/enrollment.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctds/src/main/resources/static/js/enrollment.js" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/resources/static/js/enrollment.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/resources/static/js/enrollment.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/ctds/src/main/resources/templates/enrollment.html" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/resources/templates/enrollment.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ctds/src/main/resources/templates/enrollmentStatus.html" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/resources/templates/enrollmentStatus.html" afterDir="false" />
     </list>
@@ -65,5 +64,16 @@
       <updated>1781111554980</updated>
     </task>
     <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/subjectenrollment/controller/SubjectController.java</url>
+          <line>10</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
