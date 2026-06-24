@@ -2,14 +2,17 @@ package com.genc.ctds.visitscheduling.service;
 
 import com.genc.ctds.subjectenrollment.model.TrialSubject;
 import com.genc.ctds.subjectenrollment.repository.SubjectRepository;
+import com.genc.ctds.visitscheduling.model.CrfRecord;
 import com.genc.ctds.visitscheduling.model.CrfStatus;
 import com.genc.ctds.visitscheduling.model.VisitRecord;
+import com.genc.ctds.visitscheduling.repository.CrfRepository;
 import com.genc.ctds.visitscheduling.repository.VisitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,33 +23,50 @@ public class VisitService {
     @Autowired
     private SubjectRepository subjectRepository;
 
+    @Autowired
+    private CrfRepository crfRepository;
+
     public VisitRecord scheduleVisit(VisitRecord visit) {
-        if (visit.getCrfStatus() == null) {
-            visit.setCrfStatus(CrfStatus.PENDING);
+        Integer subjectId = (visit.getTrialSubject() != null)
+                ? visit.getTrialSubject().getSubjectId()
+                : null;
+
+        if (subjectId == null) {
+            throw new IllegalArgumentException("Subject ID is required");
         }
 
-        if (visit.getTrialSubject() != null && visit.getTrialSubject().getSubjectId() != null) {
-            Integer subjectId = visit.getTrialSubject().getSubjectId();
-            TrialSubject subject = subjectRepository.findById(subjectId)
-                    .orElseThrow(() -> new RuntimeException("Subject not found: " + subjectId));
-            visit.setTrialSubject(subject);  // replace transient object with managed entity
-        }
+        TrialSubject subject = subjectRepository.findById(subjectId)
+                .orElseThrow(() -> new IllegalArgumentException(
+                        "No subject found with ID " + subjectId));
 
+        visit.setTrialSubject(subject);
+        visit.setCrfStatus(CrfStatus.PENDING);
         return visitRepository.save(visit);
     }
 
-    // Called when coordinator records clinical data
-    public VisitRecord recordCrfData(int visitId, Integer queryCount) {
+    public void recordCrfData(int visitId, Map<String, String> crfData) {
         VisitRecord visit = visitRepository.findById(visitId)
-                .orElseThrow(() -> new RuntimeException("Visit not found: " + visitId));
+                .orElseThrow(() -> new RuntimeException("Visit not found"));
+
+        CrfRecord crf = crfRepository.findByVisitId(visitId)
+                .orElse(new CrfRecord());
+
+        crf.setVisit(visit);
+        crf.setBloodPressure(crfData.get("bloodPressure"));
+        crf.setHeartRate(Integer.valueOf(crfData.get("heartRate")));
+        crf.setTemperature(Double.valueOf(crfData.get("temperature")));
+        crf.setWeight(Double.valueOf(crfData.get("weight")));
+        crf.setHeight(Double.valueOf(crfData.get("height")));
+        crf.setHemoglobin(Double.valueOf(crfData.get("hemoglobin")));
+        crf.setWbcCount(Integer.valueOf(crfData.get("wbcCount")));
+        crf.setCreatinine(Double.valueOf(crfData.get("creatinine")));
+
+        crfRepository.save(crf);
+
         visit.setCrfStatus(CrfStatus.COMPLETED);
-        if (queryCount != null) {
-            visit.setQueryCount(queryCount);
-        }
-        return visitRepository.save(visit);
+        visitRepository.save(visit);
     }
 
-    // Called when data manager locks the CRF
     public VisitRecord lockCrf(int visitId) {
         VisitRecord visit = visitRepository.findById(visitId)
                 .orElseThrow(() -> new RuntimeException("Visit not found: " + visitId));
@@ -71,11 +91,22 @@ public class VisitService {
     }
 
     public List<VisitRecord> getVisitHistory() {
-        return visitRepository.findAll(Sort.by("id").ascending());
+        List<VisitRecord> visits = visitRepository.findAll(Sort.by("id").ascending());
+        visits.forEach(this::populateSubjectId);
+        return visits;
     }
 
     public List<VisitRecord> findBySubjectId(int subjectId) {
-        return visitRepository.findByTrialSubject_SubjectIdOrderByVisitDateAsc(subjectId);
+        List<VisitRecord> visits =
+                visitRepository.findByTrialSubject_SubjectIdOrderByVisitDateAsc(subjectId);
+        visits.forEach(this::populateSubjectId);
+        return visits;
+    }
+
+    private void populateSubjectId(VisitRecord v) {
+        if (v.getTrialSubject() != null) {
+            v.setSubjectId(v.getTrialSubject().getSubjectId());
+        }
     }
 
     public List<String> getVisitsTimelineLabels() {

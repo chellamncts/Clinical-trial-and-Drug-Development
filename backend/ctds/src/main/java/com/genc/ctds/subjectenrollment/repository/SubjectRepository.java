@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface SubjectRepository extends JpaRepository<TrialSubject, Integer> {
     List<TrialSubject> findBySubjectStatus(SubjectStatus subjectStatus);
+
+    long countBySubjectStatus(SubjectStatus subjectStatus);
 }

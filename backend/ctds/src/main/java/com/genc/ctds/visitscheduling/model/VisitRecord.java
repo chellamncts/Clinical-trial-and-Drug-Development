@@ -9,7 +9,7 @@ import java.time.LocalDate;
 public class VisitRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer visitId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subject_id", foreignKey = @ForeignKey(name = "fk_visit_subject"))
@@ -30,7 +30,7 @@ public class VisitRecord {
     private Integer queryCount;
 
     public Integer getId() {
-        return id;
+        return visitId;
     }
 
     public TrialSubject getTrialSubject() {

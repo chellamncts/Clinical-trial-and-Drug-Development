@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @Controller
 @RequestMapping("/visits")
 public class VisitController {
@@ -16,10 +18,6 @@ public class VisitController {
 
     @GetMapping("/visitScheduling")
     public String showVisitPage(Model model) {
-        model.addAttribute("scheduledVisits", visitService.countScheduled());
-        model.addAttribute("pendingCrfs", visitService.countPendingCrfs());
-        model.addAttribute("completedCrfs", visitService.countCompletedCrfs());
-        model.addAttribute("lockedCrfs", visitService.countLockedCrfs());
         model.addAttribute("visit", new VisitRecord());
         return "visitScheduling";
     }
@@ -42,15 +40,13 @@ public class VisitController {
         return "crfPage";
     }
 
-    // Record CRF data
-    @PostMapping("/recordCrf/{visitId}")
-    public String recordCrfData(@PathVariable int visitId,
-                                @RequestParam(value = "queryCount", required = false) Integer queryCount) {
-        visitService.recordCrfData(visitId, queryCount);
+    @PostMapping("/recordCrf/{id}")
+    public String recordCrf(@PathVariable("id") int id,
+                            @RequestParam Map<String, String> crfData) {
+        visitService.recordCrfData(id, crfData);
         return "redirect:/visits/crfPage";
     }
 
-    // Lock CRF
     @PostMapping("/lock/{visitId}")
     public String lockCrfFromPage(@PathVariable int visitId) {
         visitService.lockCrf(visitId);

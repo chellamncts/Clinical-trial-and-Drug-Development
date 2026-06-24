@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Visit Summary - Clinical Trial</title>
+    <title>CRF Management - Clinical Trial</title>
     <link rel="stylesheet" th:href="@{/css/visitScheduling.css}">
 </head>
 <body>
@@ -10,7 +10,7 @@
     <h3 class="sidebar-title">CRC Dashboard</h3>
     <ul class="sidebar-links">
         <li><a th:href="@{/crcDashboard}">Dashboard</a></li>
-        <li><a th:href="@{/enrollment}">Subject Enrollment</a></li>
+        <li><a th:href="@{/screenSubject}">Subject Enrollment</a></li>
         <li><a th:href="@{/visits/visitScheduling}">Visit Scheduling</a></li>
         <li><a class="active" th:href="@{/visits/crfPage}">CRFs</a></li>
         <li><a th:href="@{/queriesPage}">Queries</a></li>
@@ -18,7 +18,6 @@
     </ul>
 </div>
 
-<!-- Main Content -->
 <div class="main-content">
     <nav class="navbar">
         <div class="brand"><span class="dot"></span> Clinical Trial & Drug Development Tracking</div>
@@ -29,15 +28,13 @@
 
     <div class="container">
         <div class="card">
-            <div class="card-title">CRF</div>
+            <div class="card-title">CRF Summary</div>
             <div class="card-body">
-                <!-- Search Field -->
                 <form th:action="@{/visits/search}" method="get" class="search-bar">
                     <input type="number" name="subjectId" placeholder="Enter Subject ID" required>
                     <button class="btn" type="submit">Search</button>
                 </form>
 
-                <!-- Visits Table -->
                 <div class="table-wrap">
                     <table class="styled-table">
                         <thead>
@@ -53,11 +50,11 @@
                         <tbody>
                         <tr th:each="v : ${visits}">
                             <td th:text="${v.id}">-</td>
-                            <td th:text="${v.trialSubject != null ? v.trialSubject.subjectId : '-'}">-</td>
+                            <td th:text="${v.subjectId}">-</td>
                             <td th:text="${v.visitName}">-</td>
                             <td th:text="${v.visitDate}">-</td>
                             <td>
-                                <span th:switch="${v.crfStatus}">
+                                <span th:switch="${v.crfStatus.name()}">
                                     <span th:case="'PENDING'" class="badge badge-pending">Pending</span>
                                     <span th:case="'COMPLETED'" class="badge badge-completed">Completed</span>
                                     <span th:case="'LOCKED'" class="badge badge-locked">Locked</span>
@@ -65,19 +62,20 @@
                                 </span>
                             </td>
                             <td class="actions-cell">
-                                <!-- Record CRF: only show when PENDING -->
-                                <form th:action="@{'/visits/recordCrf/' + ${v.id}}" method="post"
-                                      th:if="${v.crfStatus.name() == 'PENDING'}">
-                                    <button type="submit" class="btn btn-sm">Record CRF</button>
-                                </form>
+                                <button type="button" class="btn btn-sm fill-crf-btn"
+                                        th:if="${v.crfStatus.name() == 'PENDING'}"
+                                        th:data-id="${v.id}"
+                                        th:data-subject="${v.subjectId}"
+                                        th:data-name="${v.visitName}"
+                                        th:data-date="${v.visitDate}">
+                                    Fill CRF
+                                </button>
 
-                                <!-- Lock: only show when COMPLETED -->
                                 <form th:action="@{'/visits/lock/' + ${v.id}}" method="post"
                                       th:if="${v.crfStatus.name() == 'COMPLETED'}">
                                     <button type="submit" class="btn btn-outline btn-sm">Lock</button>
                                 </form>
                             </td>
-
                         </tr>
                         </tbody>
                     </table>
@@ -86,7 +84,103 @@
         </div>
     </div>
 
+    <!-- CRF Modal -->
+    <div id="crfModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeCrfModal()">&times;</span>
+            <h3>Enter CRF Data</h3>
+            <form id="crfForm" method="post" action="">
+                <input type="hidden" id="modalVisitId" name="visitId">
+
+                <div class="field">
+                    <label>Subject ID</label>
+                    <input type="text" id="modalSubjectId" readonly>
+                </div>
+
+                <div class="field">
+                    <label>Visit Name</label>
+                    <input type="text" id="modalVisitName" readonly>
+                </div>
+
+                <div class="field">
+                    <label>Visit Date</label>
+                    <input type="text" id="modalVisitDate" readonly>
+                </div>
+
+                <!-- Vitals -->
+                <div class="field">
+                    <label>Blood Pressure</label>
+                    <input type="text" name="bloodPressure" placeholder="e.g. 120/80">
+                </div>
+
+                <div class="field">
+                    <label>Heart Rate</label>
+                    <input type="number" name="heartRate" placeholder="e.g. 72">
+                </div>
+
+                <div class="field">
+                    <label>Temperature (°C)</label>
+                    <input type="number" step="0.1" name="temperature" placeholder="e.g. 37.0">
+                </div>
+
+                <div class="field">
+                    <label>Weight (kg)</label>
+                    <input type="number" step="0.1" name="weight" placeholder="e.g. 65.5">
+                </div>
+
+                <div class="field">
+                    <label>Height (cm)</label>
+                    <input type="number" name="height" placeholder="e.g. 170">
+                </div>
+
+                <!-- Labs -->
+                <div class="field">
+                    <label>Hemoglobin (g/dL)</label>
+                    <input type="number" step="0.1" name="hemoglobin" placeholder="e.g. 13.5">
+                </div>
+
+                <div class="field">
+                    <label>WBC Count (/µL)</label>
+                    <input type="number" name="wbcCount" placeholder="e.g. 6500">
+                </div>
+
+                <div class="field">
+                    <label>Creatinine (mg/dL)</label>
+                    <input type="number" step="0.1" name="creatinine" placeholder="e.g. 0.9">
+                </div>
+
+                <button type="submit" class="btn">Save CRF</button>
+            </form>
+        </div>
+    </div>
+
+
     <footer class="footer">&copy; 2026 Clinical Trial & Drug Development Tracking System</footer>
 </div>
+
+<script>
+    document.querySelectorAll('.fill-crf-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var visitId = this.getAttribute('data-id');
+            var subjectId = this.getAttribute('data-subject');
+            var visitName = this.getAttribute('data-name');
+            var visitDate = this.getAttribute('data-date');
+            openCrfModal(visitId, subjectId, visitName, visitDate);
+        });
+    });
+
+    function openCrfModal(visitId, subjectId, visitName, visitDate) {
+        document.getElementById("crfModal").style.display = "block";
+        document.getElementById("modalVisitId").value = visitId;
+        document.getElementById("modalSubjectId").value = subjectId;
+        document.getElementById("modalVisitName").value = visitName;
+        document.getElementById("modalVisitDate").value = visitDate;
+        document.getElementById("crfForm").action = "/visits/recordCrf/" + visitId;
+    }
+
+    function closeCrfModal() {
+        document.getElementById("crfModal").style.display = "none";
+    }
+</script>
 </body>
 </html>
