@@ -8,12 +8,11 @@
 </head>
 <body>
 
-<!-- Sidebar -->
 <div class="sidebar">
     <h3 class="sidebar-title">CRC Dashboard</h3>
     <ul class="sidebar-links">
         <li><a th:href="@{/crcDashboard}">Dashboard</a></li>
-        <li><a class="active" th:href="@{/enrollment}">Subject Enrollment</a></li>
+        <li><a class="active" th:href="@{/screenSubject}">Subject Enrollment</a></li>
         <li><a th:href="@{/visits/visitScheduling}">Visit Scheduling</a></li>
         <li><a th:href="@{/visits/crfPage}">CRFs</a></li>
         <li><a th:href="@{/queriesPage}">Queries</a></li>
@@ -22,7 +21,6 @@
     </ul>
 </div>
 
-<!-- Main Content -->
 <div class="main-content">
     <nav class="navbar">
         <div class="brand"><span class="dot"></span> Clinical Trial & Drug Development Tracking</div>
@@ -32,12 +30,14 @@
         <div class="card">
             <div class="card-title">Subject Enrollment & Consent Management</div>
             <div class="card-body">
-                <form th:action="@{/enroll}" th:object="${subject}" method="post">
+                <div class="status-message" th:if="${message != null}">
+                    <p th:text="${message}" style="color: #d32f2f; font-weight: 600;"></p>
+                </div>
+                <div class="status-message" th:if="${consentError != null}">
+                    <p th:text="${consentError}" style="color: #d32f2f; font-weight: 600; background:#fff3f3; padding:8px; border-left: 4px solid #d32f2f;"></p>
+                </div>
+                <form th:action="@{/screenSubject}" th:object="${subject}" method="post">
                     <div class="grid">
-                        <div class="field">
-                            <label for="subjectId">Subject ID <span class="required">*</span></label>
-                            <input id="subjectId" type="text" th:field="*{subjectId}" placeholder="Enter Subject ID" required>
-                        </div>
                         <div class="field">
                             <label for="protocolId">Protocol ID <span class="required">*</span></label>
                             <input id="protocolId" type="text" th:field="*{protocolId}" placeholder="Enter Protocol ID" required>
@@ -58,21 +58,14 @@
                                 <option value="Treatment A">Treatment A</option>
                             </select>
                         </div>
-                        <div class="field">
-                            <label for="subjectStatus">Subject Status <span class="required">*</span></label>
-                            <select id="subjectStatus" th:field="*{subjectStatus}" required>
-                                <option value="">Select Subject Status</option>
-                                <option value="SCREENED">SCREENED</option>
-                                <option value="ENROLLED">ENROLLED</option>
-                                <option value="COMPLETED">COMPLETED</option>
-                                <option value="WITHDRAWN">WITHDRAWN</option>
-                            </select>
-                        </div>
                     </div>
 
-                    <div class="field checkbox-row">
-                        <input id="consentCheck" type="checkbox" th:field="*{consentProvided}">
-                        <label for="consentCheck">Informed Consent Provided <span class="required">*</span></label>
+                    <div class="field checkbox-row" style="margin: 16px 0; padding: 14px; background: #eef6ff; border-left: 4px solid #2563eb; border-radius: 4px;">
+                        <input id="consentCheck" type="checkbox" th:field="*{consentProvided}" required>
+                        <label for="consentCheck" style="font-weight: 600; color: #1e3a8a;">
+                            I, the subject, have read and understood the study information and I voluntarily consent to participate in this clinical trial.
+                            <span class="required" style="color:red;">*</span>
+                        </label>
                     </div>
 
                     <div class="actions">
@@ -87,6 +80,5 @@
     <footer class="footer">&copy; 2026 Clinical Trial & Drug Development Tracking System</footer>
 </div>
 
-<script th:src="@{/js/enrollment.js}"></script>
 </body>
 </html>

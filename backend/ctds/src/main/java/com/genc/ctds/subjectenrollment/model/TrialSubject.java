@@ -1,5 +1,6 @@
 package com.genc.ctds.subjectenrollment.model;
 
+import com.genc.ctds.visitscheduling.model.VisitRecord;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.List;
 public class TrialSubject {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer subjectId;
     private Integer protocolId;
     private Integer siteId;
@@ -36,6 +38,7 @@ public class TrialSubject {
     public void setSubjectId(Integer subjectId) {
         this.subjectId = subjectId;
     }
+
 
     public Integer getProtocolId() {
         return protocolId;

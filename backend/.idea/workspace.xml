@@ -11,14 +11,8 @@
       <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/crcBackend/service/CrcService.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/subjectenrollment/model/TrialSubject.java" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/subjectenrollment/model/TrialSubject.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/subjectenrollment/service/SubjectService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/subjectenrollment/service/SubjectService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/visitscheduling/controller/VisitController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/visitscheduling/controller/VisitController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/visitscheduling/model/VisitRecord.java" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/visitscheduling/model/VisitRecord.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/visitscheduling/repository/VisitRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/visitscheduling/repository/VisitRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/visitscheduling/service/VisitService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/visitscheduling/service/VisitService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctds/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctds/src/main/resources/static/css/visitScheduling.css" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/resources/static/css/visitScheduling.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctds/src/main/resources/templates/crcDashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/resources/templates/crcDashboard.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ctds/src/main/resources/templates/crfPage.html" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/resources/templates/crfPage.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/resources/static/js/enrollment.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/resources/templates/enrollment.html" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/resources/templates/enrollment.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ctds/src/main/resources/templates/enrollmentStatus.html" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/resources/templates/enrollmentStatus.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ctds/src/main/resources/templates/queriesPage.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/ctds/src/main/resources/templates/visitScheduling.html" beforeDir="false" afterPath="$PROJECT_DIR$/ctds/src/main/resources/templates/visitScheduling.html" afterDir="false" />
@@ -74,5 +68,16 @@
       <updated>1781111554980</updated>
     </task>
     <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/subjectenrollment/controller/SubjectController.java</url>
+          <line>10</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
