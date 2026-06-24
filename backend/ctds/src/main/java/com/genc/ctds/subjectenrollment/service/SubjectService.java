@@ -25,6 +25,6 @@ public class SubjectService {
         return repository.countBySubjectStatus(SubjectStatus.SCREENED);
     }
     public long countWithdrawn() {
-        return repository.countBySubjectStatus(SubjectStatus.WITHDRAWN);
+        return repository.countBySubjectStatus("WITHDRAWN");
     }
 }

@@ -1,6 +1,5 @@
 package com.genc.ctds.subjectenrollment.model;
 
-import com.genc.ctds.visitscheduling.model.VisitRecord;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
