@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protocol Management</title>
+    <link rel="stylesheet" href="protocolPage.css">
+</head>
+<body>
+
+    <div class="layout">
+
+        <!-- Left Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="brand">
+                <span class="brand-icon">&#9877;</span>
+                <span class="brand-text">CTDS</span>
+            </div>
+            <nav class="nav">
+                <a href="#" class="nav-item" data-page="users">
+                    <span class="nav-icon">&#128100;</span>
+                    <span>User Management</span>
+                </a>
+                <a href="#" class="nav-item active" data-page="protocols">
+                    <span class="nav-icon">&#128203;</span>
+                    <span>Protocol Management</span>
+                </a>
+                <a href="sitePage.html" class="nav-item" data-page="sites">
+                    <span class="nav-icon">&#127973;</span>
+                    <span>Site Management</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <p>&copy; 2026 CTDS</p>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main">
+
+            <header class="topbar">
+                <div>
+                    <h1>Protocol Management</h1>
+                    <p class="subtitle">Create and manage clinical trial protocols</p>
+                </div>
+                <button class="btn primary" id="openFormBtn">
+                    <span class="plus">&#43;</span> Add Protocol
+                </button>
+            </header>
+
+            <!-- Stat cards -->
+            <section class="stats">
+                <div class="stat-card">
+                    <span class="stat-label">Total Protocols</span>
+                    <span class="stat-value" id="statTotal">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Active</span>
+                    <span class="stat-value" id="statActive">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Draft</span>
+                    <span class="stat-value" id="statDraft">0</span>
+                </div>
+            </section>
+
+            <!-- Protocol List -->
+            <section class="card list-card">
+                <div class="list-header">
+                    <h3>Registered Protocols</h3>
+                    <input type="text" id="searchInput" class="search" placeholder="Search by title, area, or phase...">
+                </div>
+
+                <div class="table-wrap">
+                    <table id="protocolTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Title</th>
+                                <th>Therapeutic Area</th>
+                                <th>Phase</th>
+                                <th>Status</th>
+                                <th>Version</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="protocolTableBody">
+                            <!-- Rows injected by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Add Protocol Modal (opens on same page) -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Add New Protocol</h3>
+                <button class="close-btn" id="closeFormBtn">&times;</button>
+            </div>
+
+            <form id="protocolForm" class="modal-body">
+                <div class="field">
+                    <label for="trialTitle">Trial Title <span class="req">*</span></label>
+                    <input type="text" id="trialTitle" required>
+                </div>
+
+                <div class="field">
+                    <label for="therapeuticArea">Therapeutic Area <span class="req">*</span></label>
+                    <input type="text" id="therapeuticArea" required>
+                </div>
+
+                <div class="row">
+                    <div class="field">
+                        <label for="phase">Phase <span class="req">*</span></label>
+                        <select id="phase" required>
+                            <option value="">Select phase</option>
+                            <option value="PHASE_I">PHASE_I</option>
+                            <option value="PHASE_II">PHASE_II</option>
+                            <option value="PHASE_III">PHASE_III</option>
+                            <option value="PHASE_IV">PHASE_IV</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="startDate">Start Date <span class="req">*</span></label>
+                        <input type="date" id="startDate" required>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="versionNumber">Version Number <span class="req">*</span></label>
+                    <input type="number" id="versionNumber" min="1" value="1" required>
+                </div>
+
+                <p class="form-note">New protocols start as <strong>DRAFT</strong>. Status is managed automatically as the protocol progresses.</p>
+
+                <div class="field">
+                    <label for="inclusionCriteria">Inclusion Criteria <span class="optional">(optional)</span></label>
+                    <textarea id="inclusionCriteria" rows="3" placeholder="Enter inclusion criteria"></textarea>
+                </div>
+
+                <div class="field">
+                    <label for="exclusionCriteria">Exclusion Criteria <span class="optional">(optional)</span></label>
+                    <textarea id="exclusionCriteria" rows="3" placeholder="Enter exclusion criteria"></textarea>
+                </div>
+
+                <p id="formMessage" class="message"></p>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn ghost" id="cancelFormBtn">Cancel</button>
+                    <button type="submit" class="btn primary">Save Protocol</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="protocolPage.js"></script>
+</body>
+</html>
+
+

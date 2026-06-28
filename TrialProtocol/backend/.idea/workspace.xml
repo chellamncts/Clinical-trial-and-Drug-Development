@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="9cb96379-7d43-45ff-901e-6b45816e154c" name="Changes" comment="Added Role Based Login and Implemented TrialProtocol page">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/adverseevent/controller/AdverseEventController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/adverseevent/model/AdverseEvent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/adverseevent/repository/AdverseEventRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/adverseevent/service/AdverseEventService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/samplelog/controller/SampleLogController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/samplelog/model/SampleLogController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/samplelog/repository/SampleLogRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/samplelog/service/SampleLogService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/subjectenrollment/controller/SubjectEnrollmentController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/subjectenrollment/model/SubjectEnrollment.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/subjectenrollment/repository/SubjectEnrollmentRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/subjectenrollment/service/SubjectEnrollmentService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/visitscheduling/controller/VisitSchedulingController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/visitscheduling/model/VisitScheduling.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/visitscheduling/repository/VisitSchedulingRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ctds/src/main/java/com/genc/ctds/visitscheduling/service/VisitSchedulingService.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CopilotPersistence">
+    <persistenceIdMap>
+      <entry key="_C:/Users/2503723/NewFile/ThirdFolder/Clinical-trial-and-Drug-Development/backend" value="3EyQjoD0k1m1AzYv48QGZNpAw6v" />
+    </persistenceIdMap>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+        <option value="HTML File" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="3EyQjoD0k1m1AzYv48QGZNpAw6v" />
+  <component name="ProjectSessionTemplates">
+    <option name="panelTemplate">
+      <template>
+        <option name="modeId" value="file:///c%3A/snapshot/copilot-language-server-internal/dist/assets/agents/Plan.agent.md" />
+        <option name="model">
+          <model>
+            <option name="modelType" value="builtin_family" />
+            <option name="modelValue" value="auto" />
+          </model>
+        </option>
+        <option name="targetType" value="LOCAL" />
+      </template>
+    </option>
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.CtdsApplication.executor&quot;: &quot;Run&quot;,
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;nithish&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/2503723/NewFile/ThirdFolder/Clinical-trial-and-Drug-Development/backend/ctds/src/main/resources/static/asset&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\2503723\NewFile\ThirdFolder\Clinical-trial-and-Drug-Development\backend\ctds\src\main\resources\static\asset" />
+      <recent name="C:\Users\2503723\NewFile\ThirdFolder\Clinical-trial-and-Drug-Development\backend\ctds\src\main\resources\static" />
+    </key>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9cb96379-7d43-45ff-901e-6b45816e154c" name="Changes" comment="" />
+      <created>1781148466926</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1781148466926</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Added Role Based Login and Implemented TrialProtocol page" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Role Based Login and Implemented TrialProtocol page" />
+  </component>
+</project>

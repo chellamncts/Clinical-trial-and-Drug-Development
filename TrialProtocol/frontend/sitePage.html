@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site Management</title>
+    <link rel="stylesheet" href="sitePage.css">
+</head>
+<body>
+
+    <div class="layout">
+
+        <!-- Left Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="brand">
+                <span class="brand-icon">&#9877;</span>
+                <span class="brand-text">CTDS</span>
+            </div>
+            <nav class="nav">
+                <a href="#" class="nav-item" data-page="users">
+                    <span class="nav-icon">&#128100;</span>
+                    <span>User Management</span>
+                </a>
+                <a href="protocolPage.html" class="nav-item" data-page="protocols">
+                    <span class="nav-icon">&#128203;</span>
+                    <span>Protocol Management</span>
+                </a>
+                <a href="#" class="nav-item active" data-page="sites">
+                    <span class="nav-icon">&#127973;</span>
+                    <span>Site Management</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <p>&copy; 2026 CTDS</p>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main">
+
+            <header class="topbar">
+                <div>
+                    <h1>Site Management</h1>
+                    <p class="subtitle">Register clinical sites and activate them once ready</p>
+                </div>
+                <button class="btn primary" id="openFormBtn">
+                    <span class="plus">&#43;</span> Register Site
+                </button>
+            </header>
+
+            <!-- Stat cards -->
+            <section class="stats">
+                <div class="stat-card">
+                    <span class="stat-label">Total Sites</span>
+                    <span class="stat-value" id="statTotal">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Active</span>
+                    <span class="stat-value" id="statActive">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Ready</span>
+                    <span class="stat-value" id="statReady">0</span>
+                </div>
+            </section>
+
+            <!-- Site List -->
+            <section class="card list-card">
+                <div class="list-header">
+                    <h3>Registered Sites</h3>
+                    <input type="text" id="searchInput" class="search" placeholder="Search by code, name, or location...">
+                </div>
+
+                <div class="table-wrap">
+                    <table id="siteTable">
+                        <thead>
+                            <tr>
+                                <th>Site Code</th>
+                                <th>Site Name</th>
+                                <th>Protocol</th>
+                                <th>Readiness</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="siteTableBody">
+                            <!-- Rows injected by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Register Site Modal (opens on same page) -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Register Site</h3>
+                <button class="close-btn" id="closeFormBtn">&times;</button>
+            </div>
+
+            <form id="siteForm" class="modal-body">
+                <div class="field">
+                    <label for="protocolId">Linked Protocol <span class="req">*</span></label>
+                    <select id="protocolId" required>
+                        <option value="">Select protocol</option>
+                        <!-- Options injected by JS -->
+                    </select>
+                </div>
+
+                <div class="row">
+                    <div class="field">
+                        <label for="siteCode">Site Code <span class="req">*</span></label>
+                        <input type="text" id="siteCode" required>
+                    </div>
+                    <div class="field">
+                        <label for="siteName">Site Name <span class="req">*</span></label>
+                        <input type="text" id="siteName" required>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="field">
+                        <label for="location">Location <span class="req">*</span></label>
+                        <input type="text" id="location" required>
+                    </div>
+                    <div class="field">
+                        <label for="principalInvestigatorName">Principal Investigator <span class="req">*</span></label>
+                        <input type="text" id="principalInvestigatorName" required>
+                    </div>
+                </div>
+
+                <div class="checks">
+                    <p class="checks-title">Readiness checklist <span class="optional">(optional)</span></p>
+                    <label class="check">
+                        <input type="checkbox" id="ethicsApproved">
+                        <span>Ethics committee approval completed</span>
+                    </label>
+                    <label class="check">
+                        <input type="checkbox" id="staffTrained">
+                        <span>Site staff training completed</span>
+                    </label>
+                    <label class="check">
+                        <input type="checkbox" id="pharmacyReady">
+                        <span>Pharmacy / investigational product ready</span>
+                    </label>
+                </div>
+
+                <p id="formMessage" class="message"></p>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn ghost" id="cancelFormBtn">Cancel</button>
+                    <button type="submit" class="btn primary">Register Site</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="sitePage.js"></script>
+</body>
+</html>
+
