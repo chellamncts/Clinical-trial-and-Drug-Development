@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subject Enrollment - Clinical Trial</title>
+
+    <link rel="stylesheet" href="/css/enrollment.css">
+</head>
+<body>
+
+<div class="sidebar">
+    <h3 class="sidebar-title">CRC Dashboard</h3>
+    <ul class="sidebar-links">
+        <li><a href="#">Dashboard</a></li>
+        <li><a class="active" href="#">Subject Enrollment</a></li>
+        <li><a href="#">Visit Scheduling</a></li>
+        <li><a href="#">CRFs</a></li>
+        <li><a href="#">Queries</a></li>
+        <li><a href="#">Reports</a></li>
+        <li><a href="#">Logout</a></li>
+    </ul>
+</div>
+
+<div class="main-content">
+    <nav class="navbar">
+        <div class="brand">
+            <span class="dot"></span> Clinical Trial & Drug Development Tracking
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-title">Subject Enrollment & Consent Management</div>
+            <div class="card-body">
+
+                <p id="message" style="color:red;"></p>
+
+                <form id="subjectForm">
+
+                    <div class="grid">
+
+                        <!-- ✅ REQUIRED ADDED -->
+                        <div class="field">
+                            <label>Protocol ID *</label>
+                            <input type="number"
+                                   id="protocolId"
+                                   placeholder="Enter Protocol ID"
+                                   required>
+                        </div>
+
+                        <!-- ✅ REQUIRED ADDED -->
+                        <div class="field">
+                            <label>Site ID *</label>
+                            <input type="number"
+                                   id="siteId"
+                                   placeholder="Enter Site ID"
+                                   required>
+                        </div>
+
+                        <!-- ✅ REQUIRED ADDED -->
+                        <div class="field">
+                            <label>Enrollment Date *</label>
+                            <input type="date"
+                                   id="enrollmentDate"
+                                   required>
+                        </div>
+
+                        <!-- ✅ REQUIRED ADDED -->
+                        <div class="field">
+                            <label>Study Arm *</label>
+                            <select id="studyArm" required>
+                                <option value="">Select Arm</option>
+                                <option value="Control">Control</option>
+                                <option value="Treatment A">Treatment A</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <!-- ✅ REQUIRED ADDED FOR CONSENT -->
+                    <div class="field checkbox-row"
+                         style="margin:16px 0;padding:14px;background:#eef6ff;border-left:4px solid #2563eb;border-radius:4px;">
+
+                        <input type="checkbox"
+                               id="consent"
+                               required>
+
+                        <label style="font-weight:600;color:#1e3a8a;">
+                            I, the subject, have read and understood the study information and I voluntarily consent to participate in this clinical trial.
+                        </label>
+                    </div>
+
+                    <div class="actions">
+                        <button class="btn" type="submit">Submit</button>
+                        <a href="enrollmentStatus.html" class="btn btn-outline">View Status</a>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        © 2026 Clinical Trial & Drug Development Tracking System
+    </footer>
+</div>
+
+<script src="/js/enrollment.js"></script>
+
+</body>
+</html>
