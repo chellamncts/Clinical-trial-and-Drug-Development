@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Clinical Trial App</title>
+    <link rel="stylesheet" href="loginPage.css">
+</head>
+<body>
+
+    <div class="login-wrapper">
+
+        <!-- Visual side -->
+        <div class="login-visual">
+            <span class="visual-icon">&#9877;</span>
+            <h2>Welcome to the<br>Clinical Trial App</h2>
+            <p>Securely manage trial protocols, sites, and study data in one collaborative platform.</p>
+        </div>
+
+        <!-- Form side -->
+        <div class="login-form-panel">
+            <div class="brand">
+                <span class="brand-icon">&#9877;</span>
+                <span>CTDS</span>
+            </div>
+            <h4>Welcome Back</h4>
+            <p class="subtitle">Please enter your credentials to continue</p>
+
+            <div id="alertBox" class="alert"></div>
+
+            <form id="loginForm">
+                <div class="field">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Enter your username" required autocomplete="username">
+                </div>
+
+                <div class="field">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required autocomplete="current-password">
+                </div>
+
+                <button type="submit" class="btn primary" id="loginBtn">LOGIN</button>
+                <a href="homePage.html" class="btn ghost">BACK</a>
+            </form>
+        </div>
+
+    </div>
+
+    <script src="loginPage.js"></script>
+</body>
+</html>
+
