@@ -14,14 +14,16 @@ public class SampleLog {
 
     private int subjectId;
 
+    @Column(length = 50)
     private String sampleType;
 
     private LocalDate collectionDate;
 
+    @Column(length = 255)
     private String labResult;
 
-
     @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "ENUM('COLLECTED','IN_TRANSIT','ANALYZED','DESTROYED')")
     private SampleStatus sampleStatus;
 
     public SampleLog() {
@@ -63,6 +65,4 @@ public class SampleLog {
             return displayName;
         }
     }
-
-
 }
