@@ -33,7 +33,9 @@ body {
   background: var(--green);
   color: var(--white);
   padding: 20px;
+  box-sizing: border-box; /* match enrollment.css so total width = 220px */
   box-shadow: var(--shadow);
+  z-index: 100;
 }
 
 .sidebar-title {
@@ -67,8 +69,8 @@ body {
 
 /* ---------- Main Content ---------- */
 .main-content {
-    margin-left: 240px;
-    width: calc(100% - 240px);
+    margin-left: 220px;
+    width: calc(100% - 220px);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -306,6 +308,48 @@ input:focus, select:focus {
     flex-shrink: 0;
     width: 100%;
     font-size: 14px;
+}
+
+/* ---------- Modal (CRF popup) ---------- */
+.modal {
+    display: none;            /* hidden until "Fill CRF" is clicked */
+    position: fixed;
+    inset: 0;                 /* top/right/bottom/left: 0 */
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.5);
+    overflow-y: auto;
+    padding: 40px 16px;
+}
+
+.modal-content {
+    background: var(--white);
+    max-width: 560px;
+    margin: 0 auto;
+    border-radius: 14px;
+    padding: 28px 32px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--green-line);
+    position: relative;
+}
+
+.modal-content h3 {
+    margin-top: 0;
+    color: var(--green-dark);
+}
+
+.close {
+    position: absolute;
+    top: 14px;
+    right: 18px;
+    font-size: 26px;
+    font-weight: bold;
+    color: var(--muted);
+    cursor: pointer;
+    line-height: 1;
+}
+
+.close:hover {
+    color: var(--danger);
 }
 
 /* ---------- Responsive ---------- */

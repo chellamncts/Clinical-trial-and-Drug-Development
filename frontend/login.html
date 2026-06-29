@@ -31,18 +31,18 @@
           <h4>Welcome Back</h4>
         </div>
 
-        <form>
+        <form id="loginForm">
           <div class="mb-3">
             <label>User ID</label>
-            <input type="text" class="form-control" placeholder="Enter ID">
+            <input type="text" class="form-control" placeholder="Enter ID" required>
           </div>
 
           <div class="mb-3">
             <label>Password</label>
-            <input type="password" class="form-control" placeholder="Enter password">
+            <input type="password" class="form-control" placeholder="Enter password" required>
           </div>
 
-          <button class="btn btn-login w-100">LOGIN</button>
+          <button class="btn btn-login w-100" type="submit">LOGIN</button>
         </form>
 
       </div>
@@ -50,6 +50,14 @@
 
   </div>
 </div>
+
+<script>
+  // No authentication backend yet — route the user into the CRC dashboard.
+  document.getElementById("loginForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    window.location.href = "/crcDashboard.html";
+  });
+</script>
 
 </body>
 </html>

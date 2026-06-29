@@ -1,5 +1,6 @@
 package com.genc.ctds.subjectenrollment.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.genc.ctds.visitscheduling.model.VisitRecord;
 import jakarta.persistence.*;
 import java.time.LocalDate;
@@ -21,6 +22,7 @@ public class TrialSubject {
     private boolean consentProvided;
 
     @OneToMany(mappedBy = "trialSubject", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<VisitRecord> visitRecords;
 
     public List<VisitRecord> getVisitRecords() {

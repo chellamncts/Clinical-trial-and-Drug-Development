@@ -26,6 +26,7 @@ body {
     color: var(--white);
     padding: 20px;
     box-shadow: var(--shadow);
+    z-index: 100;
 }
 
 .sidebar-title {
@@ -59,7 +60,8 @@ body {
 
 /* ---------- Main Content ---------- */
 .main-content {
-    margin-left: 240px; /* leave space for sidebar */
+    margin-left: 220px; /* match sidebar width - no gap */
+    width: calc(100% - 220px);
     padding: 20px;
 }
 

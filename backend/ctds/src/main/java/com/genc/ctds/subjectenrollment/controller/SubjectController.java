@@ -2,64 +2,65 @@ package com.genc.ctds.subjectenrollment.controller;
 
 import com.genc.ctds.subjectenrollment.model.TrialSubject;
 import com.genc.ctds.subjectenrollment.service.SubjectService;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.time.LocalDate;
-import java.util.List;
 
-@Controller
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * REST API for subject enrollment, consumed by the static frontend pages
+ * (enrollment.html / enrollmentStatus.html) via fetch().
+ */
+@RestController
+@RequestMapping("/api/subjects")
 public class SubjectController {
+
     private final SubjectService service;
+
     public SubjectController(SubjectService service) {
         this.service = service;
     }
 
-    @GetMapping("/screenSubject")
-    public String screenSubject(Model model) {
-        model.addAttribute("subject", new TrialSubject());
-        return "enrollment";
+    // List all subjects
+    @GetMapping
+    public List<TrialSubject> getAllSubjects() {
+        return service.getAllSubjects();
     }
 
-    @PostMapping("/screenSubject")
-    public String saveScreenedSubject(Model model, @ModelAttribute TrialSubject subject) {
+    // Screen a new subject
+    @PostMapping("/screen")
+    public ResponseEntity<?> screenSubject(@RequestBody TrialSubject subject) {
         if (!subject.isConsentProvided()) {
-            model.addAttribute("subject", subject);
-            model.addAttribute("consentError", "Subject must personally provide informed consent before screening.");
-            return "enrollment";
+            return ResponseEntity.badRequest().body(
+                    Map.of("message",
+                            "Subject must personally provide informed consent before screening."));
         }
         if (subject.getEnrollmentDate() == null) {
             subject.setEnrollmentDate(LocalDate.now());
         }
         service.screenSubject(subject);
-        List<TrialSubject> subjects = service.getAllSubjects();
-        model.addAttribute("subjects", subjects);
-        return "enrollmentStatus";
+        return ResponseEntity.ok(subject);
     }
 
-    @PostMapping("/enrollSubject")
-    public String enrollSubject(@RequestParam Integer subjectId, Model model) {
+    // Enroll a screened subject
+    @PostMapping("/{subjectId}/enroll")
+    public ResponseEntity<?> enrollSubject(@PathVariable Integer subjectId) {
         boolean enrolled = service.enrollSubject(subjectId);
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", enrolled);
         if (!enrolled) {
-            model.addAttribute("message", "Consent must be captured before enrollment.");
+            response.put("message", "Consent must be captured before enrollment.");
         }
-        List<TrialSubject> subjects = service.getAllSubjects();
-        model.addAttribute("subjects", subjects);
-        return "enrollmentStatus";
+        return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/withdrawSubject")
-    public String withdrawSubject(@RequestParam Integer subjectId, Model model) {
+    // Withdraw a subject
+    @PostMapping("/{subjectId}/withdraw")
+    public ResponseEntity<?> withdrawSubject(@PathVariable Integer subjectId) {
         service.withdrawSubject(subjectId);
-        List<TrialSubject> subjects = service.getAllSubjects();
-        model.addAttribute("subjects", subjects);
-        return "enrollmentStatus";
-    }
-
-    @GetMapping("/enrollmentStatus")
-    public String viewEnrollmentStatus(Model model) {
-        List<TrialSubject> subjects = service.getAllSubjects();
-        model.addAttribute("subjects", subjects);
-        return "enrollmentStatus";
+        return ResponseEntity.ok(Map.of("success", true));
     }
 }

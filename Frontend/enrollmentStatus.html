@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enrollment Status - Clinical Trial</title>
+    <link rel="stylesheet" href="/css/enrollmentStatus.css">
+</head>
+<body>
+
+<div class="sidebar">
+    <h3 class="sidebar-title">Menu</h3>
+    <ul class="sidebar-links">
+        <li><a href="/enrollment.html">Subject Enrollment</a></li>
+        <li><a href="/crcDashboard.html">Dashboard</a></li>
+        <li><a href="/login.html">Logout</a></li>
+    </ul>
+</div>
+
+<div class="main-content">
+    <nav class="navbar">
+        <div class="brand"><span class="dot"></span> Clinical Trial &amp; Drug Development Tracking</div>
+    </nav>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-title">
+                <span class="success-icon">&#10003;</span> All Enrolled Subjects
+            </div>
+            <div class="card-body">
+                <div class="status-message" id="statusMessage" style="display:none;">
+                    <p id="statusText" style="color: #d32f2f; font-weight: 600;"></p>
+                </div>
+                <div class="status-message">
+                    <p>Below is the list of all subjects enrolled in the clinical trial.</p>
+                </div>
+
+                <table class="styled-table">
+                    <thead>
+                    <tr>
+                        <th>Subject ID</th>
+                        <th>Protocol ID</th>
+                        <th>Site ID</th>
+                        <th>Enrollment Date</th>
+                        <th>Study Arm</th>
+                        <th>Subject Status</th>
+                        <th>Consent Provided</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody id="subjectsTableBody">
+                    <!-- rows injected by JS -->
+                    </tbody>
+                </table>
+
+                <div class="actions">
+                    <a href="/enrollment.html" class="btn"> Back to Enrollment</a>
+                    <a href="/crcDashboard.html" class="btn btn-outline">Go to Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">&copy; 2026 Clinical Trial &amp; Drug Development Tracking System</footer>
+</div>
+
+<script>
+    function showMessage(msg) {
+        const box = document.getElementById("statusMessage");
+        const text = document.getElementById("statusText");
+        text.textContent = msg;
+        box.style.display = msg ? "block" : "none";
+    }
+
+    function statusBadge(status) {
+        const cls = status === 'ENROLLED' ? 'badge-completed'
+                  : status === 'SCREENED' ? 'badge-screened'
+                  : 'badge-pending';
+        return `<span class="badge ${cls}">${status || 'N/A'}</span>`;
+    }
+
+    function actionCell(s) {
+        let html = '<div style="display:flex; gap:5px; flex-wrap:wrap;">';
+
+        if (s.subjectStatus === 'SCREENED' && s.consentProvided === true) {
+            html += `<button onclick="enrollSubject(${s.subjectId})"
+                        style="background-color:#1976D2;color:#fff;padding:5px 10px;border:none;border-radius:4px;cursor:pointer;">
+                        Enroll</button>`;
+        }
+
+        html += s.consentProvided
+            ? '<span style="color:#4CAF50;font-weight:bold;padding:5px;">&#10003; Consent Captured</span>'
+            : '<span style="color:#d32f2f;font-weight:bold;padding:5px;">&#10007; Consent Missing</span>';
+
+        if (s.subjectStatus !== 'WITHDRAWN') {
+            html += `<button onclick="withdrawSubject(${s.subjectId})"
+                        style="background-color:#f44336;color:#fff;padding:5px 10px;border:none;border-radius:4px;cursor:pointer;margin-left:5px;">
+                        Withdraw</button>`;
+        } else {
+            html += '<span style="color:#f44336;font-weight:bold;padding:5px;">&#10007; Withdrawn</span>';
+        }
+
+        html += '</div>';
+        return html;
+    }
+
+    async function loadSubjects() {
+        const body = document.getElementById("subjectsTableBody");
+        try {
+            const res = await fetch("/api/subjects");
+            const subjects = await res.json();
+            if (!subjects || subjects.length === 0) {
+                body.innerHTML = `<tr><td colspan="8" style="text-align:center;padding:30px;color:#5f6f67;">No subjects enrolled yet.</td></tr>`;
+                return;
+            }
+            body.innerHTML = subjects.map(s => `
+                <tr>
+                    <td>${s.subjectId}</td>
+                    <td>${s.protocolId ?? '-'}</td>
+                    <td>${s.siteId ?? '-'}</td>
+                    <td>${s.enrollmentDate ?? '-'}</td>
+                    <td>${s.studyArm ?? '-'}</td>
+                    <td>${statusBadge(s.subjectStatus)}</td>
+                    <td>${s.consentProvided ? 'Yes' : 'No'}</td>
+                    <td>${actionCell(s)}</td>
+                </tr>`).join('');
+        } catch (e) {
+            console.error("Failed to load subjects", e);
+        }
+    }
+
+    async function enrollSubject(subjectId) {
+        const res = await fetch(`/api/subjects/${subjectId}/enroll`, { method: "POST" });
+        const data = await res.json().catch(() => ({}));
+        showMessage(data.success === false ? (data.message || "Could not enroll subject.") : "");
+        loadSubjects();
+    }
+
+    async function withdrawSubject(subjectId) {
+        if (!confirm("Are you sure you want to withdraw this subject?")) return;
+        await fetch(`/api/subjects/${subjectId}/withdraw`, { method: "POST" });
+        loadSubjects();
+    }
+
+    loadSubjects();
+</script>
+
+</body>
+</html>
+

@@ -63,21 +63,23 @@
 
 </body>
 <script>
-    const apiBase = "http://localhost:8081/visits";
+    // Same-origin backend (Spring serves this page). Visits REST API base.
+    const apiBase = "/api/visits";
 
     // Handle form submission
     document.getElementById("visitForm").addEventListener("submit", async function(e) {
     e.preventDefault();
 
     const visitData = {
-      subjectId: document.getElementById("subjectId").value,
       visitName: document.getElementById("visitName").value,
       visitDate: document.getElementById("visitDate").value,
-      crfStatus: document.getElementById("crfStatus").value
+      trialSubject: {
+        subjectId: parseInt(document.getElementById("subjectId").value, 10)
+      }
     };
 
     try {
-      const response = await fetch("http://localhost:8081/visits/schedule", {
+      const response = await fetch(apiBase + "/schedule", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(visitData)
@@ -85,9 +87,11 @@
 
       if (response.ok) {
         const result = await response.json();
-        alert("Visit scheduled successfully! ID: " + result.visitId);
+        alert("Visit scheduled successfully! ID: " + result.id);
+        this.reset();
       } else {
-        alert("Error scheduling visit");
+        const err = await response.text();
+        alert("Error scheduling visit: " + err);
       }
     } catch (err) {
       console.error(err);
@@ -98,14 +102,15 @@
     // Load visit history
     async function loadVisitHistory(subjectId) {
       try {
-        const response = await fetch(apiBase + "/history/" + subjectId);
+        const response = await fetch(apiBase + "/search?subjectId=" + subjectId);
         if (response.ok) {
           const visits = await response.json();
           const tbody = document.querySelector("#visitTable tbody");
+          if (!tbody) return;
           tbody.innerHTML = "";
           visits.forEach(v => {
             const row = `<tr>
-              <td>${v.visitId}</td>
+              <td>${v.id}</td>
               <td>${v.subjectId}</td>
               <td>${v.visitName}</td>
               <td>${v.visitDate}</td>

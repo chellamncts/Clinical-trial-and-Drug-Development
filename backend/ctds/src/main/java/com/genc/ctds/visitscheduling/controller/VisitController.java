@@ -3,54 +3,47 @@ package com.genc.ctds.visitscheduling.controller;
 import com.genc.ctds.visitscheduling.model.VisitRecord;
 import com.genc.ctds.visitscheduling.service.VisitService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
-@Controller
-@RequestMapping("/visits")
+@RestController
+@RequestMapping("/api/visits")
 public class VisitController {
 
     @Autowired
     private VisitService visitService;
 
-    @GetMapping("/visitScheduling")
-    public String showVisitPage(Model model) {
-        model.addAttribute("visit", new VisitRecord());
-        return "visitScheduling";
+    // GET all visits  ->  JSON list
+    @GetMapping
+    public List<VisitRecord> getAllVisits() {
+        return visitService.getVisitHistory();
     }
 
+    // Schedule a visit  ->  returns saved VisitRecord
     @PostMapping("/schedule")
-    public String scheduleVisit(@ModelAttribute VisitRecord visit) {
-        visitService.scheduleVisit(visit);
-        return "redirect:/visits/crfPage";
+    public ResponseEntity<VisitRecord> scheduleVisit(@RequestBody VisitRecord visit) {
+        return ResponseEntity.ok(visitService.scheduleVisit(visit));
     }
 
-    @GetMapping("/crfPage")
-    public String showAllVisits(Model model) {
-        model.addAttribute("visits", visitService.getVisitHistory());
-        return "crfPage";
-    }
-
+    // Search by subjectId  ->  JSON list
     @GetMapping("/search")
-    public String searchVisits(@RequestParam("subjectId") int subjectId, Model model) {
-        model.addAttribute("visits", visitService.findBySubjectId(subjectId));
-        return "crfPage";
+    public List<VisitRecord> searchVisits(@RequestParam("subjectId") int subjectId) {
+        return visitService.findBySubjectId(subjectId);
     }
 
+    // Record CRF data  ->  no body needed, 200 OK
     @PostMapping("/recordCrf/{id}")
-    public String recordCrf(@PathVariable("id") int id,
-                            @RequestParam Map<String, String> crfData) {
+    public ResponseEntity<Void> recordCrf(@PathVariable("id") int id,
+                                          @RequestBody Map<String, String> crfData) {
         visitService.recordCrfData(id, crfData);
-        return "redirect:/visits/crfPage";
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/lock/{visitId}")
-    public String lockCrfFromPage(@PathVariable int visitId) {
-        visitService.lockCrf(visitId);
-        return "redirect:/visits/crfPage";
+    public ResponseEntity<VisitRecord> lockCrf(@PathVariable int visitId) {
+        return ResponseEntity.ok(visitService.lockCrf(visitId));
     }
-
 }

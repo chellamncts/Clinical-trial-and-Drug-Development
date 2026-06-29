@@ -18,6 +18,7 @@ public interface VisitRepository extends JpaRepository<VisitRecord, Integer> {
 
     int countByCrfStatus(CrfStatus crfStatus);
 
+
     @Query("SELECT v.visitDate, COUNT(v) FROM VisitRecord v GROUP BY v.visitDate ORDER BY v.visitDate")
     List<Object[]> countVisitsByDate();
 }

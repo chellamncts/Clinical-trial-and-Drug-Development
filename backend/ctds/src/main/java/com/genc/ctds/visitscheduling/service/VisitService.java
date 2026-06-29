@@ -67,6 +67,7 @@ public class VisitService {
         visitRepository.save(visit);
     }
 
+
     public VisitRecord lockCrf(int visitId) {
         VisitRecord visit = visitRepository.findById(visitId)
                 .orElseThrow(() -> new RuntimeException("Visit not found: " + visitId));
