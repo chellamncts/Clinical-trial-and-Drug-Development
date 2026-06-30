@@ -1,9 +1,0 @@
-com\genc\inventoryservice\model\InvestigationalProductInventory.class
-com\genc\inventoryservice\model\InvestigationalProductInventory$ColdChainStatus.class
-com\genc\inventoryservice\repository\InvestigationalProductInventoryRepository.class
-com\genc\inventoryservice\InventoryServiceApplication.class
-com\genc\inventoryservice\service\InventoryService.class
-com\genc\inventoryservice\controller\InventoryController.class
-com\genc\inventoryservice\dto\DispenseRequest.class
-com\genc\inventoryservice\model\DispenseLog.class
-com\genc\inventoryservice\exception\GlobalExceptionHandler.class
