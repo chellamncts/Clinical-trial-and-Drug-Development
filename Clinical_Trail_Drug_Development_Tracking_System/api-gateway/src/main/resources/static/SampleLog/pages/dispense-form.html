@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dispense IP - Lab Sample Tracking</title>
+    <link rel="stylesheet" href="/app.css">
+</head>
+<body>
+<header class="topbar">
+    <div class="topbar-brand">Clinical Trial &amp; Drug Development Tracking System</div>
+    <nav class="topbar-nav">
+        <a href="/UserForm" class="{{navUserFormClass}}">Add Sample</a>
+        <a href="/sample/list" class="{{navListClass}}">All Samples</a>
+        <a href="/sample/search-form" class="{{navSearchClass}}">Search</a>
+        <a href="/sample/inventory" class="{{navInventoryClass}}">Inventory</a>
+        <a href="/sample/ip/dispense-form" class="{{navDispenseClass}}">Dispense IP</a>
+    </nav>
+</header>
+<div class="app-shell">
+    <aside class="sidebar"></aside>
+    <main class="main">
+        <div class="pg-hdr">
+            <h1>Dispense Investigational Product</h1>
+            <p>Record IP dispensing to a trial subject and update accountability log.</p>
+        </div>
+        {{successAlert}}
+        {{errorAlert}}
+        <div class="card">
+            <div class="card-hdr"><span class="card-hdr-title">Dispense Record</span></div>
+            <div class="card-body">
+                <form action="/sample/ip/dispense-action" method="post">
+                    <div class="form-grid">
+                        <div class="field">
+                            <label for="inventoryId">Select Drug (Inventory)</label>
+                            <select id="inventoryId" name="inventoryId" required>
+                                <option value="">Select Drug</option>
+                                {{dispenseOptions}}
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="subjectId">Subject ID</label>
+                            <input id="subjectId" name="subjectId" type="number" min="1" required>
+                        </div>
+                        <div class="field">
+                            <label for="quantity">Quantity</label>
+                            <input id="quantity" name="quantity" type="number" min="1" value="1" required>
+                        </div>
+                        <div class="field">
+                            <label for="dispensedBy">Dispensed By</label>
+                            <input id="dispensedBy" name="dispensedBy" type="text" required>
+                        </div>
+                        <div class="field field-full">
+                            <label for="dispensingLocation">Dispensing Location</label>
+                            <input id="dispensingLocation" name="dispensingLocation" type="text" required>
+                        </div>
+                    </div>
+                    <div class="btn-bar">
+                        <a class="btn btn-ghost" href="/sample/inventory">Cancel</a>
+                        <button class="btn btn-primary" type="submit">Dispense</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-hdr"><span class="card-hdr-title">Current Stock Reference</span></div>
+            <div class="card-body">
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>ID</th><th>Product</th><th>Batch</th><th>Received</th><th>Dispensed</th><th>Available</th><th>Cold Chain</th>
+                        </tr>
+                        </thead>
+                        <tbody>{{inventoryRows}}</tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+<footer class="footer">&copy; 2026 Clinical Trial &amp; Drug Development Tracking System</footer>
+</body>
+</html>
+

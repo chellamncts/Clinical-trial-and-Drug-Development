@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lab Sample &amp; IP Tracking · Clinical Trial Tracker</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+  <link rel="stylesheet" href="../home/theme.css" />
+  <link rel="stylesheet" href="../TrialProtocol/admin.css" />
+  <link rel="stylesheet" href="lab.css" />
+  <link rel="stylesheet" href="../home/premium.css" />
+  <style>
+    .req { color: #ef4444; font-weight: 700; margin-left: 2px; }
+  </style>
+</head>
+<body class="admin">
+
+  <!-- ── Sidebar ── -->
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="brand-mark">LS</span>
+      <span>Lab &amp; IP Tracking</span>
+    </div>
+    <nav class="side-nav" aria-label="Lab Sample sections">
+      <button class="nav-item active" data-sec="dashboard">
+        <i class="bi bi-speedometer2"></i> Dashboard
+      </button>
+      <button class="nav-item" data-sec="collect">
+        <i class="bi bi-plus-circle"></i> Collect Sample
+      </button>
+      <button class="nav-item" data-sec="lab-results">
+        <i class="bi bi-clipboard2-pulse"></i> Lab Results
+      </button>
+      <button class="nav-item" data-sec="inventory">
+        <i class="bi bi-box-seam"></i> IP Inventory
+      </button>
+      <button class="nav-item" data-sec="dispense">
+        <i class="bi bi-capsule"></i> Dispense IP
+      </button>
+    </nav>
+    <button class="btn logout side-logout" onclick="logout()">
+      <i class="bi bi-box-arrow-right"></i> Logout
+    </button>
+  </aside>
+
+  <!-- ── Main ── -->
+  <main class="main">
+    <header class="topbar">
+      <button class="burger" id="burger" type="button" aria-label="Toggle menu">
+        <i class="bi bi-list"></i>
+      </button>
+      <h1 id="secTitle">Dashboard</h1>
+      <div class="topbar-end">
+        <button class="topbar-btn" type="button" title="Notifications">
+          <i class="bi bi-bell"></i>
+        </button>
+        <span class="who" id="who"></span>
+      </div>
+    </header>
+
+    <!-- ════ DASHBOARD ════ -->
+    <section id="dashboard" class="sec active">
+      <div class="stats">
+        <div class="stat">
+          <span class="stat-n" id="dTotal">0</span>
+          <span class="stat-l"><i class="bi bi-collection me-1"></i>Total Samples</span>
+        </div>
+        <div class="stat">
+          <span class="stat-n" id="dCollected">0</span>
+          <span class="stat-l"><i class="bi bi-droplet me-1"></i>Collected</span>
+        </div>
+        <div class="stat">
+          <span class="stat-n" id="dTransit">0</span>
+          <span class="stat-l"><i class="bi bi-truck me-1"></i>In Transit</span>
+        </div>
+        <div class="stat">
+          <span class="stat-n" id="dAnalyzed">0</span>
+          <span class="stat-l"><i class="bi bi-clipboard2-check me-1"></i>Analyzed</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title-row">
+          <h2><i class="bi bi-clipboard2-data"></i> Recent Samples</h2>
+          <button class="btn" onclick="document.querySelector('[data-sec=collect]').click()">
+            <i class="bi bi-plus-circle"></i> Collect Sample
+          </button>
+        </div>
+        <div id="dashBox"></div>
+      </div>
+    </section>
+
+    <!-- ════ COLLECT SAMPLE ════ -->
+    <section id="collect" class="sec">
+      <div class="sec-head">
+        <h2><i class="bi bi-plus-circle"></i> Collect New Sample</h2>
+      </div>
+      <div class="card">
+        <div id="collectMsg"></div>
+        <div class="lab-form-grid">
+          <div>
+            <label for="cSubjectId"><i class="bi bi-person"></i> Subject ID <span class="req">*</span></label>
+            <select id="cSubjectId">
+              <option value="">Loading subjects…</option>
+            </select>
+          </div>
+          <div>
+            <label for="cSampleType"><i class="bi bi-droplet"></i> Sample Type <span class="req">*</span></label>
+            <select id="cSampleType">
+              <option value="">Select Sample Type</option>
+              <option>Blood</option>
+              <option>Urine</option>
+              <option>Saliva</option>
+              <option>Serum</option>
+              <option>Plasma</option>
+              <option>Tissue</option>
+            </select>
+          </div>
+          <div>
+            <label for="cCollectionDate"><i class="bi bi-calendar-event"></i> Collection Date</label>
+            <input id="cCollectionDate" type="date" />
+          </div>
+          <div class="full">
+            <label for="cLabResult"><i class="bi bi-journal-text"></i> Initial Lab Notes (optional)</label>
+            <textarea id="cLabResult" placeholder="Enter preliminary notes or leave blank…"></textarea>
+          </div>
+        </div>
+        <div style="margin-top:16px;display:flex;gap:10px;justify-content:flex-end">
+          <button class="btn secondary" onclick="['cSubjectId','cSampleType','cCollectionDate','cLabResult'].forEach(id=>{const e=document.getElementById(id);if(e)e.value=''})">Clear</button>
+          <button class="btn" onclick="collectSample()"><i class="bi bi-plus-circle"></i> Collect Sample</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════ LAB RESULTS ════ -->
+    <section id="lab-results" class="sec">
+      <div class="sec-head">
+        <h2><i class="bi bi-clipboard2-pulse"></i> Lab Results &amp; Status</h2>
+      </div>
+      <div id="labMsg"></div>
+      <div class="card">
+        <div class="lab-search-wrap">
+          <i class="bi bi-search"></i>
+          <input id="labSearch" placeholder="Search by ID, subject, type, status…" oninput="filterLabResults()" />
+        </div>
+        <div id="labBox"></div>
+      </div>
+    </section>
+
+    <!-- ════ IP INVENTORY ════ -->
+    <section id="inventory" class="sec">
+      <div class="sec-head">
+        <h2><i class="bi bi-box-seam"></i> IP Inventory Status</h2>
+      </div>
+      <div class="inv-stats" id="invStats"></div>
+      <div class="card">
+        <div class="card-title-row">
+          <h2><i class="bi bi-table"></i> Stock Levels</h2>
+          <button class="btn" onclick="document.querySelector('[data-sec=dispense]').click()">
+            <i class="bi bi-capsule"></i> Dispense IP
+          </button>
+        </div>
+        <div id="invBox"></div>
+      </div>
+    </section>
+
+    <!-- ════ DISPENSE IP ════ -->
+    <section id="dispense" class="sec">
+      <div class="sec-head">
+        <h2><i class="bi bi-capsule"></i> Dispense Investigational Product</h2>
+      </div>
+      <div id="dispenseMsg"></div>
+      <div class="card">
+        <p style="font-size:.85rem;color:var(--muted)">Record IP dispensing to a trial subject and update accountability log.</p>
+        <div class="lab-form-grid">
+          <div class="full">
+            <label for="dInventoryId"><i class="bi bi-box-seam"></i> Select Drug (Inventory) <span class="req">*</span></label>
+            <select id="dInventoryId">
+              <option value="">Loading inventory…</option>
+            </select>
+          </div>
+          <div>
+            <label for="dSubjectId"><i class="bi bi-person"></i> Subject ID <span class="req">*</span></label>
+            <select id="dSubjectId">
+              <option value="">Loading subjects…</option>
+            </select>
+          </div>
+          <div>
+            <label for="dQuantity"><i class="bi bi-123"></i> Quantity <span class="req">*</span></label>
+            <input id="dQuantity" type="number" min="1" value="1" />
+          </div>
+          <div>
+            <label for="dDispensedBy"><i class="bi bi-person-badge"></i> Dispensed By <span class="req">*</span></label>
+            <input id="dDispensedBy" type="text" placeholder="Name of person dispensing" />
+          </div>
+          <div>
+            <label for="dLocation"><i class="bi bi-geo-alt"></i> Dispensing Location <span class="req">*</span></label>
+            <input id="dLocation" type="text" placeholder="e.g. Ward 3, Pharmacy B" />
+          </div>
+        </div>
+        <div style="margin-top:16px;display:flex;gap:10px;justify-content:flex-end">
+          <button class="btn" onclick="dispenseIP()"><i class="bi bi-capsule"></i> Dispense</button>
+        </div>
+      </div>
+
+      <!-- Reference inventory table -->
+      <div class="card" style="margin-top:20px">
+        <div class="card-title-row">
+          <h2><i class="bi bi-table"></i> Current Stock Reference</h2>
+        </div>
+        <div id="invBox2">
+          <div class="lab-empty"><i class="bi bi-hourglass-split"></i><p>Loading inventory…</p></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── Lab Result Modal ── -->
+  <div class="lab-modal-overlay" id="resultModal" onclick="if(event.target===this)closeResultModal()">
+    <div class="lab-modal">
+      <h3><i class="bi bi-clipboard2-check"></i> Record Lab Result — Sample #<span id="modalSampleId"></span></h3>
+      <div id="modalMsg"></div>
+      <label style="font-size:.82rem;font-weight:600;display:block;margin-bottom:6px">Lab Result / Findings <span class="req">*</span></label>
+      <textarea id="modalLabResult" placeholder="Enter lab analysis results, findings and notes…"></textarea>
+      <div class="lab-modal-footer">
+        <button class="btn secondary" onclick="closeResultModal()">Cancel</button>
+        <button class="btn" onclick="saveLabResult()"><i class="bi bi-floppy"></i> Save Result</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../home/app.js"></script>
+  <script src="lab.js"></script>
+  <script src="../home/dashboard.js"></script>
+</body>
+</html>
+

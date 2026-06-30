@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Subject Enrollment Dashboard · Clinical Trial Tracker</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+  <link rel="stylesheet" href="theme.css" />
+  <link rel="stylesheet" href="subject.css" />
+  <link rel="stylesheet" href="premium.css" />
+  <style>
+    .req  { color: #ef4444; font-weight: 700; margin-left: 2px; }
+    .opt  { color: #94a3b8; font-size: .73rem; font-weight: 400; margin-left: 4px; }
+    .form-legend { font-size: .75rem; color: #64748b; margin: 0 0 12px; }
+  </style>
+</head>
+<body class="admin">
+
+  <!-- ══════════════ SIDEBAR ══════════════ -->
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="brand-mark">SE</span>
+      <span>Subject Enrollment</span>
+    </div>
+    <nav class="side-nav" aria-label="Module sections">
+      <button class="nav-item active" data-sec="dashboard">
+        <i class="bi bi-speedometer2"></i> Dashboard
+      </button>
+      <button class="nav-item" data-sec="enroll">
+        <i class="bi bi-person-plus"></i> Screen &amp; Enroll
+      </button>
+      <button class="nav-item" data-sec="subjects">
+        <i class="bi bi-people"></i> All Subjects
+      </button>
+    </nav>
+  </aside>
+
+  <!-- ══════════════ MAIN ══════════════ -->
+  <main class="main">
+    <header class="topbar">
+      <button class="burger" id="burger" type="button" aria-label="Toggle menu">
+        <i class="bi bi-list"></i>
+      </button>
+      <h1 id="secTitle">Dashboard</h1>
+      <div class="topbar-end">
+        <button class="topbar-btn" type="button" title="Refresh" onclick="load()">
+          <i class="bi bi-arrow-clockwise"></i>
+        </button>
+        <span class="who" id="who"></span>
+        <button class="btn logout" style="margin:0;padding:8px 14px;font-size:.82rem" onclick="logout()">
+          <i class="bi bi-box-arrow-right"></i> Logout
+        </button>
+      </div>
+    </header>
+
+    <!-- ════ DASHBOARD ════ -->
+    <section id="dashboard" class="sec active">
+      <div class="stats">
+        <div class="stat">
+          <span class="stat-n" id="cTotal">0</span>
+          <span class="stat-l"><i class="bi bi-people me-1"></i>Total Subjects</span>
+        </div>
+        <div class="stat">
+          <span class="stat-n" id="cScreened">0</span>
+          <span class="stat-l"><i class="bi bi-clipboard-check me-1"></i>Screened</span>
+        </div>
+        <div class="stat">
+          <span class="stat-n" id="cEnrolled">0</span>
+          <span class="stat-l"><i class="bi bi-person-check me-1"></i>Enrolled</span>
+        </div>
+        <div class="stat">
+          <span class="stat-n" id="cCompleted">0</span>
+          <span class="stat-l"><i class="bi bi-check2-all me-1"></i>Completed</span>
+        </div>
+      </div>
+      <div class="card">
+        <h2><i class="bi bi-people"></i> Subjects Overview</h2>
+        <div id="dSubjects"></div>
+      </div>
+    </section>
+
+    <!-- ════ SCREEN & ENROLL ════ -->
+    <section id="enroll" class="sec">
+      <div class="sec-head">
+        <h2><i class="bi bi-clipboard-plus"></i> Subject Enrollment</h2>
+        <button class="btn" onclick="toggleForm('screenForm')">
+          <i class="bi bi-clipboard-plus"></i> Screen New Subject
+        </button>
+      </div>
+      <div id="msg"></div>
+
+      <!-- Manage Subject card -->
+      <div class="card">
+        <h2><i class="bi bi-person-vcard"></i> Manage Subject</h2>
+        <p class="admin-tip">Select a subject to review consent, then complete or withdraw.</p>
+        <label for="actId">Subject</label>
+        <select id="actId" onchange="showSubject()"></select>
+        <div id="subjDetail" class="subj-detail"></div>
+        <div class="row">
+          <button id="bConsentOpen" class="btn" onclick="openConsent()" disabled>
+            <i class="bi bi-file-earmark-medical"></i> Capture Consent &amp; Enroll
+          </button>
+          <button id="bComplete" class="btn secondary" onclick="complete()" disabled>
+            <i class="bi bi-check2-all"></i> Complete
+          </button>
+          <button id="bWithdraw" class="btn logout" onclick="withdraw()" disabled>
+            <i class="bi bi-person-dash"></i> Withdraw
+          </button>
+        </div>
+      </div>
+
+      <!-- ── Screen Subject Modal ── -->
+      <div id="screenForm" class="modal-ov hidden" onclick="if(event.target===this)closeScreenForm()">
+        <div class="modal-card" role="dialog" aria-modal="true" aria-label="Screen subject">
+          <div class="modal-head">
+            <h2><i class="bi bi-clipboard-plus"></i> Screen New Subject</h2>
+            <button class="modal-x" type="button" aria-label="Close" onclick="closeScreenForm()">&times;</button>
+          </div>
+          <div class="modal-body">
+            <div id="smsg"></div>
+            <p class="form-legend"><span class="req">*</span> Required &nbsp;·&nbsp; <span class="opt">(optional)</span> Optional</p>
+            <div class="scr-layout">
+              <div class="scr-pane">
+                <div class="scr-pane-head">
+                  <span class="scr-icon"><i class="bi bi-1-circle"></i></span>
+                  <strong>Protocol &amp; Site</strong>
+                </div>
+                <label for="protocolId">Protocol <span class="req">*</span></label>
+                <select id="protocolId" onchange="onProtocolChange()" required>
+                  <option value="">— Loading protocols… —</option>
+                </select>
+                <label for="siteId" style="margin-top:12px">Site <span class="req">*</span></label>
+                <select id="siteId" disabled>
+                  <option value="">— Select a protocol first —</option>
+                </select>
+                <p class="scr-note" id="siteNote" style="margin-top:6px">Only ACTIVE sites for the selected protocol are shown.</p>
+              </div>
+              <div class="scr-pane">
+                <div class="scr-pane-head">
+                  <span class="scr-icon"><i class="bi bi-2-circle"></i></span>
+                  <strong>Randomization</strong>
+                </div>
+                <label for="studyArm">Study Arm <span class="opt">(optional)</span></label>
+                <input type="text" id="studyArm" placeholder="e.g. TREATMENT_A" />
+                <p class="scr-note">Leave blank to assign later.</p>
+              </div>
+            </div>
+            <div class="admin-tip">Subject will be created with status <strong>SCREENED</strong>. Use Capture Consent to enroll.</div>
+          </div>
+          <div class="modal-foot">
+            <button class="btn ghost" onclick="closeScreenForm()">Cancel</button>
+            <button class="btn" id="bScreenSubject" onclick="screenSubject()" disabled>
+              <i class="bi bi-clipboard-check"></i> Screen Subject
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Consent Modal ── -->
+      <div id="consentForm" class="modal-ov hidden" onclick="if(event.target===this)toggleForm('consentForm')">
+        <div class="modal-card" role="dialog" aria-modal="true" aria-label="Informed consent">
+          <div class="modal-head">
+            <h2><i class="bi bi-file-earmark-medical"></i> Informed Consent</h2>
+            <button class="modal-x" type="button" aria-label="Close" onclick="toggleForm('consentForm')">&times;</button>
+          </div>
+          <div class="modal-body">
+            <div id="cmsg"></div>
+            <p class="form-legend"><span class="req">*</span> Required &nbsp;·&nbsp; <span class="opt">(optional)</span> Optional</p>
+            <div id="consentBody"><div class="empty">Loading subject details…</div></div>
+            <label class="consent-accept">
+              <input type="checkbox" id="consentAccept"
+                onchange="document.getElementById('bConsent').disabled=!this.checked" />
+              <span>I confirm the subject has reviewed the protocol information and
+                <strong>accepts</strong> the informed consent.
+                Capturing consent will <strong>enroll</strong> the subject.</span>
+            </label>
+          </div>
+          <div class="modal-foot">
+            <button class="btn ghost" onclick="toggleForm('consentForm')">Cancel</button>
+            <button id="bConsent" class="btn" onclick="consent()" disabled>
+              <i class="bi bi-check2-circle"></i> Accept &amp; Capture Consent
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════ ALL SUBJECTS ════ -->
+    <section id="subjects" class="sec">
+      <div class="sec-head">
+        <h2><i class="bi bi-people"></i> All Subjects</h2>
+      </div>
+      <div class="card"><div id="tbox"></div></div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="app.js"></script>
+  <script src="subject.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+</html>

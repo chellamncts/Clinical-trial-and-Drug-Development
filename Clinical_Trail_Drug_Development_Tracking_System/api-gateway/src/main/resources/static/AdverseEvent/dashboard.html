@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pharmacovigilance Dashboard · Clinical Trial Tracker</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+  <link rel="stylesheet" href="../home/theme.css" />
+  <link rel="stylesheet" href="../TrialProtocol/admin.css" />
+  <link rel="stylesheet" href="event.css" />
+  <link rel="stylesheet" href="../home/premium.css" />
+  <style>
+    .req  { color: #ef4444; font-weight: 700; margin-left: 2px; }
+    .opt  { color: #94a3b8; font-size: .73rem; font-weight: 400; margin-left: 4px; }
+    .form-legend { font-size: .75rem; color: #64748b; margin: 0 0 12px; }
+  </style>
+</head>
+<body class="admin">
+
+  <!-- ── Sidebar ── -->
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="brand-mark">CT</span>
+      <span>Pharmacovigilance</span>
+    </div>
+    <nav class="side-nav" aria-label="Pharmacovigilance sections">
+      <button class="nav-item active" data-sec="dashboard">
+        <i class="bi bi-speedometer2"></i> Dashboard
+      </button>
+      <button class="nav-item" data-sec="report">
+        <i class="bi bi-exclamation-triangle"></i> Report Event
+      </button>
+      <button class="nav-item" data-sec="workflow">
+        <i class="bi bi-shield-check"></i> Safety Workflow
+      </button>
+      <button class="nav-item" data-sec="history">
+        <i class="bi bi-clock-history"></i> Event History
+      </button>
+    </nav>
+    <button class="btn logout side-logout" onclick="logout()">
+      <i class="bi bi-box-arrow-right"></i> Logout
+    </button>
+  </aside>
+
+  <!-- ── Main ── -->
+  <main class="main">
+    <header class="topbar">
+      <button class="burger" id="burger" type="button" aria-label="Toggle menu">
+        <i class="bi bi-list"></i>
+      </button>
+      <h1 id="secTitle">Dashboard</h1>
+      <div class="topbar-end">
+        <button class="topbar-btn" type="button" title="Notifications">
+          <i class="bi bi-bell"></i>
+        </button>
+        <span class="who" id="who"></span>
+      </div>
+    </header>
+
+    <!-- ════ DASHBOARD ════ -->
+    <section id="dashboard" class="sec active">
+      <div class="stats">
+        <div class="stat">
+          <span class="stat-n" id="cTotal">0</span>
+          <span class="stat-l"><i class="bi bi-shield-exclamation me-1"></i>Total Events</span>
+        </div>
+        <div class="stat">
+          <span class="stat-n" id="cReported">0</span>
+          <span class="stat-l"><i class="bi bi-exclamation-triangle me-1"></i>Reported</span>
+        </div>
+        <div class="stat">
+          <span class="stat-n" id="cReview">0</span>
+          <span class="stat-l"><i class="bi bi-search me-1"></i>Under Review</span>
+        </div>
+        <div class="stat">
+          <span class="stat-n" id="cResolved">0</span>
+          <span class="stat-l"><i class="bi bi-check2-circle me-1"></i>Resolved / Fatal</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title-row">
+          <h2><i class="bi bi-clipboard2-data"></i> All Adverse Events</h2>
+          <div class="evt-search-wrap">
+            <i class="bi bi-search"></i>
+            <input id="evtSearch" placeholder="Search subject, severity, status…" oninput="filterTable()" aria-label="Search adverse events" />
+          </div>
+        </div>
+        <div id="tbox"></div>
+      </div>
+    </section>
+
+    <!-- ════ REPORT EVENT ════ -->
+    <section id="report" class="sec">
+      <div class="sec-head">
+        <h2><i class="bi bi-exclamation-triangle"></i> Report Adverse Event</h2>
+      </div>
+      <div class="card">
+        <div id="rmsg"></div>
+        <p class="form-legend"><span class="req">*</span> Required &nbsp;·&nbsp; <span class="opt">(optional)</span> Optional</p>
+        <div class="evt-form-grid">
+          <div class="ef-field">
+            <label for="subjectId"><i class="bi bi-person"></i> Subject <span class="req">*</span></label>
+            <select id="subjectId" required onchange="onSubjectChange()"></select>
+          </div>
+          <div class="ef-field">
+            <label for="linkedVisit"><i class="bi bi-calendar-check"></i> Linked Visit <span class="opt">(optional)</span></label>
+            <select id="linkedVisit">
+              <option value="">— Select a subject first —</option>
+            </select>
+          </div>
+          <div class="ef-field">
+            <label for="severity"><i class="bi bi-exclamation-octagon"></i> Severity <span class="req">*</span></label>
+            <select id="severity" required>
+              <option>MILD</option>
+              <option>MODERATE</option>
+              <option>SEVERE</option>
+            </select>
+          </div>
+          <div class="ef-field">
+            <label for="eventOnsetDate"><i class="bi bi-calendar-event"></i> Event Onset Date <span class="req">*</span></label>
+            <input id="eventOnsetDate" type="date" required />
+          </div>
+          <div class="ef-field full-col">
+            <label for="eventDescription"><i class="bi bi-journal-text"></i> Event Description <span class="req">*</span></label>
+            <textarea id="eventDescription" placeholder="Describe clinical signs, symptoms, and relevant context" required></textarea>
+          </div>
+        </div>
+        <div class="evt-form-foot">
+          <button id="repBtn" class="btn" onclick="save()">
+            <i class="bi bi-send"></i> Report Adverse Event
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════ SAFETY WORKFLOW ════ -->
+    <section id="workflow" class="sec">
+      <div class="sec-head">
+        <h2><i class="bi bi-shield-check"></i> Safety Workflow</h2>
+      </div>
+      <div id="wmsg"></div>
+      <div class="card">
+        <label for="eid"><i class="bi bi-list-check"></i> Select Event</label>
+        <select id="eid" onchange="showEvent()"></select>
+        <div id="eventDetail" class="event-detail-box"></div>
+        <div class="wf-actions">
+          <button id="bClassify" class="btn secondary" onclick="classify()">
+            <i class="bi bi-sliders"></i> Classify Seriousness
+          </button>
+          <button id="bSubmit" class="btn" onclick="submitReport()">
+            <i class="bi bi-send-check"></i> Submit Safety Report
+          </button>
+          <button id="bResolve" class="btn" onclick="resolve()">
+            <i class="bi bi-check2-circle"></i> Resolve Event
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════ EVENT HISTORY ════ -->
+    <section id="history" class="sec">
+      <div class="sec-head">
+        <h2><i class="bi bi-clock-history"></i> Event History by Subject</h2>
+      </div>
+      <div class="card">
+        <label for="histSubject"><i class="bi bi-person"></i> Subject</label>
+        <select id="histSubject" onchange="loadHistory()"></select>
+        <div id="hbox" style="margin-top:18px"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../home/app.js"></script>
+  <script src="event.js"></script>
+  <script src="../home/dashboard.js"></script>
+</body>
+</html>
+

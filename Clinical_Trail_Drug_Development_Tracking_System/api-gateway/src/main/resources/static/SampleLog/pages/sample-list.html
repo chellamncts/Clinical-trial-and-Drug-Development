@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Samples - Lab Sample Tracking</title>
+    <link rel="stylesheet" href="/app.css">
+</head>
+<body>
+<header class="topbar">
+    <div class="topbar-brand">Clinical Trial &amp; Drug Development Tracking System</div>
+    <nav class="topbar-nav">
+        <a href="/UserForm" class="{{navUserFormClass}}">Add Sample</a>
+        <a href="/sample/list" class="{{navListClass}}">All Samples</a>
+        <a href="/sample/search-form" class="{{navSearchClass}}">Search</a>
+        <a href="/sample/inventory" class="{{navInventoryClass}}">Inventory</a>
+        <a href="/sample/ip/dispense-form" class="{{navDispenseClass}}">Dispense IP</a>
+    </nav>
+</header>
+<div class="app-shell">
+    <aside class="sidebar"></aside>
+    <main class="main">
+        <div class="pg-hdr">
+            <h1>All Samples</h1>
+            <p>Complete list of lab specimens registered in the system.</p>
+        </div>
+        <div class="stats-row">
+            <div class="stat-tile">
+                <div class="st-num">{{totalSamples}}</div>
+                <div class="st-label">Total Samples</div>
+            </div>
+        </div>
+        {{successAlert}}
+        {{errorAlert}}
+        <div class="card">
+            <div class="card-hdr">
+                <span class="card-hdr-title">Sample Records</span>
+                <a class="btn btn-primary" href="/UserForm">Add Sample</a>
+            </div>
+            <div class="card-body">
+                <div class="empty">{{emptyMessage}}</div>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>ID</th><th>Subject</th><th>Type</th><th>Collection Date</th><th>Lab Result</th><th>Status</th><th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {{sampleRows}}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="btn-bar">
+                    <a class="btn btn-ghost" href="/sample/search-form">Search</a>
+                    <a class="btn btn-ghost" href="/sample/inventory">Inventory</a>
+                    <a class="btn btn-ghost" href="/sample/ip/dispense-form">Dispense IP</a>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+<footer class="footer">&copy; 2026 Clinical Trial &amp; Drug Development Tracking System</footer>
+</body>
+</html>
+

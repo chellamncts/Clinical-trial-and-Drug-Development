@@ -1,0 +1,17 @@
+<div class="card">
+    <div class="card-hdr"><span class="card-hdr-title">Lab Analysis Result</span></div>
+    <div class="card-body">
+        <form action="/sample/lab-result-action" method="post">
+            <input type="hidden" name="sampleId" value="{{sampleId}}">
+            <div class="field field-full">
+                <label for="labResult">Lab Result</label>
+                <textarea id="labResult" name="labResult" required></textarea>
+            </div>
+            <div class="btn-bar">
+                <a class="btn btn-ghost" href="/sample/list">Cancel</a>
+                <button class="btn btn-primary" type="submit">Save Lab Result</button>
+            </div>
+        </form>
+    </div>
+</div>
+
