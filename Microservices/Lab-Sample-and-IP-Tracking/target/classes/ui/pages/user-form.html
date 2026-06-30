@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Sample - Lab Sample Tracking</title>
+    <link rel="stylesheet" href="/app.css">
+</head>
+<body>
+<header class="topbar">
+    <div class="topbar-brand">Clinical Trial &amp; Drug Development Tracking System</div>
+    <nav class="topbar-nav">
+        <a href="/UserForm" class="{{navUserFormClass}}">Add Sample</a>
+        <a href="/sample/list" class="{{navListClass}}">All Samples</a>
+        <a href="/sample/search-form" class="{{navSearchClass}}">Search</a>
+        <a href="/sample/inventory" class="{{navInventoryClass}}">Inventory</a>
+        <a href="/sample/ip/dispense-form" class="{{navDispenseClass}}">Dispense IP</a>
+    </nav>
+</header>
+<div class="app-shell">
+    <aside class="sidebar"></aside>
+    <main class="main">
+        <div class="pg-hdr">
+            <h1>Collect New Sample</h1>
+            <p>Register a new lab specimen for a trial subject.</p>
+        </div>
+        {{successAlert}}
+        {{errorAlert}}
+        <div class="card">
+            <div class="card-hdr"><span class="card-hdr-title">Specimen Details</span></div>
+            <div class="card-body">
+                <form action="/saveUser" method="post">
+                    <div class="form-grid">
+                        <div class="field">
+                            <label for="subjectId">Subject ID</label>
+                            <input id="subjectId" type="number" name="subjectId" min="1" placeholder="Enter Subject ID" required>
+                        </div>
+                        <div class="field">
+                            <label for="collectionDate">Collection Date</label>
+                            <input id="collectionDate" type="date" name="collectionDate" required>
+                        </div>
+                        <div class="field">
+                            <label for="sampleType">Sample Type</label>
+                            <select id="sampleType" name="sampleType" required>
+                                <option value="">Select Sample Type</option>
+                                <option value="Blood">Blood</option>
+                                <option value="Urine">Urine</option>
+                                <option value="Saliva">Saliva</option>
+                                <option value="Serum">Serum</option>
+                                <option value="Plasma">Plasma</option>
+                                <option value="Tissue">Tissue</option>
+                            </select>
+                        </div>
+                        <div class="field field-full">
+                            <label for="labResult">Lab Result</label>
+                            <textarea id="labResult" name="labResult" placeholder="Enter lab findings / result (optional at this stage)..."></textarea>
+                        </div>
+                    </div>
+                    <div class="btn-bar">
+                        <a class="btn btn-ghost" href="/sample/list">Cancel</a>
+                        <button class="btn btn-primary" type="submit">Save Sample</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+</div>
+<footer class="footer">&copy; 2026 Clinical Trial &amp; Drug Development Tracking System</footer>
+</body>
+</html>
+

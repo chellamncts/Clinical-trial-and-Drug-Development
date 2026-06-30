@@ -1,0 +1,7 @@
+com\genc\sampleservice\controller\SampleController.class
+com\genc\sampleservice\exception\GlobalExceptionHandler.class
+com\genc\sampleservice\service\SampleLifecycleService.class
+com\genc\sampleservice\SampleServiceApplication.class
+com\genc\sampleservice\model\SampleLog.class
+com\genc\sampleservice\repository\SampleLogRepository.class
+com\genc\sampleservice\model\SampleLog$SampleStatus.class
