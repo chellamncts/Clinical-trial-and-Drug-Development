@@ -1,5 +1,7 @@
 package com.genc.ctds.adverseevent.model;
 
+import com.genc.ctds.adverseevent.model.EventStatus;
+import com.genc.ctds.adverseevent.model.Severity;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
@@ -9,18 +11,22 @@ public class AdverseEvent {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name="event_id")
+    private Long eventId; // Ensure this matches template bindings
 
     private String subjectId;
-
     private LocalDate eventOnsetDate;
-
     private String eventDescription;
 
-    private String severity;
+    @Enumerated(EnumType.STRING)
+    private Severity severity;
 
-    private String eventStatus;
-    public Long getId() { return id; }
+    @Enumerated(EnumType.STRING)
+    private EventStatus eventStatus;
+
+    // Getters and Setters
+    public Long getEventId() { return eventId; }
+    public void setEventId(Long eventId) { this.eventId = eventId; }
 
     public String getSubjectId() { return subjectId; }
     public void setSubjectId(String subjectId) { this.subjectId = subjectId; }
@@ -31,9 +37,9 @@ public class AdverseEvent {
     public String getEventDescription() { return eventDescription; }
     public void setEventDescription(String eventDescription) { this.eventDescription = eventDescription; }
 
-    public String getSeverity() { return severity; }
-    public void setSeverity(String severity) { this.severity = severity; }
+    public Severity getSeverity() { return severity; }
+    public void setSeverity(Severity severity) { this.severity = severity; }
 
-    public String getEventStatus() { return eventStatus; }
-    public void setEventStatus(String eventStatus) { this.eventStatus = eventStatus; }
+    public EventStatus getEventStatus() { return eventStatus; }
+    public void setEventStatus(EventStatus eventStatus) { this.eventStatus = eventStatus; }
 }

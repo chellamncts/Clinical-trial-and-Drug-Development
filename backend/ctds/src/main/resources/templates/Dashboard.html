@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>PV Officer Dashboard</title>
@@ -14,11 +14,11 @@
           background-color: #f6faf7;
         }
 
-        /* Sidebar */
+
         .sidebar {
           width: 220px;
           height: 100vh;
-          background: #198754;
+          background: #145a32;
           color: white;
           position: fixed;
           padding: 20px;
@@ -41,13 +41,12 @@
           background: #146c43;
         }
 
-        /* Main content */
+
         .main {
           margin-left: 240px;
           padding: 20px;
         }
 
-        /* Top bar */
         .topbar {
           background: white;
           padding: 12px 20px;
@@ -55,7 +54,7 @@
           margin-bottom: 20px;
         }
 
-        /* Cards */
+
         .card {
           border: none;
           border-radius: 10px;
@@ -63,16 +62,92 @@
           padding: 15px;
         }
 
-        /* Section titles */
+
         .section-title {
           font-weight: 600;
           margin: 25px 0 10px;
         }
 
-        /* Table */
+
         .table {
           background: white;
           border-radius: 8px;
+        }
+
+        .hidden {
+          display: none;
+        }
+
+        .form-card {
+          background: #ffffff;
+          border-radius: 15px;
+          max-width: 900px;
+          margin: 20px auto;
+          box-shadow: 0px 4px 15px rgba(0,0,0,0.1);
+          overflow: hidden;
+        }
+
+        .card-header-custom {
+          background-color: #145a32;
+          color: white;
+          padding: 15px 20px;
+          font-size: 18px;
+          font-weight: 600;
+        }
+
+        .submit-toast {
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          z-index: 1055;
+          background-color: #198754;
+          color: #fff;
+          padding: 10px 14px;
+          border-radius: 8px;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+          font-size: 14px;
+          opacity: 0;
+          transform: translateY(-8px);
+          transition: opacity 0.25s ease, transform 0.25s ease;
+        }
+
+        .submit-toast.show {
+          opacity: 1;
+          transform: translateY(0);
+        }
+
+        .audit-navbar {
+          background: #ffffff;
+          border-radius: 10px;
+          padding: 12px 16px;
+          margin-bottom: 16px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .audit-brand {
+          font-weight: 600;
+          color: #145a32;
+        }
+
+        .audit-links button {
+          margin-left: 8px;
+        }
+
+        .audit-card {
+          background: #ffffff;
+          border-radius: 12px;
+          box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08);
+          padding: 20px;
+        }
+
+        .audit-title {
+          font-size: 18px;
+          font-weight: 600;
+          color: #145a32;
+          margin-bottom: 16px;
         }
 
     </style>
@@ -81,14 +156,19 @@
 <body>
 <div class="sidebar">
     <h5>PV Dashboard</h5>
-    <a href="#">Overview</a>
-    <a href="event-form.html">Adverse Events</a>
-    <a href="#">SAE Tracking</a>
-    <a href="#">Reports</a>
-    <a href="#">Audit Logs</a>
+    <a th:href="@{/events/pharma/dashboard(section='dashboard')}">Overview</a>
+    <a th:href="@{/events/form}">Adverse Events</a>
+    <a th:href="@{/events/list}">Show All Events</a>
+    <a th:href="@{/events/pharma/dashboard(section='sae')}">SAE Tracking</a>
+    <a th:href="@{/events/pharma/dashboard(section='reports')}">Reports</a>
+    <a th:href="@{/events/pharma/dashboard(section='audit')}">Audit Logs</a>
 </div>
 
 <div class="main">
+
+    <div id="submitToast" th:if="${message}" class="submit-toast show" th:text="${message}">Event submitted successfully.</div>
+
+    <div id="dashboardSection" th:if="${activeSection == 'dashboard'}">
 
     <!-- Top -->
     <div class="topbar d-flex justify-content-between">
@@ -100,28 +180,28 @@
         <div class="col-md-3">
             <div class="card shadow-sm">
                 <h6>Total AE</h6>
-                <h4>120</h4>
+                <h4 id="totalAeCount" th:text="${totalAe}">0</h4>
             </div>
         </div>
 
         <div class="col-md-3">
             <div class="card shadow-sm">
                 <h6>SAE Alerts</h6>
-                <h4 class="text-danger">8</h4>
+                <h4 id="saeAlertsCount" class="text-danger" th:text="${saeAlerts}">0</h4>
             </div>
         </div>
 
         <div class="col-md-3">
             <div class="card shadow-sm">
                 <h6>Under Review</h6>
-                <h4>15</h4>
+                <h4 id="underReviewCount" th:text="${underReview}">0</h4>
             </div>
         </div>
 
         <div class="col-md-3">
             <div class="card shadow-sm">
                 <h6>Closed</h6>
-                <h4>97</h4>
+                <h4 id="closedCount" th:text="${closed}">0</h4>
             </div>
         </div>
     </div>
@@ -136,18 +216,12 @@
             <th>Status</th>
         </tr>
         </thead>
-        <tbody>
-        <tr>
-            <td>AE101</td>
-            <td>Paracetamol</td>
-            <td>Mild</td>
-            <td>Open</td>
-        </tr>
-        <tr>
-            <td>AE102</td>
-            <td>Ibuprofen</td>
-            <td class="text-danger">Severe</td>
-            <td>Review</td>
+        <tbody id="overviewBody">
+        <tr th:each="eventItem : ${events}">
+            <td th:text="${eventItem.eventId}">AE101</td>
+            <td th:text="${eventItem.subjectId}">S-1001</td>
+            <td th:text="${eventItem.severity}">MILD</td>
+            <td th:text="${eventItem.eventStatus}">REPORTED</td>
         </tr>
         </tbody>
     </table>
@@ -158,7 +232,169 @@
     </div>
 
     <div class="section-title">Actions</div>
-    <button class="btn btn-success">Submit Report</button>
+    <a class="btn btn-success" th:href="@{/events/form}">Submit Report</a>
+    <a class="btn btn-outline-success" th:href="@{/events/list}">View All Events</a>
+
+    </div>
+
+    <div id="saeSection" th:if="${activeSection == 'sae'}">
+        <div class="topbar d-flex justify-content-between align-items-center">
+            <strong>SAE Tracking</strong>
+            <a class="btn btn-outline-secondary btn-sm" th:href="@{/events/pharma/dashboard(section='dashboard')}">Back</a>
+        </div>
+        <div class="alert alert-warning">Serious adverse events requiring immediate attention.</div>
+        <table class="table table-bordered">
+            <thead class="table-light">
+            <tr>
+                <th>ID</th>
+                <th>Subject ID</th>
+                <th>Severity</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <tbody id="saeBody">
+            <tr th:each="eventItem : ${events}" th:if="${eventItem.severity == 'SEVERE'}">
+                <td th:text="${eventItem.eventId}">AE101</td>
+                <td th:text="${eventItem.subjectId}">S-1001</td>
+                <td th:text="${eventItem.severity}">SEVERE</td>
+                <td th:text="${eventItem.eventStatus}">UNDER REVIEW</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="reportsSection" th:if="${activeSection == 'reports'}">
+        <div class="topbar d-flex justify-content-between align-items-center">
+            <strong>Reports</strong>
+            <a class="btn btn-outline-secondary btn-sm" th:href="@{/events/pharma/dashboard(section='dashboard')}">Back</a>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card shadow-sm">
+                    <h6>Total Reports</h6>
+                    <h4 th:text="${totalAe}">0</h4>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow-sm">
+                    <h6>Open / Under Review</h6>
+                    <h4 th:text="${underReview}">0</h4>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow-sm">
+                    <h6>Closed</h6>
+                    <h4 th:text="${closed}">0</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="auditSection" th:if="${activeSection == 'audit'}">
+        <div class="audit-navbar">
+            <div class="audit-brand">Lab Sample &amp; IP Tracking</div>
+            <div class="audit-links">
+                <button class="btn btn-success btn-sm" onclick="showAuditAdd()">Add Sample</button>
+                <button class="btn btn-outline-success btn-sm" onclick="showAuditAll()">Show All</button>
+                <button class="btn btn-outline-secondary btn-sm" onclick="showAuditSearch()">Search</button>
+                <a class="btn btn-outline-secondary btn-sm" th:href="@{/events/pharma/dashboard(section='dashboard')}">Back</a>
+            </div>
+        </div>
+
+        <div id="auditAddPanel" class="audit-card">
+            <div class="audit-title">Collect New Sample</div>
+            <form id="sampleAuditForm">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="auditSubjectId" class="form-label">Subject ID</label>
+                        <input id="auditSubjectId" type="number" class="form-control" min="1" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="auditSampleType" class="form-label">Sample Type</label>
+                        <select id="auditSampleType" class="form-select" required>
+                            <option value="">Select sample type</option>
+                            <option value="Blood">Blood</option>
+                            <option value="Urine">Urine</option>
+                            <option value="Saliva">Saliva</option>
+                            <option value="Serum">Serum</option>
+                            <option value="Plasma">Plasma</option>
+                            <option value="Tissue">Tissue</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="auditCollectionDate" class="form-label">Collection Date</label>
+                        <input id="auditCollectionDate" type="date" class="form-control" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="auditSampleStatus" class="form-label">Sample Status</label>
+                        <select id="auditSampleStatus" class="form-select">
+                            <option value="COLLECTED">Collected</option>
+                            <option value="IN_TRANSIT">In Transit</option>
+                            <option value="ANALYZED">Analyzed</option>
+                            <option value="DESTROYED">Destroyed</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="auditLabResult" class="form-label">Lab Result</label>
+                    <textarea id="auditLabResult" class="form-control" placeholder="Enter lab findings / result..."></textarea>
+                </div>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-success" type="submit">Save Sample</button>
+                    <button class="btn btn-outline-success" type="button" onclick="showAuditAll()">Show All</button>
+                    <button class="btn btn-outline-secondary" type="button" onclick="showAuditSearch()">Search</button>
+                </div>
+            </form>
+        </div>
+
+        <div id="auditAllPanel" class="audit-card hidden">
+            <div class="audit-title">All Samples</div>
+            <table class="table table-bordered">
+                <thead class="table-light">
+                <tr>
+                    <th>Subject ID</th>
+                    <th>Sample Type</th>
+                    <th>Collection Date</th>
+                    <th>Sample Status</th>
+                    <th>Lab Result</th>
+                </tr>
+                </thead>
+                <tbody id="auditTableBody">
+                <tr id="auditEmptyRow">
+                    <td colspan="5" class="text-center">No samples added yet</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="auditSearchPanel" class="audit-card hidden">
+            <div class="audit-title">Search Sample</div>
+            <div class="row g-2 mb-3">
+                <div class="col-md-8">
+                    <input id="auditSearchInput" class="form-control" type="number" placeholder="Enter Subject ID">
+                </div>
+                <div class="col-md-4">
+                    <button class="btn btn-success w-100" type="button" onclick="searchAuditSamples()">Search</button>
+                </div>
+            </div>
+            <table class="table table-bordered">
+                <thead class="table-light">
+                <tr>
+                    <th>Subject ID</th>
+                    <th>Sample Type</th>
+                    <th>Collection Date</th>
+                    <th>Sample Status</th>
+                    <th>Lab Result</th>
+                </tr>
+                </thead>
+                <tbody id="auditSearchBody">
+                <tr>
+                    <td colspan="5" class="text-center">Search results will appear here</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
 </div>
 
