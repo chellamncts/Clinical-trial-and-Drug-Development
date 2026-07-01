@@ -102,11 +102,11 @@ async function collectSample() {
   if (msg) msg.innerHTML = "";
 
   const subjectId      = document.getElementById("cSubjectId")?.value;
-  const sampleType     = document.getElementById("cSampleType")?.value;
+  const sampleType     = (document.getElementById("cSampleType")?.value || "").trim();
   const collectionDate = document.getElementById("cCollectionDate")?.value;
-  const labResult      = document.getElementById("cLabResult")?.value;
+  const labResult      = (document.getElementById("cLabResult")?.value || "").trim();
 
-  if (!subjectId || !sampleType) {
+  if (!subjectId || isBlank(sampleType)) {
     showMsg("collectMsg", "err", "Subject ID and Sample Type are required.");
     return;
   }
@@ -220,8 +220,8 @@ function closeResultModal() {
 }
 
 async function saveLabResult() {
-  const labResult = document.getElementById("modalLabResult")?.value;
-  if (!labResult || !labResult.trim()) {
+  const labResult = (document.getElementById("modalLabResult")?.value || "").trim();
+  if (isBlank(labResult)) {
     showMsg("modalMsg", "err", "Lab result text is required.");
     return;
   }
@@ -307,10 +307,10 @@ async function dispenseIP() {
   const inventoryId       = document.getElementById("dInventoryId")?.value;
   const subjectId         = document.getElementById("dSubjectId")?.value;
   const quantity          = document.getElementById("dQuantity")?.value;
-  const dispensedBy       = document.getElementById("dDispensedBy")?.value;
-  const dispensingLocation = document.getElementById("dLocation")?.value;
+  const dispensedBy        = (document.getElementById("dDispensedBy")?.value || "").trim();
+  const dispensingLocation = (document.getElementById("dLocation")?.value || "").trim();
 
-  if (!inventoryId || !subjectId || !quantity || !dispensedBy || !dispensingLocation) {
+  if (!inventoryId || !subjectId || !quantity || isBlank(dispensedBy) || isBlank(dispensingLocation)) {
     showMsg("dispenseMsg", "err", "All fields are required.");
     return;
   }

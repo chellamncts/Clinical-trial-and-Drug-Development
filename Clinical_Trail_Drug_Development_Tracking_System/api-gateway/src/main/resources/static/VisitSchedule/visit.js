@@ -165,16 +165,21 @@ async function save(){
   const box = document.getElementById("smsg");
   box.innerHTML = "";
   const subjectIdVal = document.getElementById("subjectId").value;
+  const visitNameVal = (visitName.value || "").trim();
   if(!subjectIdVal){
     box.innerHTML = `<div class="msg err"><i class="bi bi-exclamation-triangle"></i> Please select an enrolled subject.</div>`;
+    return;
+  }
+  if(isBlank(visitNameVal)){
+    box.innerHTML = `<div class="msg err"><i class="bi bi-exclamation-triangle"></i> Visit Name is required and cannot be spaces only.</div>`;
     return;
   }
   try {
     await api("/api/visits","POST",{
       subjectId  : +subjectIdVal,
-      visitName  : visitName.value,
+      visitName  : visitNameVal,
       visitDate  : visitDate.value,
-      visitWindow: visitWindow.value === "" ? null : visitWindow.value
+      visitWindow: (visitWindow.value||"").trim() === "" ? null : visitWindow.value.trim()
     });
     box.innerHTML = `<div class="msg ok"><i class="bi bi-check-circle"></i> Visit scheduled successfully!</div>`;
     visitName.value = ""; visitDate.value = ""; visitWindow.value = "";
@@ -315,9 +320,9 @@ async function submitAe() {
   const subjectId = +modal.dataset.subjectId;
   const severity  = document.getElementById("aeSeverity").value;
   const onsetDate = document.getElementById("aeOnsetDate").value;
-  const desc      = document.getElementById("aeDescription").value.trim();
+  const desc      = (document.getElementById("aeDescription").value || "").trim();
 
-  if (!desc || !onsetDate) {
+  if (isBlank(desc) || isBlank(onsetDate)) {
     box.innerHTML = '<div class="msg err"><i class="bi bi-exclamation-triangle"></i> Onset date and description are required.</div>';
     return;
   }

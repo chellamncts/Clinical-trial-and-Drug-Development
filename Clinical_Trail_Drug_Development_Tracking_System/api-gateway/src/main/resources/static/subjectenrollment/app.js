@@ -1,6 +1,11 @@
 // Subject Enrollment — API helpers (routes through API Gateway)
 const API_BASE = "";
 
+// ── Validation helpers ────────────────────────────────────────────────
+function trimVal(id) { const el=document.getElementById(id); return el?(el.value||"").trim():""; }
+function isBlank(v) { return !v || v.trim().length === 0; }
+function isCtddtsEmail(v) { return !!v && /^[^\s@]+@ctddts\.com$/i.test(v.trim()); }
+
 // ── Auth helpers (shared with gateway) ──────────────────────────────
 function saveAuth(token, role, username) {
   localStorage.setItem("token", token);
@@ -32,8 +37,20 @@ async function api(path, method = "GET", body = null) {
     body: body ? JSON.stringify(body) : null,
   });
   if (!res.ok) {
-    let msg = "Request failed: " + res.status;
-    try { const e = await res.json(); msg = e.message || msg; } catch (_) {}
+    let msg = "";
+    try { const e = await res.json(); msg = e.message || e.error || ""; } catch (_) {}
+    if (!msg) {
+      const fallback = {
+        400: "Invalid input — please check your data.",
+        401: "Unauthorised — please log in again.",
+        403: "You don't have permission to perform this action.",
+        404: "The requested resource was not found.",
+        409: "Conflict — this record already exists.",
+        500: "Server error — please try again later.",
+        503: "Service unavailable — check that all services are running."
+      };
+      msg = fallback[res.status] || ("Unexpected error (status " + res.status + ").");
+    }
     throw new Error(msg);
   }
   return res.status === 204 ? null : res.json();

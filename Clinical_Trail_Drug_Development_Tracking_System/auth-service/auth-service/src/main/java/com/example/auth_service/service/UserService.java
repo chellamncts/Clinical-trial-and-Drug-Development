@@ -31,15 +31,31 @@ public class UserService {
     }
 
     public UserResponse createUser(UserRequest req) {
-        if (userRepository.existsByUsername(req.getUsername())) {
+        String username = req.getUsername() == null ? "" : req.getUsername().trim();
+        String fullName = req.getFullName() == null ? "" : req.getFullName().trim();
+        String email    = req.getEmail()    == null ? "" : req.getEmail().trim();
+        String password = req.getPassword() == null ? "" : req.getPassword().trim();
+        String role     = req.getRole()     == null ? "" : req.getRole().trim();
+
+        if (username.isEmpty())
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username is required");
+        if (password.isEmpty())
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Password is required");
+        if (role.isEmpty())
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Role is required");
+        if (email.isEmpty() || !email.toLowerCase().endsWith("@ctddts.com"))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Email is required and must use @ctddts.com (e.g. jsmith@ctddts.com)");
+
+        if (userRepository.existsByUsername(username))
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Username already exists");
-        }
+
         User user = new User();
-        user.setUsername(req.getUsername());
-        user.setFullName(req.getFullName());
-        user.setEmail(req.getEmail());
-        user.setPassword(passwordEncoder.encode(req.getPassword()));
-        user.setRole(Role.valueOf(req.getRole()));
+        user.setUsername(username);
+        user.setFullName(fullName.isEmpty() ? null : fullName);
+        user.setEmail(email);
+        user.setPassword(passwordEncoder.encode(password));
+        user.setRole(Role.valueOf(role));
         userRepository.save(user);
         return new UserResponse(user.getId(), user.getUsername(), user.getFullName(), user.getEmail(), user.getRole().name());
     }

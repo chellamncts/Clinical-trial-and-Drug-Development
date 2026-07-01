@@ -2,9 +2,9 @@
 async function doLogin() {
   const msg = document.getElementById("msg");
   const btn = document.getElementById("loginBtn");
-  const username = document.getElementById("username")?.value ?? "";
-  const password = document.getElementById("password")?.value ?? "";
-  if (username.length === 0 || password.length === 0) {
+  const username = (document.getElementById("username")?.value ?? "").trim();
+  const password = (document.getElementById("password")?.value ?? "").trim();
+  if (isBlank(username) || isBlank(password)) {
     msg.innerHTML = '<div class="msg err">Username and password are required</div>';
     return;
   }

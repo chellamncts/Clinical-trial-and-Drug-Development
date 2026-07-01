@@ -169,9 +169,9 @@ async function save(){
   const sid = document.getElementById("subjectId")?.value;
   const sev = document.getElementById("severity")?.value;
   const oed = document.getElementById("eventOnsetDate")?.value;
-  const edv = document.getElementById("eventDescription")?.value;
+  const edv = (document.getElementById("eventDescription")?.value || "").trim();
 
-  if(!sid || !sev || !oed || !oed.length || !edv || !edv.length){
+  if(!sid || !sev || isBlank(oed) || isBlank(edv)){
     box.innerHTML = '<div class="msg err">Subject, severity, onset date and description are mandatory.</div>';
     return;
   }

@@ -2,6 +2,11 @@
 // Empty base = relative URL → all requests go to the same gateway (port 8080)
 const API_BASE = "";
 
+// ── Validation helpers (used across all modules) ─────────────────────
+function trimVal(id) { const el=document.getElementById(id); return el?(el.value||"").trim():""; }
+function isBlank(v) { return !v || v.trim().length === 0; }
+function isCtddtsEmail(v) { return !!v && /^[^\s@]+@ctddts\.com$/i.test(v.trim()); }
+
 function saveAuth(token, role, username) {
   localStorage.setItem("token", token);
   localStorage.setItem("role", role);
@@ -30,7 +35,28 @@ async function api(path, method = "GET", body = null) {
     headers,
     body: body ? JSON.stringify(body) : null,
   });
-  if (!res.ok) throw new Error("Request failed: " + res.status);
+  if (!res.ok) {
+    // Try to read the server's own error message first
+    let msg = "";
+    try {
+      const errBody = await res.json();
+      msg = errBody.message || errBody.error || "";
+    } catch (_) {}
+    // Fall back to a friendly status-based message
+    if (!msg) {
+      const fallback = {
+        400: "Invalid input — please check your data.",
+        401: "Unauthorised — please log in again.",
+        403: "You don't have permission to perform this action.",
+        404: "The requested resource was not found.",
+        409: "Conflict — this record already exists.",
+        500: "Server error — please try again later.",
+        503: "Service unavailable — check that all services are running."
+      };
+      msg = fallback[res.status] || ("Unexpected error (status " + res.status + ").");
+    }
+    throw new Error(msg);
+  }
   return res.status === 204 ? null : res.json();
 }
 

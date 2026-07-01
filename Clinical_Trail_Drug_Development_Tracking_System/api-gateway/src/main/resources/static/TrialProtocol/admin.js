@@ -24,12 +24,17 @@ function siteLabel(s){return s.siteName;}
 let PROTOS=[], SITES=[], USERS=[];
 
 async function createUser(){
-  const username=u_username.value;
-  const password=u_password.value;
+  const username=trimVal('u_username');
+  const fullName=trimVal('u_fullname');
+  const email=trimVal('u_email');
+  const password=trimVal('u_password');
   const role=u_role.value;
-  if(username.length===0||password.length===0||role.length===0){umsg.innerHTML='<div class="msg err">Username, password and role are mandatory.</div>';return;}
+  if(isBlank(username)){umsg.innerHTML='<div class="msg err">Username is required and cannot be spaces only.</div>';return;}
+  if(isBlank(password)){umsg.innerHTML='<div class="msg err">Password is required and cannot be spaces only.</div>';return;}
+  if(!role){umsg.innerHTML='<div class="msg err">Role is mandatory.</div>';return;}
+  if(!isCtddtsEmail(email)){umsg.innerHTML='<div class="msg err">Email is required and must use @ctddts.com (e.g. jsmith@ctddts.com).</div>';return;}
   try{
-    await api("/users","POST",{username,fullName:u_fullname.value,email:u_email.value,password,role});
+    await api("/users","POST",{username,fullName,email,password,role});
     umsg.innerHTML='<div class="msg ok">User created</div>';
     u_username.value=u_fullname.value=u_email.value=u_password.value="";
     loadUsers();
@@ -44,8 +49,15 @@ async function deleteUser(id){
   try{await api("/users/"+id,"DELETE");umsg.innerHTML='<div class="msg ok">User deactivated and removed</div>';loadUsers();}
   catch(e){umsg.innerHTML='<div class="msg err">'+e.message+'</div>';}
 }
-async function createProtocol(){try{await api("/api/protocols","POST",{trialTitle:p_title.value,therapeuticArea:p_area.value,phase:p_phase.value,startDate:p_date.value,inclusionCriteria:p_incl.value,exclusionCriteria:p_excl.value});pmsg.innerHTML='<div class="msg ok">Protocol saved (status: DRAFT)</div>';p_title.value=p_area.value=p_date.value=p_incl.value=p_excl.value="";loadProtocols();setTimeout(()=>toggleForm('protoForm'),700);}catch(e){pmsg.innerHTML='<div class="msg err">'+e.message+'</div>';}}
-async function registerSite(){if(!s_protocol.value){smsg.innerHTML='<div class="msg err">Protocol is mandatory.</div>';return;}try{await api("/api/protocols/sites","POST",{protocolId:+s_protocol.value,siteName:s_name.value,location:s_location.value,principalInvestigator:s_pi.value});smsg.innerHTML='<div class="msg ok">Site registered</div>';s_name.value=s_location.value=s_pi.value="";loadSites();setTimeout(()=>toggleForm('siteForm'),700);}catch(e){smsg.innerHTML='<div class="msg err">'+e.message+'</div>';}}
+async function createProtocol(){
+  const trialTitle=trimVal('p_title');
+  if(isBlank(trialTitle)){pmsg.innerHTML='<div class="msg err">Trial Title is required and cannot be spaces only.</div>';return;}
+  try{await api("/api/protocols","POST",{trialTitle,therapeuticArea:trimVal('p_area'),phase:p_phase.value,startDate:p_date.value,inclusionCriteria:trimVal('p_incl'),exclusionCriteria:trimVal('p_excl')});pmsg.innerHTML='<div class="msg ok">Protocol saved (status: DRAFT)</div>';p_title.value=p_area.value=p_date.value=p_incl.value=p_excl.value="";loadProtocols();setTimeout(()=>toggleForm('protoForm'),700);}catch(e){pmsg.innerHTML='<div class="msg err">'+e.message+'</div>';}
+}
+async function registerSite(){
+  if(!s_protocol.value){smsg.innerHTML='<div class="msg err">Protocol is mandatory.</div>';return;}
+  try{await api("/api/protocols/sites","POST",{protocolId:+s_protocol.value,siteName:trimVal('s_name'),location:trimVal('s_location'),principalInvestigator:trimVal('s_pi')});smsg.innerHTML='<div class="msg ok">Site registered</div>';s_name.value=s_location.value=s_pi.value="";loadSites();setTimeout(()=>toggleForm('siteForm'),700);}catch(e){smsg.innerHTML='<div class="msg err">'+e.message+'</div>';}
+}
 async function activateSite(){try{await api("/api/protocols/sites/"+s_id.value+"/activate","PUT");sActMsg.innerHTML='<div class="msg ok">Site activated</div>';loadSites();}catch(e){sActMsg.innerHTML='<div class="msg err">'+e.message+'</div>';}}
 async function setStatus(st){try{await api("/api/protocols/"+l_protocol.value+"/status?status="+st,"PUT");lmsg.innerHTML='<div class="msg ok">Status \u2192 '+st+'</div>';loadProtocols();}catch(e){lmsg.innerHTML='<div class="msg err">'+humanError(e,st)+'</div>';}}
 
