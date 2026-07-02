@@ -6,10 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 
-/**
- * Feign client for SubjectEnrollment service.
- * Eureka resolves "SubjectEnrollment" → actual host:port automatically.
- */
 @FeignClient(name = "SubjectEnrollment")
 public interface SubjectClient {
 
