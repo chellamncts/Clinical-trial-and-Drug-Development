@@ -1,0 +1,176 @@
+package com.genc.SubjectEnrollment.service;
+
+import com.genc.SubjectEnrollment.client.ProtocolClient;
+import com.genc.SubjectEnrollment.dto.ConsentForm;
+import com.genc.SubjectEnrollment.dto.ProtocolDTO;
+import com.genc.SubjectEnrollment.dto.SiteDTO;
+import com.genc.SubjectEnrollment.dto.SubjectRequestDTO;
+import com.genc.SubjectEnrollment.dto.SubjectResponseDTO;
+import com.genc.SubjectEnrollment.exception.BusinessRuleException;
+import com.genc.SubjectEnrollment.exception.ResourceNotFoundException;
+import com.genc.SubjectEnrollment.model.SubjectStatus;
+import com.genc.SubjectEnrollment.model.TrialSubject;
+import com.genc.SubjectEnrollment.repository.TrialSubjectRepository;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+public class SubjectService {
+
+    private final TrialSubjectRepository subjectRepository;
+    private final ProtocolClient protocolClient;
+
+    public SubjectService(TrialSubjectRepository subjectRepository,
+                          ProtocolClient protocolClient) {
+        this.subjectRepository = subjectRepository;
+        this.protocolClient = protocolClient;
+    }
+
+    // ── Screen a new subject ─────────────────────────────────────
+    public SubjectResponseDTO screenSubject(SubjectRequestDTO dto) {
+
+        // 1. Validate protocol exists and is ACTIVE via trialprotocol-service
+        ProtocolDTO protocol;
+        try {
+            protocol = protocolClient.getProtocol(dto.getProtocolId().longValue());
+        } catch (Exception e) {
+            throw new BusinessRuleException(
+                "Protocol ID " + dto.getProtocolId() + " not found in trialprotocol-service.");
+        }
+        if (!"ACTIVE".equals(protocol.getProtocolStatus())) {
+            throw new BusinessRuleException(
+                "Protocol must be ACTIVE to screen a subject. Current status: "
+                + protocol.getProtocolStatus());
+        }
+
+        // 2. Validate site only if siteId is provided
+        if (dto.getSiteId() != null) {
+            SiteDTO site;
+            try {
+                site = protocolClient.getSite(dto.getSiteId().longValue());
+            } catch (Exception e) {
+                throw new BusinessRuleException(
+                    "Site ID " + dto.getSiteId() + " not found in trialprotocol-service.");
+            }
+            if (!site.getProtocolId().equals(dto.getProtocolId().longValue())) {
+                throw new BusinessRuleException(
+                    "Site " + dto.getSiteId() + " does not belong to protocol " + dto.getProtocolId());
+            }
+            if (!"ACTIVE".equals(site.getSiteStatus())) {
+                throw new BusinessRuleException(
+                    "Site must be ACTIVE to screen a subject. Current site status: "
+                    + site.getSiteStatus());
+            }
+        }
+
+        // 3. All checks passed — save subject as SCREENED
+        TrialSubject subject = TrialSubject.builder()
+                .protocolId(dto.getProtocolId())
+                .siteId(dto.getSiteId())
+                .studyArm(dto.getStudyArm())
+                .screeningDate(dto.getScreeningDate() != null ? dto.getScreeningDate() : LocalDate.now())
+                .consentVersion(dto.getConsentVersion())
+                .consentDate(dto.getConsentDate())
+                .consentedBy(dto.getConsentedBy())
+                .subjectStatus(SubjectStatus.SCREENED)
+                .build();
+        return mapToResponse(subjectRepository.save(subject));
+    }
+
+    // ── Enroll a screened subject ────────────────────────────────
+    public SubjectResponseDTO enrollSubject(Integer subjectId) {
+        TrialSubject subject = findById(subjectId);
+        if (subject.getSubjectStatus() != SubjectStatus.SCREENED) {
+            throw new BusinessRuleException(
+                "Subject must be SCREENED before enrollment. Current status: " + subject.getSubjectStatus());
+        }
+        subject.setSubjectStatus(SubjectStatus.ENROLLED);
+        subject.setEnrollmentDate(LocalDate.now());
+        return mapToResponse(subjectRepository.save(subject));
+    }
+
+    // ── Capture / update informed consent ───────────────────────
+    public SubjectResponseDTO captureConsent(Integer subjectId, ConsentForm form) {
+        TrialSubject subject = findById(subjectId);
+        if (subject.getSubjectStatus() == SubjectStatus.WITHDRAWN) {
+            throw new BusinessRuleException("Cannot capture consent for a WITHDRAWN subject.");
+        }
+        subject.setConsentVersion(form.getConsentVersion());
+        subject.setConsentDate(form.getConsentDate());
+        subject.setConsentedBy(form.getConsentedBy());
+        return mapToResponse(subjectRepository.save(subject));
+    }
+
+    // ── Withdraw a subject ───────────────────────────────────────
+    public SubjectResponseDTO withdrawSubject(Integer subjectId, String reason) {
+        TrialSubject subject = findById(subjectId);
+        if (subject.getSubjectStatus() == SubjectStatus.WITHDRAWN) {
+            throw new BusinessRuleException("Subject is already WITHDRAWN.");
+        }
+        if (subject.getSubjectStatus() == SubjectStatus.COMPLETED) {
+            throw new BusinessRuleException("Cannot withdraw a COMPLETED subject.");
+        }
+        subject.setSubjectStatus(SubjectStatus.WITHDRAWN);
+        subject.setWithdrawalReason(reason);
+        return mapToResponse(subjectRepository.save(subject));
+    }
+
+    // ── Mark an enrolled subject as completed ────────────────────
+    public SubjectResponseDTO completeSubject(Integer subjectId) {
+        TrialSubject subject = findById(subjectId);
+        if (subject.getSubjectStatus() != SubjectStatus.ENROLLED) {
+            throw new BusinessRuleException(
+                "Subject must be ENROLLED to be completed. Current status: " + subject.getSubjectStatus());
+        }
+        subject.setSubjectStatus(SubjectStatus.COMPLETED);
+        return mapToResponse(subjectRepository.save(subject));
+    }
+
+    // ── Queries ──────────────────────────────────────────────────
+    public SubjectResponseDTO getSubjectById(Integer subjectId) {
+        return mapToResponse(findById(subjectId));
+    }
+
+    public List<SubjectResponseDTO> getAllSubjects() {
+        return subjectRepository.findAll().stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+    }
+
+    public List<SubjectResponseDTO> getSubjectsByProtocol(Integer protocolId) {
+        return subjectRepository.findByProtocolId(protocolId).stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+    }
+
+    public List<SubjectResponseDTO> getSubjectsByStatus(SubjectStatus status) {
+        return subjectRepository.findBySubjectStatus(status).stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+    }
+
+    // ── Helpers ──────────────────────────────────────────────────
+    private TrialSubject findById(Integer id) {
+        return subjectRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Subject not found with ID: " + id));
+    }
+
+    private SubjectResponseDTO mapToResponse(TrialSubject s) {
+        return SubjectResponseDTO.builder()
+                .subjectId(s.getSubjectId())
+                .protocolId(s.getProtocolId())
+                .siteId(s.getSiteId())
+                .screeningDate(s.getScreeningDate())
+                .enrollmentDate(s.getEnrollmentDate())
+                .studyArm(s.getStudyArm())
+                .subjectStatus(s.getSubjectStatus())
+                .consentVersion(s.getConsentVersion())
+                .consentDate(s.getConsentDate())
+                .consentedBy(s.getConsentedBy())
+                .withdrawalReason(s.getWithdrawalReason())
+                .build();
+    }
+}

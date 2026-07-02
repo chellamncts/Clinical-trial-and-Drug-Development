@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CopilotDiffPersistence">
+    <option name="pendingDiffs">
+      <map>
+        <entry key="/application (snapshot).properties">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="/application (snapshot).properties" />
+              <option name="originalContent" value="spring.application.name=api-gateway&#10;spring.config.import=optional:configserver:http://localhost:8888&#10;# Fallback&#10;server.port=8083&#10;eureka.client.service-url.defaultZone=http://localhost:8761/eureka/&#10;eureka.instance.prefer-ip-address=true&#10;jwt.secret=mySecretKey404E635266556A586E3272357538782F413F4428&#10;&#10;" />
+              <option name="updatedContent" value="spring.application.name=api-gateway&#10;spring.config.import=optional:configserver:http://localhost:8888&#10;# Fallback&#10;server.port=8083&#10;eureka.client.service-url.defaultZone=http://localhost:8761/eureka/&#10;eureka.instance.prefer-ip-address=true&#10;eureka.client.registry-fetch-interval-seconds=5&#10;jwt.secret=mySecretKey404E635266556A586E3272357538782F413F4428&#10;&#10;&#10;# Load balancer retry&#10;spring.cloud.loadbalancer.retry.enabled=true&#10;&#10;# Global timeouts&#10;spring.cloud.gateway.httpclient.connect-timeout=5000&#10;spring.cloud.gateway.httpclient.response-timeout=30s&#10;&#10;# Fallback routes (also defined in GatewayConfig.java and config-server)&#10;spring.cloud.gateway.routes[0].id=auth-service&#10;spring.cloud.gateway.routes[0].uri=lb://auth-service&#10;spring.cloud.gateway.routes[0].predicates[0]=Path=/auth/**,/users/**&#10;&#10;spring.cloud.gateway.routes[1].id=trialprotocol-service&#10;spring.cloud.gateway.routes[1].uri=lb://trialprotocol-service&#10;spring.cloud.gateway.routes[1].predicates[0]=Path=/api/protocols/**&#10;&#10;spring.cloud.gateway.routes[2].id=SubjectEnrollment&#10;spring.cloud.gateway.routes[2].uri=lb://SubjectEnrollment&#10;spring.cloud.gateway.routes[2].predicates[0]=Path=/api/subjects/**&#10;&#10;spring.cloud.gateway.routes[3].id=visit-scheduling&#10;spring.cloud.gateway.routes[3].uri=lb://visit-scheduling&#10;spring.cloud.gateway.routes[3].predicates[0]=Path=/api/visits/**&#10;&#10;spring.cloud.gateway.routes[4].id=adverseevent&#10;spring.cloud.gateway.routes[4].uri=lb://adverseevent&#10;spring.cloud.gateway.routes[4].predicates[0]=Path=/api/events/**" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+        <entry key="/visit-scheduling (snapshot).properties">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="/visit-scheduling (snapshot).properties" />
+              <option name="originalContent" value="# ── visit-scheduling service config ──&#10;server.port=8086&#10;&#10;spring.datasource.url=jdbc:mysql://localhost:3306/visit_scheduling?createDatabaseIfNotExist=true&#10;spring.datasource.username=root&#10;spring.datasource.password=root&#10;spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver&#10;spring.jpa.hibernate.ddl-auto=update&#10;spring.jpa.show-sql=true&#10;spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect&#10;&#10;" />
+              <option name="updatedContent" value="# ── visit-scheduling service config ──&#10;server.port=8086&#10;&#10;spring.datasource.url=jdbc:mysql://localhost:3306/visit_scheduling?createDatabaseIfNotExist=true&amp;autoReconnect=true&amp;failOverReadOnly=false&amp;maxReconnects=10&#10;spring.datasource.username=root&#10;spring.datasource.password=root&#10;spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver&#10;spring.jpa.hibernate.ddl-auto=update&#10;spring.jpa.show-sql=true&#10;spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect&#10;&#10;" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
