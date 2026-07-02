@@ -13,9 +13,9 @@ public class VisitRecord {
     private Long subjectId;
     private String visitName;
     private LocalDate visitDate;
-    private String crfStatus; // PENDING, COMPLETED, LOCKED
+    private String crfStatus;
     private Integer queryCount;
-    private String visitWindow;   // e.g. "Day 1 ± 3 days"
+    private String visitWindow;
 
     public Long getVisitId() { return visitId; }
     public void setVisitId(Long visitId) { this.visitId = visitId; }

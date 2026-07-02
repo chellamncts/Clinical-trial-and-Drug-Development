@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/Clinical_Trail_Drug_Development_Tracking_System/visit-scheduling/pom.xml" />
+        <option value="$PROJECT_DIR$/Clinical_Trail_Drug_Development_Tracking_System/trialprotocol/pom.xml" />
+        <option value="$PROJECT_DIR$/Clinical_Trail_Drug_Development_Tracking_System/adverseevent/pom.xml" />
+        <option value="$PROJECT_DIR$/Clinical_Trail_Drug_Development_Tracking_System/api-gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/Clinical_Trail_Drug_Development_Tracking_System/auth-service/auth-service/pom.xml" />
+        <option value="$PROJECT_DIR$/Clinical_Trail_Drug_Development_Tracking_System/config-server/pom.xml" />
+        <option value="$PROJECT_DIR$/Clinical_Trail_Drug_Development_Tracking_System/ctds/pom.xml" />
+        <option value="$PROJECT_DIR$/Clinical_Trail_Drug_Development_Tracking_System/eureka-server/pom.xml" />
+        <option value="$PROJECT_DIR$/Clinical_Trail_Drug_Development_Tracking_System/SubjectEnrollment/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_21" default="true" project-jdk-name="21" project-jdk-type="JavaSDK" />
+</project>
