@@ -1,5 +1,6 @@
 package com.genc.trialprotocol.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -12,7 +13,7 @@ public class Site {
     private Long protocolId;
     private String siteName;
 
-    @com.fasterxml.jackson.annotation.JsonIgnore
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "protocolId", insertable = false, updatable = false)
     private TrialProtocol protocol;

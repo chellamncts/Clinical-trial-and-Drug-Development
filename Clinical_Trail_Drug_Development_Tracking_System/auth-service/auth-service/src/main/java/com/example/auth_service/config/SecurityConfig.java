@@ -28,12 +28,12 @@ public class SecurityConfig {
     }
 
 
-    @Bean
-    public UserDetailsService userDetailsService() {
-        return username -> {
-            throw new UsernameNotFoundException("Direct Spring Security login not used — authenticate via /auth/login");
-        };
-    }
+//    @Bean
+//    public UserDetailsService userDetailsService() {
+//        return username -> {
+//            throw new UsernameNotFoundException("Direct Spring Security login not used — authenticate via /auth/login");
+//        };
+//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
