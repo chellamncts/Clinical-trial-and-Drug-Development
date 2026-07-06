@@ -4,7 +4,6 @@ import com.genc.visit_scheduling.model.VisitRecord;
 import com.genc.visit_scheduling.service.VisitService;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-//controller
 
 @RestController
 @RequestMapping("/api/visits")
