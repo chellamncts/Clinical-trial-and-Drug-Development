@@ -13,8 +13,8 @@
         <module name="adverseevent" />
         <module name="trialprotocol" />
         <module name="eureka-server" />
-        <module name="visit-scheduling" />
         <module name="ctds" />
+        <module name="visit-scheduling" />
       </profile>
     </annotationProcessing>
   </component>

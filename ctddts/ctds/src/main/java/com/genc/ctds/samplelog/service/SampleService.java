@@ -19,22 +19,22 @@ public class SampleService {
 
     private final SampleLogRepository sampleLogRepository;
     private final InvestigationalProductInventoryRepository inventoryRepository;
-    private final AtomicInteger dispenseSequence = new AtomicInteger(1);
-
-    /** Allowed forward transitions for the sample lifecycle. */
+    private int dispenseSequence = 1;
     private static final Map<SampleLog.SampleStatus, Set<SampleLog.SampleStatus>> ALLOWED_TRANSITIONS = Map.of(
             SampleLog.SampleStatus.COLLECTED, Set.of(SampleLog.SampleStatus.IN_TRANSIT),
             SampleLog.SampleStatus.IN_TRANSIT, Set.of(SampleLog.SampleStatus.ANALYZED),
             SampleLog.SampleStatus.ANALYZED, Set.of(SampleLog.SampleStatus.DESTROYED),
             SampleLog.SampleStatus.DESTROYED, Set.of()
     );
+    public List<SampleLog> getAllSamples() {
+        return sampleLogRepository.findAll();
+    }
 
     public SampleService(
             SampleLogRepository sampleLogRepository,
             InvestigationalProductInventoryRepository inventoryRepository) {
         this.sampleLogRepository = sampleLogRepository;
         this.inventoryRepository = inventoryRepository;
-        seedInventoryIfEmpty();
     }
 
     @Transactional
@@ -71,11 +71,7 @@ public class SampleService {
         return sampleLogRepository.save(sample);
     }
 
-    /**
-     * Moves a sample to the requested next state, enforcing the lifecycle:
-     * COLLECTED -> IN_TRANSIT -> ANALYZED -> DESTROYED.
-     * Automatically records the date for each transition.
-     */
+
     @Transactional
     public SampleLog updateSampleStatus(int sampleId, SampleLog.SampleStatus targetStatus) {
         if (sampleId <= 0) {
@@ -142,7 +138,7 @@ public class SampleService {
         inventoryRepository.save(inventory);
 
         InvestigationalProductInventory.DispenseLog log = new InvestigationalProductInventory.DispenseLog();
-        log.setDispenseId(dispenseSequence.getAndIncrement());
+        log.setDispenseId(dispenseSequence++);
         log.setInventoryId(inventoryId);
         log.setSubjectId(subjectId);
         log.setQuantityDispensed(quantity);
@@ -161,47 +157,5 @@ public class SampleService {
             throw new IllegalArgumentException("subjectId must be greater than zero");
         }
         return sampleLogRepository.findBySubjectId(subjectId);
-    }
-
-    private void seedInventoryIfEmpty() {
-        if (inventoryRepository.count() > 0) {
-            return;
-        }
-        
-        // Drug 1: IP-101
-        InvestigationalProductInventory drug1 = new InvestigationalProductInventory();
-        drug1.setInventoryId(1);
-        drug1.setProductName("IP-101");
-        drug1.setBatchNumber("BATCH-CT-001");
-        drug1.setQuantityReceived(100);
-        drug1.setQuantityDispensed(0);
-        drug1.setQuantityAvailable(100);
-        drug1.setStorageTemperatureC(5.0);
-        drug1.setColdChainStatus(InvestigationalProductInventory.ColdChainStatus.OK);
-        inventoryRepository.save(drug1);
-        
-        // Drug 2: IP-102
-        InvestigationalProductInventory drug2 = new InvestigationalProductInventory();
-        drug2.setInventoryId(2);
-        drug2.setProductName("IP-102");
-        drug2.setBatchNumber("BATCH-CT-002");
-        drug2.setQuantityReceived(80);
-        drug2.setQuantityDispensed(0);
-        drug2.setQuantityAvailable(80);
-        drug2.setStorageTemperatureC(2.0);
-        drug2.setColdChainStatus(InvestigationalProductInventory.ColdChainStatus.OK);
-        inventoryRepository.save(drug2);
-        
-        // Drug 3: IP-103
-        InvestigationalProductInventory drug3 = new InvestigationalProductInventory();
-        drug3.setInventoryId(3);
-        drug3.setProductName("IP-103");
-        drug3.setBatchNumber("BATCH-CT-003");
-        drug3.setQuantityReceived(120);
-        drug3.setQuantityDispensed(0);
-        drug3.setQuantityAvailable(120);
-        drug3.setStorageTemperatureC(20.0);
-        drug3.setColdChainStatus(InvestigationalProductInventory.ColdChainStatus.OK);
-        inventoryRepository.save(drug3);
     }
 }

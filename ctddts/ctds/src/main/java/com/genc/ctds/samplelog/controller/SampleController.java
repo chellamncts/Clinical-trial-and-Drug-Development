@@ -15,20 +15,17 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-public class LabSampleApiController {
+public class SampleController {
 
-    private final SampleLogRepository sampleLogRepository;
     private final SampleService sampleService;
 
-    public LabSampleApiController(SampleLogRepository sampleLogRepository,
-                                   SampleService sampleService) {
-        this.sampleLogRepository = sampleLogRepository;
+    public SampleController(SampleService sampleService) {
         this.sampleService = sampleService;
     }
 
     @GetMapping("/samples")
     public List<SampleLog> getAllSamples() {
-        return sampleLogRepository.findAll();
+        return sampleService.getAllSamples();
     }
 
     @PostMapping("/samples")
@@ -62,7 +59,7 @@ public class LabSampleApiController {
 
     @PutMapping("/samples/{id}/result")
     public SampleLog recordLabResult(@PathVariable int id,
-                                      @RequestBody LabResultRequest req) {
+                                     @RequestBody LabResultRequest req) {
         return sampleService.recordLabResult(id, req.getLabResult());
     }
 
@@ -72,18 +69,15 @@ public class LabSampleApiController {
     }
 
     @GetMapping("/inventory")
-    public List<InvestigationalProductInventory> getInventory() {
+    public List<InvestigationalProductInventory> getInventoryStatus() {
         return sampleService.getInventoryStatus();
     }
 
     @PostMapping("/inventory/{id}/dispense")
-    public ResponseEntity<InvestigationalProductInventory.DispenseLog> dispense(
-            @PathVariable int id,
-            @RequestBody DispenseRequest req) {
+    public ResponseEntity<InvestigationalProductInventory.DispenseLog> dispenseInvestigationalProduct(  @PathVariable int id,
+                                                                                                        @RequestBody DispenseRequest req) {
         InvestigationalProductInventory.DispenseLog log = sampleService.dispenseInvestigationalProduct(
                 id, req.getSubjectId(), req.getQuantity(),
                 req.getDispensedBy(), req.getDispensingLocation());
-        return ResponseEntity.ok(log);
-    }
+        return ResponseEntity.ok(log);  }
 }
-
