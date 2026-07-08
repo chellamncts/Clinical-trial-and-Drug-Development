@@ -19,14 +19,12 @@ public class AdverseEventService {
         this.repository = repository;
     }
 
-    /** Report a new adverse event — status → REPORTED */
     public AdverseEvent reportEvent(AdverseEvent event) {
         event.setEventStatus(EventStatus.REPORTED);
         event.setSafetyReportSubmitted(false);
         return repository.save(event);
     }
 
-    /** Classify seriousness and move to UNDER_REVIEW */
     public AdverseEvent classify(Long id) {
         AdverseEvent e = findById(id);
         if (e.getEventStatus() == EventStatus.RESOLVED || e.getEventStatus() == EventStatus.FATAL) {

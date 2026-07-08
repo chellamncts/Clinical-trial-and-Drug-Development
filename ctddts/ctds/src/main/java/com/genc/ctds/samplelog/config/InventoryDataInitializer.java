@@ -1,6 +1,5 @@
 package com.genc.ctds.samplelog.config;
 
-package com.genc.ctds.samplelog.config;
 import com.genc.ctds.samplelog.model.InvestigationalProductInventory;
 import com.genc.ctds.samplelog.repository.InvestigationalProductInventoryRepository;
 import jakarta.annotation.PostConstruct;

@@ -5,7 +5,7 @@ requireRole("INVESTIGATOR", "COORDINATOR");
 
 // ── Show signed-in user ──────────────────────────────────────────────
 const whoEl = document.getElementById("who");
-if (whoEl) whoEl.textContent = "Signed in as " + (getUsername() || "user");
+if (whoEl) whoEl.textContent = localStorage.getItem("username") || "user";
 
 /* ── Section navigation ─────────────────────────────────────────── */
 const SEC_TITLES = { dashboard: "Dashboard", enroll: "Screen & Enroll", subjects: "All Subjects" };
@@ -180,7 +180,6 @@ async function openConsent() {
     body.innerHTML = `
       <div class="consent-block">
         <h3><i class="bi bi-person-vcard"></i> Subject Details</h3>
-        <p class="consent-title">Subject #${s.subjectId}</p>
         <p class="consent-sub">Protocol ID: ${s.protocolId} &nbsp;·&nbsp; Site ID: ${s.siteId || "—"} &nbsp;·&nbsp; Study Arm: ${pretty(s.studyArm)}</p>
       </div>
       <div class="consent-grid">
@@ -212,7 +211,6 @@ async function openConsent() {
   }
 }
 
-/* ── Capture consent (enroll subject) ────────────────────────────── */
 async function consent() {
   const subjectId = document.getElementById("actId").value;
   const accepted  = document.getElementById("consentAccept").checked;
@@ -220,7 +218,6 @@ async function consent() {
   if (!accepted) { cmsg.innerHTML = '<div class="msg err">Please confirm the subject accepts consent.</div>'; return; }
 
   const form = {
-    consentVersion: (document.getElementById("cvVersion")?.value || "v1.0").trim(),
     consentDate:    document.getElementById("cvDate")?.value || today(),
     consentedBy:    (document.getElementById("cvBy")?.value || "").trim(),
     notes:          "Consent captured via dashboard"
@@ -236,12 +233,16 @@ async function consent() {
     cmsg.innerHTML = `<div class="msg err">${e.message}</div>`;
   }
 }
-
-/* ── Withdraw / Complete ─────────────────────────────────────────── */
 async function withdraw() {
   const subjectId = document.getElementById("actId").value;
-  const reason    = prompt("Enter withdrawal reason:") || "No reason provided";
+  const reason    = prompt("Enter withdrawal reason:");
   const msg       = document.getElementById("msg");
+
+  if (!reason) {
+    msg.innerHTML = '<div class="msg err">Withdrawal cancelled — no reason provided.</div>';
+    return;
+  }
+
   try {
     await api("/api/subjects/" + subjectId + "/withdraw", "PUT", { reason });
     msg.innerHTML = '<div class="msg ok">Subject withdrawn.</div>';
@@ -250,6 +251,7 @@ async function withdraw() {
     msg.innerHTML = `<div class="msg err">${e.message}</div>`;
   }
 }
+
 
 async function complete() {
   const subjectId = document.getElementById("actId").value;
@@ -263,7 +265,6 @@ async function complete() {
   }
 }
 
-/* ── Subject status stepper ──────────────────────────────────────── */
 function subjStepper(s) {
   const steps = [
     { l: "Screened",  i: "bi-clipboard-check" },
@@ -280,7 +281,6 @@ function subjStepper(s) {
     (withdrawn ? '<div class="withdrawn-note"><i class="bi bi-person-dash"></i> Subject withdrawn</div>' : "");
 }
 
-/* ── Subject detail card ────────────────────────────��────────────── */
 function showSubject() {
   const subjectId = document.getElementById("actId").value;
   const s         = SUBJECTS.find(x => x.subjectId === +subjectId);
@@ -297,8 +297,8 @@ function showSubject() {
     <div class="subj-hero">
       <div class="subj-avatar"><i class="bi bi-person-fill"></i></div>
       <div class="subj-hero-text">
-        <div class="subj-name">Subject #${s.subjectId}</div>
-        <div class="subj-sub">Protocol #${s.protocolId} &nbsp;·&nbsp; Site #${s.siteId || "—"}</div>
+        <div class="subj-name">Subject ${s.subjectId}</div>
+        <div class="subj-sub">Protocol ${s.protocolId} &nbsp;·&nbsp; Site #${s.siteId || "—"}</div>
       </div>
       ${badge(s.subjectStatus)}
     </div>
@@ -334,7 +334,6 @@ function subjTable(d) {
   </table>`;
 }
 
-/* ── Subject select dropdown ─────────────────────────────────────── */
 function fillSubjectSelect() {
   const sel = document.getElementById("actId");
   if (!SUBJECTS.length) {
@@ -344,11 +343,10 @@ function fillSubjectSelect() {
   }
   sel.disabled = false;
   sel.innerHTML = '<option value="">Select a subject…</option>' +
-    SUBJECTS.map(s => `<option value="${s.subjectId}">#${s.subjectId} · Protocol ${s.protocolId} · ${pretty(s.subjectStatus)}</option>`).join("");
+    SUBJECTS.map(s => `<option value="${s.subjectId}">${s.subjectId} · Protocol ${s.protocolId} · ${pretty(s.subjectStatus)}</option>`).join("");
   sel.value = "";
 }
 
-/* ── Load all subjects ───────────────────────────────────────────── */
 async function load() {
   try {
     const d = await api("/api/subjects");
@@ -366,5 +364,4 @@ async function load() {
   }
 }
 
-/* ── Bootstrap ───────────────────────────────────────────────────── */
 load();

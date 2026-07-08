@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
-    <file url="file://$PROJECT_DIR$/SubjectEnrollment/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/adverseevent/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/api-gateway/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/auth-service/auth-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/config-server/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ctds/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eureka-server/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/subjectenrollment/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/trialprotocol/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/visit-scheduling/src/main/java" charset="UTF-8" />
   </component>

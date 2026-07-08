@@ -5,7 +5,6 @@ import com.genc.ctds.samplelog.dto.DispenseRequest;
 import com.genc.ctds.samplelog.dto.LabResultRequest;
 import com.genc.ctds.samplelog.model.InvestigationalProductInventory;
 import com.genc.ctds.samplelog.model.SampleLog;
-import com.genc.ctds.samplelog.repository.SampleLogRepository;
 import com.genc.ctds.samplelog.service.SampleService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

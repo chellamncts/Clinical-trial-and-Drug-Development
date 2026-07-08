@@ -1,6 +1,6 @@
 
 const whoEl = document.getElementById("who");
-if (whoEl) whoEl.textContent = "Signed in as " + (localStorage.getItem("username") || "user");
+if (whoEl) whoEl.textContent = localStorage.getItem("username") || "user";
 
 requireRole("PHARMACOVIGILANCE_OFFICER");
 

@@ -2,7 +2,7 @@
 requireRole("DATA_MANAGER");
 
 const whoEl = document.getElementById("who");
-if (whoEl) whoEl.textContent = "Signed in as " + (localStorage.getItem("username") || "user");
+if (whoEl) whoEl.textContent = localStorage.getItem("username") || "user";
 
 document.querySelectorAll(".nav-item").forEach(b => b.onclick = () => {
   document.querySelectorAll(".nav-item").forEach(x => x.classList.remove("active"));

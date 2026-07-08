@@ -17,7 +17,6 @@
 </head>
 <body class="admin">
 
-  <!-- ══════════════ SIDEBAR ══════════════ -->
   <aside class="sidebar">
     <div class="brand">
       <span class="brand-mark">SE</span>
@@ -36,7 +35,6 @@
     </nav>
   </aside>
 
-  <!-- ══════════════ MAIN ══════════════ -->
   <main class="main">
     <header class="topbar">
       <button class="burger" id="burger" type="button" aria-label="Toggle menu">
@@ -54,7 +52,6 @@
       </div>
     </header>
 
-    <!-- ════ DASHBOARD ════ -->
     <section id="dashboard" class="sec active">
       <div class="stats">
         <div class="stat">
@@ -80,7 +77,6 @@
       </div>
     </section>
 
-    <!-- ════ SCREEN & ENROLL ════ -->
     <section id="enroll" class="sec">
       <div class="sec-head">
         <h2><i class="bi bi-clipboard-plus"></i> Subject Enrollment</h2>
@@ -90,7 +86,6 @@
       </div>
       <div id="msg"></div>
 
-      <!-- Manage Subject card -->
       <div class="card">
         <h2><i class="bi bi-person-vcard"></i> Manage Subject</h2>
         <p class="admin-tip">Select a subject to review consent, then complete or withdraw.</p>
@@ -110,7 +105,6 @@
         </div>
       </div>
 
-      <!-- ── Screen Subject Modal ── -->
       <div id="screenForm" class="modal-ov hidden" onclick="if(event.target===this)closeScreenForm()">
         <div class="modal-card" role="dialog" aria-modal="true" aria-label="Screen subject">
           <div class="modal-head">
@@ -157,7 +151,6 @@
         </div>
       </div>
 
-      <!-- ── Consent Modal ── -->
       <div id="consentForm" class="modal-ov hidden" onclick="if(event.target===this)toggleForm('consentForm')">
         <div class="modal-card" role="dialog" aria-modal="true" aria-label="Informed consent">
           <div class="modal-head">

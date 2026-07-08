@@ -2,7 +2,7 @@
 requireRole("ADMIN");
 
 const SEC_TITLES = { dashboard:"Dashboard", users:"User Management", protocols:"Protocols", sites:"Sites" };
-document.getElementById("who").textContent = "Signed in as " + (localStorage.getItem("username")||"admin");
+document.getElementById("who").textContent = localStorage.getItem("username")||"Admin";
 
 
 document.querySelectorAll(".nav-item").forEach(b=>b.addEventListener("click",()=>{
@@ -26,23 +26,62 @@ function siteLabel(s) {
 let PROTOS=[], SITES=[], USERS=[];
 
 async function createUser(){
-  const username=trimVal('u_username');
-  const fullName=trimVal('u_fullname');
-  const email=trimVal('u_email');
-  const password=trimVal('u_password');
-  const role=u_role.value;
-  if(isBlank(username)){umsg.innerHTML='<div class="msg err">Username is required and cannot be spaces only.</div>';return;}
-  if(isBlank(password)){umsg.innerHTML='<div class="msg err">Password is required and cannot be spaces only.</div>';return;}
-  if(!role){umsg.innerHTML='<div class="msg err">Role is mandatory.</div>';return;}
-  if(!isCtddtsEmail(email)){umsg.innerHTML='<div class="msg err">Email is required and must use @ctddts.com (e.g. jsmith@ctddts.com).</div>';return;}
+  const username = trimVal('u_username');
+  const fullName = trimVal('u_fullname');
+  const email = trimVal('u_email');
+  const password = trimVal('u_password');
+  const role = u_role.value;
+  if(isBlank(fullName)){
+    umsg.innerHTML = '<div class="msg err">Full name is required.</div>';
+    return;
+  }
+  if(isBlank(username)){
+    umsg.innerHTML = '<div class="msg err">Username is required and cannot be spaces only.</div>';
+    return;
+  }
+  if(/^\d/.test(username)){
+    umsg.innerHTML = '<div class="msg err">Username must not start with a number.</div>';
+    return;
+  }
+  if(/^\d+$/.test(username)){
+    umsg.innerHTML = '<div class="msg err">Username cannot be numbers only.</div>';
+    return;
+  }
+
+  if(isBlank(password)){
+    umsg.innerHTML = '<div class="msg err">Password is required and cannot be spaces only.</div>';
+    return;
+  }
+  if(password.length < 8 ||
+     !/[A-Z]/.test(password) ||
+     !/[a-z]/.test(password) ||
+     !/[0-9]/.test(password) ||
+     !/[!@#$%^&*]/.test(password)){
+    umsg.innerHTML = '<div class="msg err">Password must be at least 8 characters long and include uppercase, lowercase, number, and special character.</div>';
+    return;
+  }
+
+  if(!role){
+    umsg.innerHTML = '<div class="msg err">Role is mandatory.</div>';
+    return;
+  }
+
+  if(!isCtddtsEmail(email)){
+    umsg.innerHTML = '<div class="msg err">Email is required and must use @ctddts.com (e.g. jsmith@ctddts.com).</div>';
+    return;
+  }
+
   try{
     await api("/users","POST",{username,fullName,email,password,role});
-    umsg.innerHTML='<div class="msg ok">User created</div>';
-    u_username.value=u_fullname.value=u_email.value=u_password.value="";
+    umsg.innerHTML = '<div class="msg ok">User created</div>';
+    u_username.value = u_fullname.value = u_email.value = u_password.value = "";
     loadUsers();
     setTimeout(()=>toggleForm('userForm'),700);
-  }catch(e){umsg.innerHTML='<div class="msg err">'+e.message+'</div>';}
+  }catch(e){
+    umsg.innerHTML = '<div class="msg err">'+e.message+'</div>';
+  }
 }
+
 async function deleteUser(id){
   const user=USERS.find(u=>u.id===id);
   if(!user){umsg.innerHTML='<div class="msg err">User not found in current list.</div>';return;}
