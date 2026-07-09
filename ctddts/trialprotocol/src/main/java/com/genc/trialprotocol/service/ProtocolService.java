@@ -26,7 +26,9 @@ public class ProtocolService {
         return repo.save(p);
     }
 
-    public List<TrialProtocol> all() { return repo.findAll(); }
+    public List<TrialProtocol> all() {
+        return repo.findAll();
+    }
 
     public TrialProtocol getProtocolDetails(Long id) {
         return repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Protocol not found: " + id));
@@ -51,7 +53,9 @@ public class ProtocolService {
         return siteRepo.save(s);
     }
 
-    public List<Site> allSites() { return siteRepo.findAll(); }
+    public List<Site> allSites() {
+        return siteRepo.findAll();
+    }
 
     public Site getSiteById(Long siteId) {
         return siteRepo.findById(siteId)
@@ -68,10 +72,10 @@ public class ProtocolService {
 
         boolean allowed = switch (target) {
             case APPROVED -> current == ProtocolStatus.DRAFT;
-            case ACTIVE   -> current == ProtocolStatus.APPROVED;
-            case CLOSED   -> current == ProtocolStatus.APPROVED
-                          || current == ProtocolStatus.ACTIVE;
-            case DRAFT    -> false; // cannot revert to DRAFT
+            case ACTIVE -> current == ProtocolStatus.APPROVED;
+            case CLOSED -> current == ProtocolStatus.APPROVED
+                    || current == ProtocolStatus.ACTIVE;
+            case DRAFT -> false; // cannot revert to DRAFT
         };
         if (!allowed)
             throw new BusinessRuleException("Invalid status transition: " + current + " \u2192 " + target);
@@ -79,3 +83,4 @@ public class ProtocolService {
         p.setProtocolStatus(target);
         return repo.save(p);
     }
+}

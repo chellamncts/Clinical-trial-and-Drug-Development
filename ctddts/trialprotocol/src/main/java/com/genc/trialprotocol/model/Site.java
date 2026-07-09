@@ -14,7 +14,7 @@ public class Site {
     private String siteName;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "protocolId")
+    @JoinColumn(name = "protocolId", insertable = false, updatable = false)
     private TrialProtocol protocol;
 
     private String location;
