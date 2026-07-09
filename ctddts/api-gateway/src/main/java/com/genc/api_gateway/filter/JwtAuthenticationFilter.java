@@ -18,11 +18,7 @@ import java.util.List;
 
 @Component
 public class JwtAuthenticationFilter implements GlobalFilter, Ordered {
-
-
     private static final List<String> PROTECTED_PREFIXES = List.of("/api/", "/users");
-
-
     private static final List<String> PUBLIC_PREFIXES = List.of("/auth/");
 
     @Value("${jwt.secret}")

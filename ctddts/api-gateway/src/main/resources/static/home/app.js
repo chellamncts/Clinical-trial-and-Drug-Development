@@ -13,7 +13,7 @@ function saveAuth(token, role, username) {
 function getToken() { return localStorage.getItem("token"); }
 function getRole() { return localStorage.getItem("role"); }
 function getUsername() { return localStorage.getItem("username"); }
-function logout() { localStorage.clear(); window.location.href = "/home/index.html"; }
+function logout() { localStorage.clear(); window.location.href = "/home/login.html"; }
 
 function requireRole(role) {
   if (!getToken()) { window.location.href = "/home/login.html"; return; }

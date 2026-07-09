@@ -67,7 +67,7 @@ async function createUser(){
   }
 
   if(!isCtddtsEmail(email)){
-    umsg.innerHTML = '<div class="msg err">Email is required and must use @ctddts.com (e.g. jsmith@ctddts.com).</div>';
+    umsg.innerHTML = '<div class="msg err">Email is required and must use @ctddts.com (e.g. nithish@ctddts.com).</div>';
     return;
   }
 
@@ -131,7 +131,7 @@ function updateSiteButton(){
   b.disabled=!(s.siteStatus==="REGISTERED" && ready);
 }
 
-function userTable(d,withActions=false){return d.length?`<table><tr><th>Id</th><th>Username</th><th>Name</th><th>Email</th><th>Role</th>${withActions?'<th>Action</th>':''}</tr>`+d.map(u=>`<tr><td><span class="ig-v mut">${u.id}</span></td><td><b>${u.username}</b></td><td>${u.fullName||"—"}</td><td>${u.email?`<a href="mailto:${u.email}">${u.email}</a>`:"—"}</td><td><span class="badge b-approved">${pretty(u.role)}</span></td>${withActions?`<td><button class="btn logout" onclick="deleteUser(${u.id})"><i class="bi bi-person-dash"></i> Deactivate</button></td>`:''}</tr>`).join("")+"</table>":'<div class="empty">No users yet</div>';}
+function userTable(d,withActions=false){return d.length?`<table><tr><th>Id</th><th>Username</th><th>Name</th><th>Email</th><th>Role</th>${withActions?'<th>Action</th>':''}</tr>`+d.map(u=>`<tr><td><span class="ig-v mut">${u.id}</span></td><td><b>${u.username}</b></td><td>${u.fullName||"—"}</td><td>${u.email?`<a href="mailto:${u.email}">${u.email}</a>`:"—"}</td><td><span class="badge b-approved">${pretty(u.role)}</span></td>${withActions?`<td><button class="btn logout" onclick="deleteUser(${u.id})"><i class="bi bi-person-dash"></i> Delete User</button></td>`:''}</tr>`).join("")+"</table>":'<div class="empty">No users yet</div>';}
 function protoTable(d){return d.length?`<table><tr><th>Id</th><th>Title</th><th>Phase</th><th>Status</th></tr>`+d.map(p=>`<tr><td><span class="ig-v mut">${p.protocolId}</span></td><td><b>${p.trialTitle}</b><br><small class="ig-v mut">${p.therapeuticArea||""}</small></td><td>${phaseLabel(p.phase)}</td><td>${badge(p.protocolStatus)}</td></tr>`).join("")+"</table>":'<div class="empty">No protocols yet</div>';}
 function siteTable(d){return d.length?`<table><tr><th>Id</th><th>Protocol</th><th>Name</th><th>Location</th><th>PI</th><th>Status</th></tr>`+d.map(s=>`<tr><td><span class="ig-v mut">${s.siteId}</span></td><td>#${s.protocolId}</td><td><b>${s.siteName||""}</b></td><td>${s.location||"—"}</td><td>${s.principalInvestigator||"—"}</td><td>${badge(s.siteStatus)}</td></tr>`).join("")+"</table>":'<div class="empty">No sites yet</div>';}
 

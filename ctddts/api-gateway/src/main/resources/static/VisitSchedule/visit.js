@@ -71,8 +71,8 @@ function renderTable(data){
       <tbody>
         ${data.map(v=>`
           <tr>
-            <td class="visit-id-cell">#${v.visitId}</td>
-            <td>Subject #${v.subjectId}</td>
+            <td class="visit-id-cell">${v.visitId}</td>
+            <td>Subject ${v.subjectId}</td>
             <td class="visit-name-cell">${v.visitName||"—"}</td>
             <td class="visit-date-cell">${fmtDate(v.visitDate)}</td>
             <td>${v.visitWindow ? `<span class="window-chip"><i class="bi bi-arrows-expand"></i>${v.visitWindow}</span>` : `<span style="color:var(--muted);font-size:.8rem">—</span>`}</td>
@@ -99,7 +99,7 @@ async function showVisit(){
   const box = document.getElementById("visitDetail");
   if(!box) return;
   if(!v){
-    box.innerHTML = `<div class="det-empty"><i class="bi bi-calendar3"></i><p>Select a visit to view CRF status.</p></div>`;
+    box.innerHTML = `<div class="det-empty"><i class="bi bi-calendar3"></i>Select a visit to view CRF status.</div>`;
     document.querySelectorAll(".crf-btns .btn").forEach(b => b.disabled = true);
     document.getElementById("qc").disabled = true;
     return;
@@ -127,8 +127,8 @@ async function showVisit(){
     <div class="detail-hero">
       <div class="detail-avatar purple"><i class="bi bi-calendar-check"></i></div>
       <div class="detail-title-wrap">
-        <div class="detail-title">${v.visitName||"Visit #"+v.visitId}</div>
-        <div class="detail-sub">Subject #${v.subjectId} · ${fmtDate(v.visitDate)}</div>
+        <div class="detail-title">${v.visitName||"Visit "+v.visitId}</div>
+        <div class="detail-sub">Subject ${v.subjectId} · ${fmtDate(v.visitDate)}</div>
       </div>
       ${badge(v.crfStatus)}
     </div>
@@ -218,7 +218,7 @@ async function loadHistory(){
       <li class="hist-item">
         <div class="hist-dot ${v.crfStatus}"><i class="bi ${iconMap[v.crfStatus]||'bi-calendar'}"></i></div>
         <div class="hist-body">
-          <div class="hist-name">${v.visitName||"Visit #"+v.visitId}</div>
+          <div class="hist-name">${v.visitName||"Visit "+v.visitId}</div>
           <div class="hist-meta">
             <span><i class="bi bi-calendar-event"></i>${fmtDate(v.visitDate)}</span>
             <span><i class="bi bi-arrows-expand"></i>${v.visitWindow||"—"}</span>
@@ -241,7 +241,7 @@ async function loadSubjects(){
     if(enrolled.length){
       subSel.disabled = false;
       subSel.innerHTML = '<option value="">— Select an enrolled subject —</option>' +
-        enrolled.map(s => `<option value="${s.subjectId}">#${s.subjectId} · Protocol ${s.protocolId} · Site ${s.siteId||"—"}</option>`).join("");
+        enrolled.map(s => `<option value="${s.subjectId}">${s.subjectId} · Protocol ${s.protocolId} · Site ${s.siteId||"—"}</option>`).join("");
     } else {
       subSel.innerHTML = '<option value="">No ENROLLED subjects yet</option>';
       subSel.disabled = true;
@@ -250,7 +250,7 @@ async function loadSubjects(){
     const histSel = document.getElementById("histSubject");
     if(histSel && histSel.tagName === "SELECT"){
       histSel.innerHTML = '<option value="">— Select a subject —</option>' +
-        ALL_SUBJECTS.map(s => `<option value="${s.subjectId}">#${s.subjectId} · ${s.subjectStatus}</option>`).join("");
+        ALL_SUBJECTS.map(s => `<option value="${s.subjectId}">${s.subjectId} · ${s.subjectStatus}</option>`).join("");
     }
   } catch(e){
     console.error("Could not load subjects:", e.message);
@@ -266,7 +266,7 @@ async function load(){
     updateStats();
     renderTable(VISITS);
     fillSelect("vid", d, "visitId",
-      x => `${x.visitName||"Visit"} #${x.visitId} · Subject #${x.subjectId} · ${x.crfStatus}`, "No visits yet");
+      x => `${x.visitName||"Visit"} ${x.visitId} · Subject ${x.subjectId} · ${x.crfStatus}`, "No visits yet");
     await showVisit();
   } catch(e){
     console.error("Could not load visits:", e.message);
@@ -278,8 +278,8 @@ load();
 
 function openAeModal(visitId, subjectId) {
   document.getElementById("aeModal").classList.remove("hidden");
-  document.getElementById("aeSubjectId").value  = "Subject #" + subjectId;
-  document.getElementById("aeVisitId").value    = "Visit #" + visitId;
+  document.getElementById("aeSubjectId").value  = "Subject " + subjectId;
+  document.getElementById("aeVisitId").value    = "Visit " + visitId;
   document.getElementById("aeOnsetDate").value  = new Date().toISOString().split("T")[0];
   document.getElementById("aeSeverity").value   = "MILD";
   document.getElementById("aeDescription").value = "";
