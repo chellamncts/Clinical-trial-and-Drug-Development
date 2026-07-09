@@ -66,7 +66,6 @@ public class ProtocolService {
         if (current == target)
             throw new BusinessRuleException("Protocol is already " + target);
 
-        // Enforce lifecycle: DRAFT -> APPROVED -> ACTIVE -> CLOSED
         boolean allowed = switch (target) {
             case APPROVED -> current == ProtocolStatus.DRAFT;
             case ACTIVE   -> current == ProtocolStatus.APPROVED;
@@ -80,4 +79,3 @@ public class ProtocolService {
         p.setProtocolStatus(target);
         return repo.save(p);
     }
-}

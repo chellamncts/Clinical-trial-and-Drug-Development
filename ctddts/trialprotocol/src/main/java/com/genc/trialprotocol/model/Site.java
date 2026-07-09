@@ -13,9 +13,8 @@ public class Site {
     private Long protocolId;
     private String siteName;
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "protocolId", insertable = false, updatable = false)
+    @JoinColumn(name = "protocolId")
     private TrialProtocol protocol;
 
     private String location;
