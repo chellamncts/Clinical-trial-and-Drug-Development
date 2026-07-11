@@ -1,8 +1,4 @@
-// ──────────────────────────────────────────────
-//  Lab Sample & IP Tracking – SPA logic
-// ──────────────────────────────────────────────
 
-// Require COORDINATOR or ADMIN role
 requireRole("COORDINATOR");
 
 // Show signed-in user
@@ -359,7 +355,6 @@ async function loadSubjects() {
       }
     }
 
-    // Dispense IP subject dropdown
     const dSel = document.getElementById("dSubjectId");
     if (dSel) {
       if (!enrolled.length) {
@@ -399,14 +394,11 @@ async function loadInventory() {
   }
 }
 
-// ── Burger menu ────────────────────────────────
 const burger = document.getElementById("burger");
 const sidebar = document.querySelector(".sidebar");
 if (burger && sidebar) {
   burger.addEventListener("click", () => sidebar.classList.toggle("open"));
 }
-
-// ── Kick off ───────────────────────────────────
 loadSamples();
 loadInventory();
 loadSubjects();

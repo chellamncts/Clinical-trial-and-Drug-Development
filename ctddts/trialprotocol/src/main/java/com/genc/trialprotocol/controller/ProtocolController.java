@@ -24,8 +24,8 @@ public class ProtocolController {
     public TrialProtocol getProtocolDetails(@PathVariable Long id) { return service.getProtocolDetails(id); }
 
     @PutMapping("/{id}/status")
-    public TrialProtocol updateStatus(@PathVariable Long id, @RequestParam ProtocolStatus status) {
-        return service.updateStatus(id, status);
+    public TrialProtocol updateStatus(@PathVariable Long id, @RequestParam ProtocolStatus status) { // id = 3 status = approve
+        return service.updateStatus(id, status); //updateStatus(3,approve)
     }
 
     @PostMapping("/sites")

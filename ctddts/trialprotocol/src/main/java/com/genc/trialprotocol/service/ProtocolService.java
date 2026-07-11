@@ -62,8 +62,8 @@ public class ProtocolService {
                 .orElseThrow(() -> new ResourceNotFoundException("Site not found: " + siteId));
     }
 
-    public TrialProtocol updateStatus(Long id, ProtocolStatus target) {
-        TrialProtocol p = getProtocolDetails(id);
+    public TrialProtocol updateStatus(Long id, ProtocolStatus target) {// id = 3,status = approve
+        TrialProtocol p = getProtocolDetails(id); // get protocol details by id ->
         ProtocolStatus current = p.getProtocolStatus();
         if (current == null) current = ProtocolStatus.DRAFT;
 
@@ -75,7 +75,7 @@ public class ProtocolService {
             case ACTIVE -> current == ProtocolStatus.APPROVED;
             case CLOSED -> current == ProtocolStatus.APPROVED
                     || current == ProtocolStatus.ACTIVE;
-            case DRAFT -> false; // cannot revert to DRAFT
+            case DRAFT -> false;
         };
         if (!allowed)
             throw new BusinessRuleException("Invalid status transition: " + current + " \u2192 " + target);

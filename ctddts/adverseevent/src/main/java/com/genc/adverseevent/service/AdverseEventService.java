@@ -1,5 +1,6 @@
 package com.genc.adverseevent.service;
 
+import com.genc.adverseevent.exception.ResourceNotFoundException;
 import com.genc.adverseevent.model.AdverseEvent;
 import com.genc.adverseevent.model.EventStatus;
 import com.genc.adverseevent.model.Severity;
@@ -77,6 +78,6 @@ public class AdverseEventService {
 
     private AdverseEvent findById(Long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Event not found: " + id));
     }
 }

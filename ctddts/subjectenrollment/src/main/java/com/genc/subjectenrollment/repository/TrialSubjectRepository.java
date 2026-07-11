@@ -14,6 +14,5 @@ public interface TrialSubjectRepository extends JpaRepository<TrialSubject, Inte
 
     List<TrialSubject> findBySubjectStatus(SubjectStatus subjectStatus);
 
-    List<TrialSubject> findBySiteId(Integer siteId);
 }
 
