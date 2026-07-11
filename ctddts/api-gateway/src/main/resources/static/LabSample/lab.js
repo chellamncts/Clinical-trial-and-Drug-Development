@@ -45,7 +45,7 @@ function statusBadge(s) {
 }
 
 function coldBadge(s) {
-  const cls   = { OK: "badge-ok", EXCURSION: "badge-excursion", UNKNOWN: "badge-unknown" };
+  const cls = { OK: "badge-ok", EXCURSION: "badge-excursion", UNKNOWN: "badge-unknown" };
   return `<span class="status-pill ${cls[s] || "badge-unknown"}">${s || "UNKNOWN"}</span>`;
 }
 
@@ -239,24 +239,60 @@ function buildInventoryTableHtml() {
   if (!INVENTORY.length) {
     return '<div class="lab-empty"><i class="bi bi-box-seam"></i><p>No inventory items found.</p></div>';
   }
+
   return `<table class="sample-table">
     <thead><tr>
-      <th>ID</th><th>Product</th><th>Batch</th><th>Received</th><th>Dispensed</th><th>Available</th><th>Temp (°C)</th><th>Cold Chain</th>
+      <th>ID</th>
+      <th>Product</th>
+      <th>Batch</th>
+      <th>Received</th>
+      <th>Dispensed</th>
+      <th>Available</th>
+      <th>Required Temp</th>
+      <th>Current Temp</th>
+      <th>Cold Chain</th>
     </tr></thead>
-    <tbody>${INVENTORY.map(i => `<tr>
-      <td>#${i.inventoryId}</td>
-      <td><strong>${i.productName}</strong></td>
-      <td>${i.batchNumber || "—"}</td>
-      <td style="text-align:center">${i.quantityReceived}</td>
-      <td style="text-align:center">${i.quantityDispensed}</td>
-      <td style="text-align:center"><strong>${i.quantityAvailable}</strong></td>
-      <td>${i.storageTemperatureC != null ? i.storageTemperatureC + "°C" : "—"}</td>
-      <td>${coldBadge(i.coldChainStatus)}</td>
-    </tr>`).join("")}
+    <tbody>${INVENTORY.map(i => {
+      let requiredTemp = "—";
+      if (i.productName === "IP-101") requiredTemp = "2°C - 8°C";
+      else if (i.productName === "IP-102") requiredTemp = "-20°C";
+      else if (i.productName === "IP-103") requiredTemp = "15°C - 25°C";
+
+      const storedTemp = localStorage.getItem(`temp_${i.inventoryId}`);
+      const cur = storedTemp ? parseFloat(storedTemp) : i.currentTemperatureC;
+
+      let status = "UNKNOWN";
+      if (cur != null && cur !== "") {
+        if (requiredTemp.includes("2°C") && (cur < 2 || cur > 8)) status = "EXCURSION";
+        else if (requiredTemp.includes("-20") && cur > -20) status = "EXCURSION";
+        else if (requiredTemp.includes("15°C") && (cur < 15 || cur > 25)) status = "EXCURSION";
+        else status = "OK";
+      }
+
+      const tempInput = `<input type="number" step="0.1" value="${cur ?? ""}" placeholder="Enter °C" onchange="updateTemp(${i.inventoryId}, this.value)" />`;
+
+      return `<tr data-status="${status}">
+        <td>#${i.inventoryId}</td>
+        <td><strong>${i.productName}</strong></td>
+        <td>${i.batchNumber || "—"}</td>
+        <td style="text-align:center">${i.quantityReceived}</td>
+        <td style="text-align:center">${i.quantityDispensed}</td>
+        <td style="text-align:center"><strong>${i.quantityAvailable}</strong></td>
+        <td>${requiredTemp}</td>
+        <td>${tempInput}</td>
+        <td>${coldBadge(status)}</td>
+      </tr>`;
+    }).join("")}
     </tbody>
   </table>`;
 }
-
+function updateTemp(id, value) {
+  const item = INVENTORY.find(x => x.inventoryId === id);
+  if (!item) return;
+  item.currentTemperatureC = parseFloat(value);
+  localStorage.setItem(`temp_${id}`, value);
+  document.getElementById("invBox").innerHTML = buildInventoryTableHtml();
+}
 function renderInventoryTable() {
   const box = document.getElementById("invBox");
   if (box) box.innerHTML = buildInventoryTableHtml();
