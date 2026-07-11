@@ -9,7 +9,7 @@
 		<relativePath/>
 	</parent>
 	<groupId>com.genc</groupId>
-	<artifactId>ctds</artifactId>
+	<artifactId>lab-sample</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<description>Lab Sample and IP Tracking Microservice</description>
 

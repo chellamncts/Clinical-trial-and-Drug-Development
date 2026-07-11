@@ -1,6 +1,7 @@
 package com.genc.adverseevent.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
@@ -13,6 +14,7 @@ public class AdverseEvent {
     private Long eventId;
 
     @Column(nullable = false)
+    @NotNull(message = "Subject ID is required")
     private Long subjectId;
 
     private LocalDate eventOnsetDate;
@@ -33,6 +35,7 @@ public class AdverseEvent {
 
     private String meddraCode;
 
+    @NotNull(message = "Visit ID is mandatory")
     private Long visitId;
 
     public Long getEventId() { return eventId; }

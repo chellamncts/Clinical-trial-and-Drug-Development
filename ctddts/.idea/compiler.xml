@@ -8,11 +8,11 @@
         <outputRelativeToContentRoot value="true" />
         <module name="config-server" />
         <module name="auth-service" />
+        <module name="lab-sample" />
         <module name="api-gateway" />
         <module name="adverseevent" />
         <module name="trialprotocol" />
         <module name="eureka-server" />
-        <module name="ctds" />
         <module name="visit-scheduling" />
         <module name="subjectenrollment" />
       </profile>
@@ -24,8 +24,8 @@
       <module name="api-gateway" options="-parameters" />
       <module name="auth-service" options="-parameters" />
       <module name="config-server" options="-parameters" />
-      <module name="ctds" options="-parameters" />
       <module name="eureka-server" options="-parameters" />
+      <module name="lab-sample" options="-parameters" />
       <module name="subjectenrollment" options="-parameters" />
       <module name="trialprotocol" options="-parameters" />
       <module name="visit-scheduling" options="-parameters" />

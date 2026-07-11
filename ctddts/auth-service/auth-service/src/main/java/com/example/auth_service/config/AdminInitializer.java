@@ -20,12 +20,12 @@ public class AdminInitializer {
 
     @PostConstruct
     public void init() {
-        if (!userRepository.existsByUsername("admin")) {
+        if (!userRepository.existsByUsername("Admin")) {
             User admin = new User();
-            admin.setUsername("admin");
+            admin.setUsername("Admin");
             admin.setEmail("admin@ctddts.com");
-            admin.setFullName("System Administrator");
-            admin.setPassword(passwordEncoder.encode("admin123"));
+            admin.setFullName("Administrator");
+            admin.setPassword(passwordEncoder.encode("Admin@123"));
             admin.setRole(Role.ADMIN);
             userRepository.save(admin);
             System.out.println("[AdminInitializer] Default admin created — username: admin / password: admin123");

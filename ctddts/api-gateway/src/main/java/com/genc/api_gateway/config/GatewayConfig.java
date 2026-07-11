@@ -31,9 +31,9 @@ public class GatewayConfig {
                 .path("/api/events/**")
                 .uri("lb://adverseevent"))
 
-            .route("ctds-route", r -> r
+            .route("lab-sample-service-route", r -> r
                 .path("/api/samples", "/api/samples/**", "/api/inventory", "/api/inventory/**")
-                .uri("lb://ctds"))
+                .uri("lb://lab-sample-service"))
 
             .build();
     }

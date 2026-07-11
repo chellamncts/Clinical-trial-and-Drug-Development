@@ -31,19 +31,17 @@ public class AdverseEventService {
         if (e.getEventStatus() == EventStatus.RESOLVED || e.getEventStatus() == EventStatus.FATAL) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Cannot classify a " + e.getEventStatus() + " event.");
         }
-        // Classify based on severity
+
         String seriousness = (e.getSeverity() == Severity.SEVERE) ? "SERIOUS" : "NOT_SERIOUS";
         e.setSeriousness(seriousness);
-        // Assign a simple MedDRA placeholder code
         if (e.getMeddraCode() == null) {
             e.setMeddraCode(e.getSeverity() == Severity.SEVERE ? "10000228" :
-                            e.getSeverity() == Severity.MODERATE ? "10047700" : "10001316");
+                    e.getSeverity() == Severity.MODERATE ? "10047700" : "10001316");
         }
         e.setEventStatus(EventStatus.UNDER_REVIEW);
         return repository.save(e);
     }
 
-    /** Submit safety report — only for SERIOUS + UNDER_REVIEW events */
     public AdverseEvent submitSafetyReport(Long id) {
         AdverseEvent e = findById(id);
         if (e.getEventStatus() != EventStatus.UNDER_REVIEW) {
@@ -60,7 +58,6 @@ public class AdverseEventService {
         return repository.save(e);
     }
 
-    /** Resolve event — must be UNDER_REVIEW */
     public AdverseEvent resolve(Long id) {
         AdverseEvent e = findById(id);
         if (e.getEventStatus() != EventStatus.UNDER_REVIEW) {
