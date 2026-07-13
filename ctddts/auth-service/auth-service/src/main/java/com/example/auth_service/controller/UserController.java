@@ -2,6 +2,7 @@ package com.example.auth_service.controller;
 
 import com.example.auth_service.dto.UserRequest;
 import com.example.auth_service.dto.UserResponse;
+import com.example.auth_service.model.User;
 import com.example.auth_service.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +22,8 @@ public class UserController {
     }
 
     @GetMapping
-    public List<UserResponse> listUsers(@RequestHeader(value = "X-User-Role", required = false) String role) {
-        requireAdmin(role);
+    public List<User> listUsers(@RequestHeader(value = "X-User-Role", required = false) String role) {
+        userService.requireAdmin(role);
         return userService.findAll();
     }
 
@@ -30,7 +31,7 @@ public class UserController {
     public ResponseEntity<UserResponse> createUser(
             @RequestHeader(value = "X-User-Role", required = false) String role,
             @RequestBody UserRequest request) {
-        requireAdmin(role);
+        userService.requireAdmin(role);
         return ResponseEntity.ok(userService.createUser(request));
     }
 
@@ -38,15 +39,9 @@ public class UserController {
     public ResponseEntity<Void> deleteUser(
             @RequestHeader(value = "X-User-Role", required = false) String role,
             @PathVariable Long id) {
-        requireAdmin(role);
+        userService.requireAdmin(role);
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
-    }
-
-    private void requireAdmin(String role) {
-        if (!"ADMIN".equals(role)) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin access required");
-        }
     }
 }
 

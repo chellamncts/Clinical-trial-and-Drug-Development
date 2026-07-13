@@ -2,7 +2,6 @@ package com.genc.subjectenrollment.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
-import java.util.Objects;
 
 @Entity
 @Table(name = "TrialSubject")
@@ -15,21 +14,34 @@ public class TrialSubject {
     @Column(nullable = false)
     private Integer protocolId;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     private Integer siteId;
 
+    @Column(nullable = false)
     private LocalDate screeningDate;
+
+    @Column(nullable = false)
     private LocalDate enrollmentDate;
+
+    @Column(nullable = false)
     private String studyArm;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private SubjectStatus subjectStatus;
 
+    @Column(nullable = false)
     private String consentVersion;
+
+    @Column(nullable = false)
     private LocalDate consentDate;
+
+    @Column(nullable = false)
     private String consentedBy;
+
+    @Column(nullable = false)
     private String withdrawalReason;
+
     public TrialSubject() {}
 
     public TrialSubject(Integer subjectId, Integer protocolId, Integer siteId,
@@ -81,54 +93,4 @@ public class TrialSubject {
 
     public String getWithdrawalReason() { return withdrawalReason; }
     public void setWithdrawalReason(String withdrawalReason) { this.withdrawalReason = withdrawalReason; }
-
-    public static Builder builder() { return new Builder(); }
-
-    public static class Builder {
-        private Integer subjectId;
-        private Integer protocolId;
-        private Integer siteId;
-        private LocalDate screeningDate;
-        private LocalDate enrollmentDate;
-        private String studyArm;
-        private SubjectStatus subjectStatus;
-        private String consentVersion;
-        private LocalDate consentDate;
-        private String consentedBy;
-        private String withdrawalReason;
-
-        public Builder subjectId(Integer v)          { this.subjectId = v; return this; }
-        public Builder protocolId(Integer v)         { this.protocolId = v; return this; }
-        public Builder siteId(Integer v)             { this.siteId = v; return this; }
-        public Builder screeningDate(LocalDate v)    { this.screeningDate = v; return this; }
-        public Builder enrollmentDate(LocalDate v)   { this.enrollmentDate = v; return this; }
-        public Builder studyArm(String v)            { this.studyArm = v; return this; }
-        public Builder subjectStatus(SubjectStatus v){ this.subjectStatus = v; return this; }
-        public Builder consentVersion(String v)      { this.consentVersion = v; return this; }
-        public Builder consentDate(LocalDate v)      { this.consentDate = v; return this; }
-        public Builder consentedBy(String v)         { this.consentedBy = v; return this; }
-        public Builder withdrawalReason(String v)    { this.withdrawalReason = v; return this; }
-
-        public TrialSubject build() {
-            return new TrialSubject(subjectId, protocolId, siteId, screeningDate, enrollmentDate,
-                    studyArm, subjectStatus, consentVersion, consentDate, consentedBy, withdrawalReason);
-        }
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof TrialSubject)) return false;
-        TrialSubject that = (TrialSubject) o;
-        return Objects.equals(subjectId, that.subjectId);
-    }
-
-    @Override
-    public int hashCode() { return Objects.hash(subjectId); }
-
-    @Override
-    public String toString() {
-        return "TrialSubject{subjectId=" + subjectId + ", protocolId=" + protocolId +
-               ", siteId=" + siteId + ", subjectStatus=" + subjectStatus + "}";
-    }
 }

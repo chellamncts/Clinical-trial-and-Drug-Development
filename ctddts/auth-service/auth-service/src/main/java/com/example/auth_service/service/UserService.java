@@ -23,11 +23,14 @@ public class UserService {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
+    public void requireAdmin(String role) {
+        if (!"ADMIN".equals(role)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin access required");
+        }
+    }
 
-    public List<UserResponse> findAll() {
-        return userRepository.findAll().stream()
-                .map(u -> new UserResponse(u.getId(), u.getUsername(), u.getFullName(), u.getEmail(), u.getRole().name()))
-                .collect(Collectors.toList());
+    public List<User> findAll() {
+        return userRepository.findAll();
     }
 
     public UserResponse createUser(UserRequest req) {

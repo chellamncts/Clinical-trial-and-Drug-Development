@@ -4,6 +4,7 @@ import com.genc.visit_scheduling.client.SubjectClient;
 import com.genc.visit_scheduling.dto.SubjectDTO;
 import com.genc.visit_scheduling.exception.BusinessRuleException;
 import com.genc.visit_scheduling.exception.ResourceNotFoundException;
+import com.genc.visit_scheduling.model.CrfStatus;
 import com.genc.visit_scheduling.model.VisitRecord;
 import com.genc.visit_scheduling.repository.VisitRecordRepository;
 import org.springframework.stereotype.Service;
@@ -29,39 +30,40 @@ public class VisitService {
         if (v.getSubjectId() == null)
             throw new BusinessRuleException("subjectId is required to schedule a visit");
 
-        // Validate subject exists and is ENROLLED via SubjectEnrollment service
         SubjectDTO subject;
         try {
             subject = subjectClient.getSubject(v.getSubjectId());
         } catch (Exception e) {
             throw new BusinessRuleException(
-                "Subject ID " + v.getSubjectId() + " not found in SubjectEnrollment service.");
+                    "Subject ID " + v.getSubjectId() + " not found in SubjectEnrollment service.");
         }
         if (!"ENROLLED".equals(subject.getSubjectStatus())) {
             throw new BusinessRuleException(
-                "Subject must be ENROLLED to schedule a visit. Current status: "
-                + subject.getSubjectStatus());
+                    "Subject must be ENROLLED to schedule a visit. Current status: "
+                            + subject.getSubjectStatus());
         }
 
-        v.setCrfStatus("PENDING");
+        v.setCrfStatus(CrfStatus.PENDING);
         if (v.getQueryCount() == null) v.setQueryCount(0);
         return repo.save(v);
     }
 
     public VisitRecord recordCrfData(Long id, Integer queryCount) {
         VisitRecord v = get(id);
-        if ("LOCKED".equals(v.getCrfStatus()))
+        if (v.getCrfStatus() == CrfStatus.LOCKED)
             throw new BusinessRuleException("CRF is locked and cannot be edited");
+
         v.setQueryCount(queryCount == null ? 0 : queryCount);
-        v.setCrfStatus("COMPLETED");
+        v.setCrfStatus(CrfStatus.COMPLETED);
         return repo.save(v);
     }
 
     public VisitRecord lockCrf(Long id) {
         VisitRecord v = get(id);
-        if (!"COMPLETED".equals(v.getCrfStatus()))
+        if (v.getCrfStatus() != CrfStatus.COMPLETED)
             throw new BusinessRuleException("Only COMPLETED CRFs can be locked");
-        v.setCrfStatus("LOCKED");
+
+        v.setCrfStatus(CrfStatus.LOCKED);
         return repo.save(v);
     }
 

@@ -3,6 +3,7 @@ package com.genc.visit_scheduling.model;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
+
 @Entity
 @Table(name = "visit_record")
 public class VisitRecord {
@@ -13,7 +14,11 @@ public class VisitRecord {
     private Long subjectId;
     private String visitName;
     private LocalDate visitDate;
-    private String crfStatus;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private CrfStatus crfStatus;
+
     private Integer queryCount;
     private String visitWindow;
 
@@ -25,11 +30,10 @@ public class VisitRecord {
     public void setVisitName(String visitName) { this.visitName = visitName; }
     public LocalDate getVisitDate() { return visitDate; }
     public void setVisitDate(LocalDate visitDate) { this.visitDate = visitDate; }
-    public String getCrfStatus() { return crfStatus; }
-    public void setCrfStatus(String crfStatus) { this.crfStatus = crfStatus; }
+    public CrfStatus getCrfStatus() { return crfStatus; }
+    public void setCrfStatus(CrfStatus crfStatus) { this.crfStatus = crfStatus; }
     public Integer getQueryCount() { return queryCount; }
     public void setQueryCount(Integer queryCount) { this.queryCount = queryCount; }
     public String getVisitWindow() { return visitWindow; }
     public void setVisitWindow(String visitWindow) { this.visitWindow = visitWindow; }
 }
-

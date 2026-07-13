@@ -38,12 +38,12 @@ public class SubjectService {
             protocol = protocolClient.getProtocol(dto.getProtocolId().longValue());
         } catch (Exception e) {
             throw new BusinessRuleException(
-                "Protocol ID " + dto.getProtocolId() + " not found in trialprotocol-service.");
+                    "Protocol ID " + dto.getProtocolId() + " not found in trialprotocol-service.");
         }
         if (!"ACTIVE".equals(protocol.getProtocolStatus())) {
             throw new BusinessRuleException(
-                "Protocol must be ACTIVE to screen a subject. Current status: "
-                + protocol.getProtocolStatus());
+                    "Protocol must be ACTIVE to screen a subject. Current status: "
+                            + protocol.getProtocolStatus());
         }
 
         // 2. Validate site only if siteId is provided
@@ -53,30 +53,30 @@ public class SubjectService {
                 site = protocolClient.getSite(dto.getSiteId().longValue());
             } catch (Exception e) {
                 throw new BusinessRuleException(
-                    "Site ID " + dto.getSiteId() + " not found in trialprotocol-service.");
+                        "Site ID " + dto.getSiteId() + " not found in trialprotocol-service.");
             }
             if (!site.getProtocolId().equals(dto.getProtocolId().longValue())) {
                 throw new BusinessRuleException(
-                    "Site " + dto.getSiteId() + " does not belong to protocol " + dto.getProtocolId());
+                        "Site " + dto.getSiteId() + " does not belong to protocol " + dto.getProtocolId());
             }
             if (!"ACTIVE".equals(site.getSiteStatus())) {
                 throw new BusinessRuleException(
-                    "Site must be ACTIVE to screen a subject. Current site status: "
-                    + site.getSiteStatus());
+                        "Site must be ACTIVE to screen a subject. Current site status: "
+                                + site.getSiteStatus());
             }
         }
 
         // 3. All checks passed — save subject as SCREENED
-        TrialSubject subject = TrialSubject.builder()
-                .protocolId(dto.getProtocolId())
-                .siteId(dto.getSiteId())
-                .studyArm(dto.getStudyArm())
-                .screeningDate(dto.getScreeningDate() != null ? dto.getScreeningDate() : LocalDate.now())
-                .consentVersion(dto.getConsentVersion())
-                .consentDate(dto.getConsentDate())
-                .consentedBy(dto.getConsentedBy())
-                .subjectStatus(SubjectStatus.SCREENED)
-                .build();
+        TrialSubject subject = new TrialSubject();
+        subject.setProtocolId(dto.getProtocolId());
+        subject.setSiteId(dto.getSiteId());
+        subject.setStudyArm(dto.getStudyArm());
+        subject.setScreeningDate(dto.getScreeningDate() != null ? dto.getScreeningDate() : LocalDate.now());
+        subject.setConsentVersion(dto.getConsentVersion());
+        subject.setConsentDate(dto.getConsentDate());
+        subject.setConsentedBy(dto.getConsentedBy());
+        subject.setSubjectStatus(SubjectStatus.SCREENED);
+
         return mapToResponse(subjectRepository.save(subject));
     }
 
@@ -85,7 +85,7 @@ public class SubjectService {
         TrialSubject subject = findById(subjectId);
         if (subject.getSubjectStatus() != SubjectStatus.SCREENED) {
             throw new BusinessRuleException(
-                "Subject must be SCREENED before enrollment. Current status: " + subject.getSubjectStatus());
+                    "Subject must be SCREENED before enrollment. Current status: " + subject.getSubjectStatus());
         }
         subject.setSubjectStatus(SubjectStatus.ENROLLED);
         subject.setEnrollmentDate(LocalDate.now());
@@ -123,7 +123,7 @@ public class SubjectService {
         TrialSubject subject = findById(subjectId);
         if (subject.getSubjectStatus() != SubjectStatus.ENROLLED) {
             throw new BusinessRuleException(
-                "Subject must be ENROLLED to be completed. Current status: " + subject.getSubjectStatus());
+                    "Subject must be ENROLLED to be completed. Current status: " + subject.getSubjectStatus());
         }
         subject.setSubjectStatus(SubjectStatus.COMPLETED);
         return mapToResponse(subjectRepository.save(subject));
@@ -159,18 +159,18 @@ public class SubjectService {
     }
 
     private SubjectResponseDTO mapToResponse(TrialSubject s) {
-        return SubjectResponseDTO.builder()
-                .subjectId(s.getSubjectId())
-                .protocolId(s.getProtocolId())
-                .siteId(s.getSiteId())
-                .screeningDate(s.getScreeningDate())
-                .enrollmentDate(s.getEnrollmentDate())
-                .studyArm(s.getStudyArm())
-                .subjectStatus(s.getSubjectStatus())
-                .consentVersion(s.getConsentVersion())
-                .consentDate(s.getConsentDate())
-                .consentedBy(s.getConsentedBy())
-                .withdrawalReason(s.getWithdrawalReason())
-                .build();
+        SubjectResponseDTO response = new SubjectResponseDTO();
+        response.setSubjectId(s.getSubjectId());
+        response.setProtocolId(s.getProtocolId());
+        response.setSiteId(s.getSiteId());
+        response.setScreeningDate(s.getScreeningDate());
+        response.setEnrollmentDate(s.getEnrollmentDate());
+        response.setStudyArm(s.getStudyArm());
+        response.setSubjectStatus(s.getSubjectStatus());
+        response.setConsentVersion(s.getConsentVersion());
+        response.setConsentDate(s.getConsentDate());
+        response.setConsentedBy(s.getConsentedBy());
+        response.setWithdrawalReason(s.getWithdrawalReason());
+        return response;
     }
 }

@@ -24,9 +24,9 @@ public class AuthService {
     }
 
     public AuthResponse login(LoginRequest request) {
-        String username = request.getUsername() == null ? "" : request.getUsername().trim();
+        String username = request.getUsername();
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials -1"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials"));
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials");
         }

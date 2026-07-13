@@ -28,17 +28,14 @@ public class JwtAuthenticationFilter implements GlobalFilter, Ordered {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         String path = exchange.getRequest().getURI().getPath();
 
-        // Always allow auth endpoints (login)
         if (PUBLIC_PREFIXES.stream().anyMatch(path::startsWith)) {
             return chain.filter(exchange);
         }
 
-        // Static files and anything not under a protected prefix pass through without JWT
         if (PROTECTED_PREFIXES.stream().noneMatch(path::startsWith)) {
             return chain.filter(exchange);
         }
 
-        // Protected route — must have a valid Bearer token
         String authHeader = exchange.getRequest().getHeaders().getFirst("Authorization");
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
@@ -56,7 +53,6 @@ public class JwtAuthenticationFilter implements GlobalFilter, Ordered {
 
             String role = claims.get("role", String.class);
 
-            // Forward role to downstream services so they can enforce role-based access
             ServerHttpRequest mutated = exchange.getRequest().mutate()
                     .header("X-User-Role", role != null ? role : "")
                     .header("X-Username", claims.getSubject() != null ? claims.getSubject() : "")

@@ -28,8 +28,6 @@ public class AdminInitializer {
             admin.setPassword(passwordEncoder.encode("Admin@123"));
             admin.setRole(Role.ADMIN);
             userRepository.save(admin);
-            System.out.println("[AdminInitializer] Default admin created — username: admin / password: admin123");
         }
     }
 }
-
