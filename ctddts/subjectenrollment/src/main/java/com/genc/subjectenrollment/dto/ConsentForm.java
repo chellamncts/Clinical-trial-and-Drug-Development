@@ -7,6 +7,15 @@ public class ConsentForm {
     private String consentVersion;
     private LocalDate consentDate;
     private String consentedBy;
+    private String notes;
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
 
     public ConsentForm() {}
 

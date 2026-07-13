@@ -12,7 +12,6 @@ document.querySelectorAll(".nav-item").forEach(b => b.onclick = () => {
   if (sec) sec.classList.add("active");
   const t = document.getElementById("secTitle");
   if (t) t.textContent = b.textContent.trim();
-  // Reload subjects when opening Report Event tab
   if (b.dataset.sec === "report") loadSubjects();
 });
 
@@ -64,9 +63,9 @@ function renderTable(list){
     </tr></thead>
     <tbody>
       ${list.map(e => `<tr>
-        <td class="event-id">#${e.eventId}</td>
-        <td>Subject #${e.subjectId}</td>
-        <td>${e.visitId ? `<span class="badge b-draft">Visit #${e.visitId}</span>` : '<span style="color:var(--muted);font-size:.8rem">—</span>'}</td>
+        <td class="event-id">${e.eventId}</td>
+        <td>Subject ${e.subjectId}</td>
+        <td>${e.visitId ? `<span class="badge b-draft">Visit ${e.visitId}</span>` : '<span style="color:var(--muted);font-size:.8rem">—</span>'}</td>
         <td>${sevPill(e.severity)}</td>
         <td>${e.seriousness || "-"}</td>
         <td>${e.safetyReportSubmitted ? '<span class="badge b-active">Submitted</span>' : '<span class="badge b-draft">Pending</span>'}</td>
@@ -79,15 +78,12 @@ function renderTable(list){
 
 function filterTable(){
   const q = (document.getElementById("evtSearch")?.value || "").toLowerCase();
-  const list = q ? EVENTS.filter(e =>
-    String(e.eventId).includes(q) ||
-    String(e.subjectId).includes(q) ||
-    (e.eventStatus || "").toLowerCase().includes(q) ||
-    (e.severity || "").toLowerCase().includes(q) ||
-    (e.eventDescription || "").toLowerCase().includes(q)
-  ) : EVENTS;
+  const list = q
+    ? EVENTS.filter(e => String(e.subjectId).toLowerCase().includes(q))
+    : EVENTS;
   renderTable(list);
 }
+
 
 function applyWorkflowButtons(e){
   const bClassify = document.getElementById("bClassify");
@@ -119,8 +115,8 @@ function showEvent(){
     <div class="detail-hero">
       <div class="detail-avatar red"><i class="bi bi-exclamation-triangle-fill"></i></div>
       <div class="detail-title-wrap">
-        <div class="detail-title">Event #${e.eventId}</div>
-        <div class="detail-sub">Subject #${e.subjectId} · Onset: ${fmtDate(e.eventOnsetDate)}</div>
+        <div class="detail-title">Event Id ${e.eventId}</div>
+        <div class="detail-sub">Subject Id ${e.subjectId} · Onset: ${fmtDate(e.eventOnsetDate)}</div>
       </div>
       ${badge(e.eventStatus)}
     </div>
@@ -130,7 +126,7 @@ function showEvent(){
       <div class="ig"><span class="ig-l"><i class="bi bi-clipboard2-pulse"></i> Seriousness</span><span class="ig-v ${e.seriousness === "SERIOUS" ? "err" : "mut"}">${e.seriousness || "Pending"}</span></div>
       <div class="ig"><span class="ig-l"><i class="bi bi-send-check"></i> SAE Report</span><span class="ig-v ${e.safetyReportSubmitted ? "ok" : "mut"}">${e.safetyReportSubmitted ? '<i class="bi bi-check-circle-fill"></i> Submitted' : 'Not submitted'}</span></div>
       <div class="ig"><span class="ig-l"><i class="bi bi-code-square"></i> MedDRA</span><span class="ig-v mut">${e.meddraCode || "-"}</span></div>
-      <div class="ig"><span class="ig-l"><i class="bi bi-calendar-check"></i> Linked Visit</span><span class="ig-v mut">${e.visitId ? "Visit #"+e.visitId : "—"}</span></div>
+      <div class="ig"><span class="ig-l"><i class="bi bi-calendar-check"></i> Linked Visit</span><span class="ig-v mut">${e.visitId ? "Visit Id"+e.visitId : "—"}</span></div>
     </div>
     <p class="detail-sub" style="margin-top:10px;font-style:italic">"${e.eventDescription || ""}"</p>`;
 
@@ -152,7 +148,7 @@ async function onSubjectChange(){
       vSel.innerHTML = '<option value="">— No visits yet for this subject —</option>';
     } else {
       vSel.innerHTML = '<option value="">— None (not visit-linked) —</option>' +
-        visits.map(v => `<option value="${v.visitId}">#${v.visitId} · ${v.visitName||"Visit"} · ${v.visitDate||"no date"} (${v.crfStatus})</option>`).join("");
+        visits.map(v => `<option value="${v.visitId}">${v.visitId} · ${v.visitName||"Visit"} · ${v.visitDate||"no date"} (${v.crfStatus})</option>`).join("");
     }
   } catch(e) {
     vSel.innerHTML = '<option value="">Could not load visits</option>';
@@ -174,8 +170,23 @@ async function save(){
     return;
   }
 
+
   const visitIdVal = document.getElementById("linkedVisit")?.value || null;
 
+const selectedDate = new Date(oed);
+
+selectedDate.setHours(0,0,0,0);
+
+const today = new Date();
+today.setHours(0,0,0,0);
+
+const yesterday = new Date(today);
+yesterday.setDate(today.getDate() - 1);
+
+if(selectedDate < yesterday){
+  box.innerHTML = `<div class="msg err"><i class="bi bi-exclamation-triangle"></i> Event OnSet Date cannot be Past.</div>`;
+  return;
+}
   try {
     await api("/api/events", "POST", {
       subjectId: +sid,
@@ -247,7 +258,7 @@ async function loadHistory(){
       <div class="history-item">
         <div class="history-top">
           <div>
-            <div class="history-title">Event #${e.eventId} · ${sevPill(e.severity)}</div>
+            <div class="history-title">Event Id ${e.eventId} · ${sevPill(e.severity)}</div>
             <div class="history-sub">Onset ${fmtDate(e.eventOnsetDate)} · MedDRA ${e.meddraCode || "-"}</div>
           </div>
           <div>${badge(e.eventStatus)}</div>
@@ -264,11 +275,11 @@ async function loadSubjects(){
   try {
     SUBJECTS = await api("/api/subjects");
     const n = fillSelect("subjectId", SUBJECTS, "subjectId",
-      x => `Subject #${x.subjectId} · ${x.subjectStatus||"N/A"}`, "No subjects yet");
+      x => `Subject Id ${x.subjectId} · ${x.subjectStatus||"N/A"}`, "No subjects yet");
     const repBtn = document.getElementById("repBtn");
     if (repBtn) repBtn.disabled = n === 0;
     fillSelect("histSubject", SUBJECTS, "subjectId",
-      x => `Subject #${x.subjectId} · ${x.subjectStatus||"N/A"}`, "No subjects");
+      x => `Subject Id ${x.subjectId} · ${x.subjectStatus||"N/A"}`, "No subjects");
 
     if (n > 0) await onSubjectChange();
   } catch(e) {
@@ -281,12 +292,11 @@ async function load(){
     EVENTS = await api("/api/events");
     updateStats();
     renderTable(EVENTS);
-    fillSelect("eid", EVENTS, "eventId", x => `Event #${x.eventId} · Subject #${x.subjectId} · ${pretty(x.eventStatus)}`, "No events yet");
+    fillSelect("eid", EVENTS, "eventId", x => `Event Id ${x.eventId} · Subject Id ${x.subjectId} · ${pretty(x.eventStatus)}`, "No events yet");
     showEvent();
   } catch(e) {
     console.error("Could not load events:", e.message);
   }
 }
-
 loadSubjects();
 load();

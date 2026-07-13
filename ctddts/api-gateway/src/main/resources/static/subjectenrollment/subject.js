@@ -40,16 +40,10 @@ function toggleForm(id) {
 
 function today() { return new Date().toISOString().split("T")[0]; }
 
-/* ── State ───────────────────────────────────────────────────────── */
 let SUBJECTS  = [];
 let PROTOCOLS = [];   // cache of ACTIVE protocols
 let ALL_SITES = [];   // cache of all sites
 
-/* ═══════════════════════════════════════════════════════════════════
-   SCREEN FORM — cascading Protocol → Site dropdowns
-   ═══════════════════════════════════════════════════════════════════ */
-
-/** Open the Screen Subject modal and pre-load protocol list */
 async function openScreenForm() {
   document.getElementById("screenForm").classList.remove("hidden");
   document.getElementById("smsg").innerHTML = "";
@@ -164,8 +158,6 @@ async function screenSubject() {
   }
 }
 
-
-/* ── Open consent modal: show subject details ────────────────────── */
 async function openConsent() {
   const subjectId = document.getElementById("actId").value;
   if (!subjectId) return;
@@ -305,7 +297,8 @@ function showSubject() {
     ${subjStepper(s)}
     <div class="info-grid">
       <div class="ig"><span class="ig-l"><i class="bi bi-diagram-2"></i> Study Arm</span><span class="ig-v">${pretty(s.studyArm)}</span></div>
-      <div class="ig"><span class="ig-l"><i class="bi bi-file-earmark-medical"></i> Consent</span><span class="ig-v">${s.consentVersion ? `<i class="bi bi-check-circle-fill" style="color:var(--ok)"></i> ${s.consentVersion}` : '<span class="ig-v mut">Pending</span>'}</span></div>
+
+
       <div class="ig"><span class="ig-l"><i class="bi bi-calendar-check"></i> Enrolled</span><span class="ig-v">${s.enrollmentDate || "—"}</span></div>
       <div class="ig"><span class="ig-l"><i class="bi bi-calendar"></i> Screened</span><span class="ig-v">${s.screeningDate || "—"}</span></div>
     </div>`;

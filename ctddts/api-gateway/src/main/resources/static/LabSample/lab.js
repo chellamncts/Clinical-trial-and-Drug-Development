@@ -1,11 +1,9 @@
 
 requireRole("COORDINATOR");
 
-// Show signed-in user
 const whoEl = document.getElementById("who");
 if (whoEl) whoEl.textContent = localStorage.getItem("username") || "user";
 
-// Sidebar section switching
 document.querySelectorAll(".nav-item").forEach(b => b.onclick = () => {
   document.querySelectorAll(".nav-item").forEach(x => x.classList.remove("active"));
   document.querySelectorAll(".sec").forEach(s => s.classList.remove("active"));
@@ -14,14 +12,12 @@ document.querySelectorAll(".nav-item").forEach(b => b.onclick = () => {
   if (sec) sec.classList.add("active");
   const t = document.getElementById("secTitle");
   if (t) t.textContent = b.textContent.trim();
-  // Reload data when switching to sections
   if (b.dataset.sec === "inventory") loadInventory();
   if (b.dataset.sec === "dispense")  { loadInventory(); loadInventoryForDispense(); loadSubjects(); }
   if (b.dataset.sec === "lab-results") loadSamples();
   if (b.dataset.sec === "collect") loadSubjects();
 });
 
-// ── Utilities ─────────────────────────────────
 function fmtDate(d) {
   if (!d) return "—";
   try { return new Date(d).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }); }
@@ -55,12 +51,10 @@ function showMsg(elId, type, text) {
   el.innerHTML = `<div class="msg ${type}"><i class="bi bi-${type === "ok" ? "check-circle" : "exclamation-triangle"}"></i> ${text}</div>`;
 }
 
-// ── App State ──────────────────────────────────
 let SAMPLES   = [];
 let INVENTORY = [];
 let ALL_SUBJECTS = [];
 
-// ── DASHBOARD section ──────────────────────────
 function updateDashStats() {
   document.getElementById("dTotal").textContent     = SAMPLES.length;
   document.getElementById("dCollected").textContent = SAMPLES.filter(s => s.sampleStatus === "COLLECTED").length;
@@ -81,8 +75,8 @@ function renderDashTable() {
       <th>ID</th><th>Subject</th><th>Type</th><th>Collection Date</th><th>Status</th><th>Lab Result</th>
     </tr></thead>
     <tbody>${recent.map(s => `<tr>
-      <td>#${s.sampleId}</td>
-      <td>Subject #${s.subjectId}</td>
+      <td>${s.sampleId}</td>
+      <td>${s.subjectId}</td>
       <td>${s.sampleType || "—"}</td>
       <td>${fmtDate(s.collectionDate)}</td>
       <td>${statusBadge(s.sampleStatus)}</td>
@@ -91,8 +85,6 @@ function renderDashTable() {
     </tbody>
   </table>`;
 }
-
-// ── COLLECT SAMPLE section ─────────────────────
 async function collectSample() {
   const msg = document.getElementById("collectMsg");
   if (msg) msg.innerHTML = "";
@@ -107,6 +99,20 @@ async function collectSample() {
     return;
   }
 
+  const selectedDate = new Date(collectionDate);
+  selectedDate.setHours(0,0,0,0);
+
+  const today = new Date();
+  today.setHours(0,0,0,0);
+
+  const yesterday = new Date(today);
+  yesterday.setDate(today.getDate() - 1);
+
+  if(selectedDate < yesterday){
+    showMsg("collectMsg", "err", "Collection Date cannot be in the past.");
+    return;
+  }
+
   try {
     const s = await api("/api/samples", "POST", {
       subjectId: +subjectId,
@@ -114,19 +120,22 @@ async function collectSample() {
       collectionDate: collectionDate || null,
       labResult: labResult || null
     });
-    showMsg("collectMsg", "ok", `Sample #${s.sampleId} collected for Subject #${s.subjectId}.`);
-    // Reset form
+
+    showMsg("collectMsg", "ok", `Sample ${s.sampleId} collected for Subject ${s.subjectId}.`);
+
     ["cSubjectId","cSampleType","cCollectionDate","cLabResult"].forEach(id => {
       const el = document.getElementById(id);
-      if (el) el.value = el.tagName === "SELECT" ? "" : "";
+      if (el) el.value = "";
     });
+
     await loadSamples();
+
   } catch(e) {
     showMsg("collectMsg", "err", e.message);
   }
 }
 
-// ── LAB RESULTS section ────────────────────────
+
 function renderLabResultsTable(list) {
   const box = document.getElementById("labBox");
   if (!box) return;
@@ -139,8 +148,8 @@ function renderLabResultsTable(list) {
       <th>ID</th><th>Subject</th><th>Type</th><th>Date</th><th>Status</th><th>Lab Result</th><th>Actions</th>
     </tr></thead>
     <tbody>${list.map(s => `<tr>
-      <td>#${s.sampleId}</td>
-      <td>Subject #${s.subjectId}</td>
+      <td>${s.sampleId}</td>
+      <td>${s.subjectId}</td>
       <td>${s.sampleType || "—"}</td>
       <td>${fmtDate(s.collectionDate)}</td>
       <td>${statusBadge(s.sampleStatus)}</td>
@@ -164,20 +173,16 @@ function renderLabResultsTable(list) {
 
 function filterLabResults() {
   const q = (document.getElementById("labSearch")?.value || "").toLowerCase();
-  const list = q ? SAMPLES.filter(s =>
-    String(s.sampleId).includes(q) ||
-    String(s.subjectId).includes(q) ||
-    (s.sampleType || "").toLowerCase().includes(q) ||
-    (s.sampleStatus || "").toLowerCase().includes(q) ||
-    (s.labResult || "").toLowerCase().includes(q)
-  ) : SAMPLES;
+  const list = q
+    ? SAMPLES.filter(s => String(s.subjectId).toLowerCase().includes(q))
+    : SAMPLES;
   renderLabResultsTable(list);
 }
 
 async function markTransit(id) {
   try {
     await api(`/api/samples/${id}/transit`, "PUT");
-    showMsg("labMsg", "ok", `Sample #${id} marked as In Transit.`);
+    showMsg("labMsg", "ok", `Sample Id ${id} marked as In Transit.`);
     await loadSamples();
   } catch(e) {
     showMsg("labMsg", "err", e.message);
@@ -185,17 +190,16 @@ async function markTransit(id) {
 }
 
 async function destroySample(id) {
-  if (!confirm(`Destroy Sample #${id}? This action cannot be undone.`)) return;
+  if (!confirm(`Destroy Sample Id ${id}? This action cannot be undone.`)) return;
   try {
     await api(`/api/samples/${id}/destroy`, "PUT");
-    showMsg("labMsg", "ok", `Sample #${id} destroyed.`);
+    showMsg("labMsg", "ok", `Sample Id ${id} destroyed.`);
     await loadSamples();
   } catch(e) {
     showMsg("labMsg", "err", e.message);
   }
 }
 
-// ── Lab Result Modal ───────────────────────────
 let modalSampleId = null;
 
 function openResultModal(id) {
@@ -226,7 +230,7 @@ async function saveLabResult() {
     showMsg("modalMsg", "ok", "Lab result recorded.");
     setTimeout(() => {
       closeResultModal();
-      showMsg("labMsg", "ok", `Lab result recorded for Sample #${modalSampleId}.`);
+      showMsg("labMsg", "ok", `Lab result recorded for Sample Id ${modalSampleId}.`);
     }, 800);
     await loadSamples();
   } catch(e) {
@@ -234,7 +238,6 @@ async function saveLabResult() {
   }
 }
 
-// ── INVENTORY section ──────────────────────────
 function buildInventoryTableHtml() {
   if (!INVENTORY.length) {
     return '<div class="lab-empty"><i class="bi bi-box-seam"></i><p>No inventory items found.</p></div>';
@@ -272,7 +275,7 @@ function buildInventoryTableHtml() {
       const tempInput = `<input type="number" step="0.1" value="${cur ?? ""}" placeholder="Enter °C" onchange="updateTemp(${i.inventoryId}, this.value)" />`;
 
       return `<tr data-status="${status}">
-        <td>#${i.inventoryId}</td>
+        <td>${i.inventoryId}</td>
         <td><strong>${i.productName}</strong></td>
         <td>${i.batchNumber || "—"}</td>
         <td style="text-align:center">${i.quantityReceived}</td>
@@ -297,7 +300,6 @@ function renderInventoryTable() {
   const box = document.getElementById("invBox");
   if (box) box.innerHTML = buildInventoryTableHtml();
 
-  // Also update reference table in dispense section
   const box2 = document.getElementById("invBox2");
   if (box2) box2.innerHTML = buildInventoryTableHtml();
 
@@ -316,7 +318,6 @@ function renderInventoryTable() {
   }
 }
 
-// ── DISPENSE section ───────────────────────────
 function loadInventoryForDispense() {
   const sel = document.getElementById("dInventoryId");
   if (!sel) return;
@@ -355,9 +356,8 @@ async function dispenseIP() {
       dispensingLocation
     });
     showMsg("dispenseMsg", "ok",
-      `Dispensed ${log.quantityDispensed} unit(s) of ${getProductName(inventoryId)} to Subject #${log.subjectId} by ${log.dispensedBy}.`
+      `Dispensed ${log.quantityDispensed} unit(s) of ${getProductName(inventoryId)} to Subject Id ${log.subjectId} by ${log.dispensedBy}.`
     );
-    // Reset
     ["dInventoryId","dSubjectId","dQuantity","dDispensedBy","dLocation"].forEach(id => {
       const el = document.getElementById(id);
       if (el) el.value = "";
@@ -374,20 +374,18 @@ function getProductName(inventoryId) {
   return item ? item.productName : `Item #${inventoryId}`;
 }
 
-// ── Data Loaders ───────────────────────────────
 async function loadSubjects() {
   try {
     ALL_SUBJECTS = await api("/api/subjects");
     const enrolled = ALL_SUBJECTS.filter(s => s.subjectStatus === "ENROLLED");
 
-    // Collect Sample subject dropdown
     const cSel = document.getElementById("cSubjectId");
     if (cSel) {
       if (!enrolled.length) {
         cSel.innerHTML = '<option value="">No ENROLLED subjects yet</option>';
       } else {
         cSel.innerHTML = '<option value="">Select Subject</option>' +
-          enrolled.map(s => `<option value="${s.subjectId}">#${s.subjectId} — ${s.firstName || ""} ${s.lastName || ""}</option>`).join("");
+          enrolled.map(s => `<option value="${s.subjectId}">Subject Id ${s.subjectId} — ${s.subjectStatus || "ENROLLED"}</option>`).join("");
       }
     }
 
@@ -397,7 +395,7 @@ async function loadSubjects() {
         dSel.innerHTML = '<option value="">No ENROLLED subjects yet</option>';
       } else {
         dSel.innerHTML = '<option value="">Select Subject</option>' +
-          enrolled.map(s => `<option value="${s.subjectId}">#${s.subjectId} — ${s.firstName || ""} ${s.lastName || ""}</option>`).join("");
+          enrolled.map(s => `<option value="${s.subjectId}">Subject Id ${s.subjectId} — ${s.subjectStatus || ""}</option>`).join("");
       }
     }
   } catch (e) {

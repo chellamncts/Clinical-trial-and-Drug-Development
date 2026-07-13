@@ -112,7 +112,7 @@
                 <h2><i class="bi bi-calendar3"></i> All Visits</h2>
                 <div class="visit-search-wrap">
                     <i class="bi bi-search"></i>
-                    <input id="visitSearch" placeholder="Search visit or subject…" oninput="filterTable()" aria-label="Search visits" />
+                    <input id="visitSearch" placeholder="Search by subject Id" oninput="filterTable()" aria-label="Search visits" />
                 </div>
             </div>
             <div id="tbox"></div>
@@ -125,18 +125,18 @@
         </div>
         <div class="card visit-form-card">
             <div id="smsg"></div>
-            <p class="form-legend"><span class="req">*</span> Required &nbsp;·&nbsp; <span class="opt">(optional)</span> Optional</p>
+            <p class="form-legend"><span class="req">*</span> Required </p>
             <div class="visit-form-grid">
                 <div class="vf-field">
                     <label for="subjectId"><i class="bi bi-person"></i> Subject <span class="req">*</span></label>
                     <select id="subjectId" required></select>
                 </div>
                 <div class="vf-field">
-                    <label for="visitName"><i class="bi bi-tag"></i> Visit Name <span class="opt">(optional)</span></label>
+                    <label for="visitName"><i class="bi bi-tag"></i> Visit Name <span class="req">*</span></label>
                     <input id="visitName" placeholder="e.g. Baseline, Week 4, End of Study" />
                 </div>
                 <div class="vf-field">
-                    <label for="visitDate"><i class="bi bi-calendar-event"></i> Visit Date <span class="opt">(optional)</span></label>
+                    <label for="visitDate"><i class="bi bi-calendar-event"></i> Visit Date <span class="req">*</span></label>
                     <input id="visitDate" type="date" />
                 </div>
                 <div class="vf-field">

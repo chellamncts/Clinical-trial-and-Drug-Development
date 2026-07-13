@@ -79,7 +79,7 @@
                 <h2><i class="bi bi-clipboard2-data"></i> All Adverse Events</h2>
                 <div class="evt-search-wrap">
                     <i class="bi bi-search"></i>
-                    <input id="evtSearch" placeholder="Search subject, severity, status…" oninput="filterTable()" aria-label="Search adverse events" />
+                    <input id="evtSearch" placeholder="Search by subject Id" oninput="filterTable()" aria-label="Search adverse events" />
                 </div>
             </div>
             <div id="tbox"></div>
@@ -92,14 +92,14 @@
         </div>
         <div class="card">
             <div id="rmsg"></div>
-            <p class="form-legend"><span class="req">*</span> Required &nbsp;·&nbsp; <span class="opt">(optional)</span> Optional</p>
+            <p class="form-legend"><span class="req">*</span> Required </p>
             <div class="evt-form-grid">
                 <div class="ef-field">
                     <label for="subjectId"><i class="bi bi-person"></i> Subject <span class="req">*</span></label>
                     <select id="subjectId" required onchange="onSubjectChange()"></select>
                 </div>
                 <div class="ef-field">
-                    <label for="linkedVisit"><i class="bi bi-calendar-check"></i> Linked Visit <span class="opt">(optional)</span></label>
+                    <label for="linkedVisit"><i class="bi bi-calendar-check"></i> Linked Visit <span class="req">*</span></label>
                     <select id="linkedVisit">
                         <option value="">— Select a subject first —</option>
                     </select>

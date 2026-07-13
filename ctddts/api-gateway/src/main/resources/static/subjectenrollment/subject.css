@@ -1,14 +1,4 @@
-/* ============================================================
-   Subject Enrollment Module — Complete Stylesheet
-   Includes: Dashboard Layout + Subject Module Theme
-   ============================================================ */
 
-/* ══════════════════════════════════════════════════════════════
-   SECTION 1 — DASHBOARD LAYOUT (sidebar, topbar, sections,
-                stats, modals, responsive)
-   ══════════════════════════════════════════════════════════════ */
-
-/* ── Module Color System (overridden below by Subject theme) ── */
 :root {
   --m-grad-side:   linear-gradient(180deg,#0f172a 0%,#1a2744 60%,#1e3a5f 100%);
   --m-primary:     #3b82f6;

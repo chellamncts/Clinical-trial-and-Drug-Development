@@ -84,13 +84,10 @@ function renderTable(data){
 }
 
 function filterTable(){
-  const q = (document.getElementById("visitSearch")?.value||"").toLowerCase();
-  const filtered = q ? VISITS.filter(v =>
-    (v.visitName||"").toLowerCase().includes(q) ||
-    String(v.subjectId).includes(q) ||
-    (v.crfStatus||"").toLowerCase().includes(q) ||
-    (v.visitWindow||"").toLowerCase().includes(q)
-  ) : VISITS;
+  const q = (document.getElementById("visitSearch")?.value || "").toLowerCase();
+  const filtered = q
+    ? VISITS.filter(v => String(v.subjectId).toLowerCase().includes(q))
+    : VISITS;
   renderTable(filtered);
 }
 
@@ -153,25 +150,52 @@ async function showVisit(){
 async function save(){
   const box = document.getElementById("smsg");
   box.innerHTML = "";
+
   const subjectIdVal = document.getElementById("subjectId").value;
   const visitNameVal = (visitName.value || "").trim();
+  const visitDateVal = visitDate.value;
+
   if(!subjectIdVal){
     box.innerHTML = `<div class="msg err"><i class="bi bi-exclamation-triangle"></i> Please select an enrolled subject.</div>`;
     return;
   }
+
   if(isBlank(visitNameVal)){
     box.innerHTML = `<div class="msg err"><i class="bi bi-exclamation-triangle"></i> Visit Name is required and cannot be spaces only.</div>`;
     return;
   }
+
+  if(!visitDateVal){
+    box.innerHTML = `<div class="msg err"><i class="bi bi-exclamation-triangle"></i> Visit Date is required.</div>`;
+    return;
+  }
+
+const selectedDate = new Date(visitDateVal);
+
+selectedDate.setHours(0,0,0,0);
+
+const today = new Date();
+today.setHours(0,0,0,0);
+
+const yesterday = new Date(today);
+yesterday.setDate(today.getDate() - 1);
+
+if(selectedDate < yesterday){
+  box.innerHTML = `<div class="msg err"><i class="bi bi-exclamation-triangle"></i> Visit Date cannot be Past.</div>`;
+  return;
+}
+
   try {
     await api("/api/visits","POST",{
       subjectId  : +subjectIdVal,
       visitName  : visitNameVal,
-      visitDate  : visitDate.value,
+      visitDate  : visitDateVal,
       visitWindow: (visitWindow.value||"").trim() === "" ? null : visitWindow.value.trim()
     });
     box.innerHTML = `<div class="msg ok"><i class="bi bi-check-circle"></i> Visit scheduled successfully!</div>`;
-    visitName.value = ""; visitDate.value = ""; visitWindow.value = "";
+    visitName.value = "";
+    visitDate.value = "";
+    visitWindow.value = "";
     document.getElementById("subjectId").value = "";
     await load();
   } catch(e){

@@ -91,10 +91,56 @@ async function deleteUser(id){
   catch(e){umsg.innerHTML='<div class="msg err">'+e.message+'</div>';}
 }
 async function createProtocol(){
-  const trialTitle=trimVal('p_title');
-  if(isBlank(trialTitle)){pmsg.innerHTML='<div class="msg err">Trial Title is required and cannot be spaces only.</div>';return;}
-  try{await api("/api/protocols","POST",{trialTitle,therapeuticArea:trimVal('p_area'),phase:p_phase.value,startDate:p_date.value,inclusionCriteria:trimVal('p_incl'),exclusionCriteria:trimVal('p_excl')});pmsg.innerHTML='<div class="msg ok">Protocol saved (status: DRAFT)</div>';p_title.value=p_area.value=p_date.value=p_incl.value=p_excl.value="";loadProtocols();setTimeout(()=>toggleForm('protoForm'),700);}catch(e){pmsg.innerHTML='<div class="msg err">'+e.message+'</div>';}
+  const trialTitle = trimVal('p_title');
+  const phaseVal   = p_phase.value;
+  const startDateVal = p_date.value;
+
+  if(isBlank(trialTitle)){
+    pmsg.innerHTML = '<div class="msg err">Trial Title is required and cannot be spaces only.</div>';
+    return;
+  }
+  if(isBlank(phaseVal)){
+    pmsg.innerHTML = '<div class="msg err">Phase is required.</div>';
+    return;
+  }
+
+  if(!startDateVal){
+    pmsg.innerHTML = '<div class="msg err">Start Date is required.</div>';
+    return;
+  }
+
+  const selectedDate = new Date(startDateVal);
+  selectedDate.setHours(0,0,0,0);
+
+  const today = new Date();
+  today.setHours(0,0,0,0);
+
+  const yesterday = new Date(today);
+  yesterday.setDate(today.getDate() - 1);
+
+  if(selectedDate < yesterday){
+    pmsg.innerHTML = '<div class="msg err">Start Date cannot be Past.</div>';
+    return;
+  }
+
+  try {
+    await api("/api/protocols","POST",{
+      trialTitle,
+      therapeuticArea: trimVal('p_area'),
+      phase: phaseVal,
+      startDate: startDateVal,
+      inclusionCriteria: trimVal('p_incl'),
+      exclusionCriteria: trimVal('p_excl')
+    });
+    pmsg.innerHTML = '<div class="msg ok">Protocol saved (status: DRAFT)</div>';
+    p_title.value = p_area.value = p_date.value = p_incl.value = p_excl.value = "";
+    loadProtocols();
+    setTimeout(()=>toggleForm('protoForm'),700);
+  } catch(e){
+    pmsg.innerHTML = '<div class="msg err">'+e.message+'</div>';
+  }
 }
+
 async function registerSite(){
   if(!s_protocol.value){smsg.innerHTML='<div class="msg err">Protocol is mandatory.</div>';return;}
   const siteName = document.getElementById("s_name").value.trim();
